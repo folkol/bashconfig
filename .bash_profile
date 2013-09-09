@@ -49,7 +49,7 @@ rmhost() {
     cat ~/.ssh/known_hosts | grep -v $1 > ~/.ssh/known_hosts.tmp && mv ~/.ssh/known_hosts.tmp ~/.ssh/known_hosts
 }
 
-static_analysis() {
+static_analysis_c() {
     if [ -z $1 ]
     then
         echo "Usage: check_static_analysis source_file.c"
