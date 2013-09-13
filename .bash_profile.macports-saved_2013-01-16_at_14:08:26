@@ -16,8 +16,7 @@ export CLICOLOR=Hxxxbxxxxxx
 
 ### PATH
 export PATH=$PATH:/Users/folkol/bin/polopoly_scripts/scripts:/Users/folkol/bin/polopoly_scripts:/Users/folkol/bin
-export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
-export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS/
+export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:$PATH
 
 ### IMPORTS
 source ~/bin/git-completion.bash
@@ -35,33 +34,7 @@ export REBEL_HOME="/Users/folkol/jrebel/"
 export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=256m"
 export ANT_OPTS=-Xmx1024m
 
-### FUNCTIONS
-import() {
-    cp $@ /Users/folkol/polopoly/sites/greenfieldtimes-example/work/inbox/
-}
-
-rmhost() {
-    if [ $# -eq 0 ]
-    then
-        echo "Usage: rmhost ip"
-        return
-    fi
-    cat ~/.ssh/known_hosts | grep -v $1 > ~/.ssh/known_hosts.tmp && mv ~/.ssh/known_hosts.tmp ~/.ssh/known_hosts
-}
-
-static_analysis_c() {
-    if [ -z $1 ]
-    then
-        echo "Usage: check_static_analysis source_file.c"
-        return;
-    fi
-    ~/bin/checker-275/scan-build ~/bin/checker-275/bin/clang -c $@
-}
-
 ### ALIASES
-alias git_share='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
-alias git_daemon='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
-alias import_scan="mvn p:import-scan -Dpolopoly.connection-properties=http://localhost:8081/connection-properties/connection.properties"
 alias cdp="cd ~/polopoly"
 alias deploy_external='cp target/dist/deployment-cm/cm-server*.ear /usr/local/jboss/jboss-4.0.5.GA/server/default/deploy/polopoly/ && cp target/dist/deployment-front/*.war /Library/Tomcat/Home/webapps/ && cp target/dist/deployment-polopoly-gui/*.war /Library/Tomcat/Home/webapps/'
 alias rebel='MAVEN_OPTS="-noverify -javaagent:$REBEL_HOME/jrebel.jar $MAVEN_OPTS"'
@@ -101,14 +74,3 @@ alias copyjars="cp /usr/local/jboss/jboss-4.0.5.GA/client/concurrent.jar \
 
 #sourcing rvm
 source /Users/folkol/.rvm/scripts/rvm
-##
-# Your previous /Users/folkol/.bash_profile file was backed up as /Users/folkol/.bash_profile.macports-saved_2013-01-16_at_14:08:26
-##
-
-# MacPorts Installer addition on 2013-01-16_at_14:08:26: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
-
-### ENVIRONMENT
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
