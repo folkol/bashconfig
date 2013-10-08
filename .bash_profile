@@ -15,16 +15,17 @@ HISTSIZE=2000
 export CLICOLOR=Hxxxbxxxxxx
 
 ### PATH
-export PATH=$PATH:/Users/folkol/bin/polopoly_scripts/scripts:/Users/folkol/bin/polopoly_scripts:/Users/folkol/bin
+export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly_scripts:/Users/folkol/bin
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
-export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS/
+export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
+export PATH=/usr/local/bin:$PATH
 
 ### IMPORTS
 source ~/bin/git-completion.bash
 
 ### EXPORTS
 export PS1='\n`pwd`\n[\u@\h$(__git_ps1 " (%s)")]\$ '
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
 export ANT_OPTS=-'Xmx512m -XX:MaxPermSize=128m'
 export EDITOR=emacs
 export MY_POLOPOLY_HOME=/Users/folkol/polopoly
@@ -59,6 +60,7 @@ static_analysis_c() {
 }
 
 ### ALIASES
+alias tidyjson="python -m json.tool"
 alias git_share='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
 alias git_daemon='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
 alias import_scan="mvn p:import-scan -Dpolopoly.connection-properties=http://localhost:8081/connection-properties/connection.properties"
@@ -100,7 +102,7 @@ alias copyjars="cp /usr/local/jboss/jboss-4.0.5.GA/client/concurrent.jar \
                    ~/polopoly/dist/dist-root/contrib-archives/container-client-lib/"
 
 #sourcing rvm
-source /Users/folkol/.rvm/scripts/rvm
+#source /Users/folkol/.rvm/scripts/rvm
 ##
 # Your previous /Users/folkol/.bash_profile file was backed up as /Users/folkol/.bash_profile.macports-saved_2013-01-16_at_14:08:26
 ##
