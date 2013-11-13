@@ -60,6 +60,9 @@ static_analysis_c() {
 }
 
 ### ALIASES
+alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
+alias pp='cd ~/polopoly'
+alias gt='pp && cd sites/greenfieldtimes-example'
 alias tidyjson="python -m json.tool"
 alias git_share='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
 alias git_daemon='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
