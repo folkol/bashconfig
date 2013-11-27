@@ -59,6 +59,11 @@ static_analysis_c() {
     ~/bin/checker-275/scan-build ~/bin/checker-275/bin/clang -c $@
 }
 
+xmlgrep()
+{
+   grep -r $1 . --include="*.xml"
+}
+
 ### ALIASES
 alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
 alias pp='cd ~/polopoly'
