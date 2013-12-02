@@ -61,7 +61,13 @@ static_analysis_c() {
 
 xmlgrep()
 {
-   grep -r $1 . --include="*.xml"
+    if [ -z $2 ]
+    then
+      dir=.
+    else
+      dir=$2
+    fi
+    grep -r $1 $dir --include="*.xml"
 }
 
 ### ALIASES
