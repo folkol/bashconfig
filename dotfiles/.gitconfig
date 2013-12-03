@@ -41,4 +41,4 @@
         new-branches = for-each-ref --count=30 --sort=-committerdate refs/remotes/ --format='%(refname:short)'
 
 [push]
-	default = current
+	default = simple
