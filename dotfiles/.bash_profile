@@ -25,7 +25,8 @@ source ~/bin/git-completion.bash
 
 ### EXPORTS
 export PS1='\n`pwd`\n[\u@\h$(__git_ps1 " (%s)")]\$ '
-export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+#export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export JAVA_HOME=`/usr/libexec/java_home`
 export ANT_OPTS=-'Xmx512m -XX:MaxPermSize=128m'
 export EDITOR=emacs
 export MY_POLOPOLY_HOME=/Users/folkol/polopoly
@@ -70,8 +71,21 @@ xmlgrep()
     grep -r $1 $dir --include="*.xml"
 }
 
+javagrep()
+{
+    if [ -z $2 ]
+    then
+      dir=.
+    else
+      dir=$2
+    fi
+    grep -r $1 $dir --include="*.java"
+}
+
 ### ALIASES
+alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war'
 alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
+alias pc='cd ~/code/photochallenge_play'
 alias pp='cd ~/polopoly'
 alias gt='pp && cd sites/greenfieldtimes-example'
 alias tidyjson="python -m json.tool"
