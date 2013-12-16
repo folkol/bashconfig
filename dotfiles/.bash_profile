@@ -83,7 +83,8 @@ javagrep()
 }
 
 ### ALIASES
-alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war'
+alias rebuild_pp='killall java && rm -rf ~/sites/greenfieldtimes-example/work && pp && mvn clean install -DskipTests -Dskipdoc && cd public-artifacts/jboss-derby-database/ && mvn install && gt && mvn p:run -DskipTests'
+alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
 alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
 alias pc='cd ~/code/photochallenge_play'
 alias pp='cd ~/polopoly'
