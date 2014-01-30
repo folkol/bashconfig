@@ -21,7 +21,8 @@ export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
 export PATH=/usr/local/bin:$PATH
 
 ### IMPORTS
-source ~/bin/git-completion.bash
+source ~/.git-completion.sh
+source ~/.git-prompt.sh
 
 ### EXPORTS
 export PS1='\n`pwd`\n[\u@\h$(__git_ps1 " (%s)")]\$ '
