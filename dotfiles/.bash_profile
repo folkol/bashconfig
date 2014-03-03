@@ -26,7 +26,6 @@ source ~/.git-prompt.sh
 
 ### EXPORTS
 export PS1='\n`pwd`\n[\u@\h$(__git_ps1 " (%s)")]\$ '
-#export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
 export JAVA_HOME=`/usr/libexec/java_home`
 export ANT_OPTS=-'Xmx512m -XX:MaxPermSize=128m'
 export EDITOR=emacs
@@ -84,6 +83,8 @@ javagrep()
 }
 
 ### ALIASES
+alias java6="JAVA_HOME=`/usr/libexec/java_home -v 1.6`"
+alias java7="JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
 alias rebuild_pp='time (killall java; rm -rf ~/sites/greenfieldtimes-example/work && pp && mvn clean install -DskipTests -Dskipdoc && cd public-artifacts/jboss-derby-database/ && mvn install && gt && mvn p:run -DskipTests)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
@@ -100,8 +101,8 @@ alias deploy_external='cp target/dist/deployment-cm/cm-server*.ear /usr/local/jb
 alias rebel='MAVEN_OPTS="-noverify -javaagent:$REBEL_HOME/jrebel.jar $MAVEN_OPTS"'
 alias p_run='rebel mvnDebug p:run -Dpolopoly.jetty-scanIntervalSeconds=0 -DskipTests'
 alias pp_run='MAVEN_OPTS="-noverify -Xbootclasspath/p:$REBEL_HOME/jrebel-bootstrap.jar:$REBEL_HOME/jrebel.jar -DPP_HOME=/Users/folkol -Drebel.plugins=/Users/folkol/pp-rebel/pp-rebel/target/pp-rebel-1.1-SNAPSHOT-jar-with-dependencies.jar -Drebel.pp-rebel=true $MAVEN_OPTS" mvnDebug p:run -Dpolopoly.jetty-scanIntervalSeconds=0'
-alias mvn2="sudo ln -s -f /usr/share/java/maven-2.2.1/bin/mvn /usr/bin/mvn"
-alias mvn3="sudo ln -s -f /usr/share/java/maven-3.0.4/bin/mvn /usr/bin/mvn"
+alias mvn305="export PATH=/usr/local/opt/maven-3.0.5/bin:$PATH"
+alias mvn311="export PATH=/usr/local/bin:$PATH"
 alias mvnsystem="sudo ln -s -f /usr/share/maven/bin/mvn /usr/bin/mvn"
 alias ll="ls -l"
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
