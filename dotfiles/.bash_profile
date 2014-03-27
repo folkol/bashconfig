@@ -38,6 +38,11 @@ export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=256m"
 export ANT_OPTS=-Xmx1024m
 
 ### FUNCTIONS
+function nitro_import
+{
+    java -jar ~/polopoly/test/nitro-dist-test-project/target/dist/deployment-config/polopoly-cli.jar import -c http://localhost:9090/connection-properties/connection.properties $@
+}
+
 import() {
     cp $@ /Users/folkol/polopoly/sites/greenfieldtimes-example/work/inbox/
 }
@@ -83,6 +88,7 @@ javagrep()
 }
 
 ### ALIASES
+alias login_dataapi="TOKEN=`curl -s -H "Content-Type: application/json" -X POST http://localhost:9090/content-hub/ws/security/token?format=json -d '{"username":"sysadmin", "password": "sysadmin"}' | cut -c 11-46`"
 alias java6="JAVA_HOME=`/usr/libexec/java_home -v 1.6`"
 alias java7="JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
@@ -113,6 +119,20 @@ alias deployjs="ant -f ~/polopoly/dist/build.xml pack-polopoly-js -Djs.compress=
 alias maketomcatsoftlink='ln -s /Users/folkol/polopoly/eclipse-build/com /Library/Tomcat/Home/webapps/polopoly/WEB-INF/classes/com'
 alias jup='/usr/local/jboss/jboss-4.0.5.GA/bin/run.sh'
 alias tup='/Library/Tomcat/Home/bin/catalina.sh jpda start'
+alias tup_nitro="/opt/tomcat7/bin/catalina.sh -Djava.awt.headless=true \
+    -DreindexIfEmptyIndex=true \
+    -Djava.util.logging.config.file=/tmp/test-dir/config/logging.properties \
+    -Dp.connectionPropertiesUrl=http://localhost:9090//connection-properties/connection.properties \
+    -Dnitro.workspace=/tmp/test-dir/filedata \
+    -Dnitro.applicationContextLocation=file:///tmp/test-dir/config/server-integration.applicationContext.xml \
+    -Dnitro.integrationInboxLocation=/tmp/test-dir/inbox \
+    -Dnitro.integrationOutboxLocation=/tmp/test-dir/outbox \
+    -DmultimachineTest.indexServerHost=http://localhost:8080 \
+    -DPOLOPOLY_TEST_REPORT_DIR=/Users/folkol/polopoly/archive/dumps/ \
+    -DwebServerHost=localhost \
+    -DwebDataApiServerHost=localhost \
+    -DwebDataApiServerPort=8080 \
+    -DcachingProxy=False jpda start"
 alias tjup='/Library/Tomcat/Home/bin/catalina-jrebel.sh jpda start'
 alias tdown='/Library/Tomcat/Home/bin/catalina.sh stop'
 alias tlog='tail -F -b 200 /Library/Tomcat/Home/logs/catalina.out'
