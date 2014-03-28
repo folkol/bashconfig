@@ -91,6 +91,7 @@ javagrep()
 alias login_dataapi="TOKEN=`curl -s -H "Content-Type: application/json" -X POST http://localhost:9090/content-hub/ws/security/token?format=json -d '{"username":"sysadmin", "password": "sysadmin"}' | cut -c 11-46`"
 alias java6="JAVA_HOME=`/usr/libexec/java_home -v 1.6`"
 alias java7="JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
+alias java8="JAVA_HOME=`/usr/libexec/java_home -v 1.8`"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
 alias rebuild_pp='time (killall java; rm -rf ~/sites/greenfieldtimes-example/work && pp && mvn clean install -DskipTests -Dskipdoc && cd public-artifacts/jboss-derby-database/ && mvn install && gt && mvn p:run -DskipTests)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
