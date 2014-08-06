@@ -88,6 +88,7 @@ javagrep()
 }
 
 ### ALIASES
+alias login_dataapi="TOKEN=`curl -s -H 'Content-Type: application/json' -X POST 'http://localhost:9090/content-hub/ws/security/token?format=json' -d '{\"username\":\"sysadmin\", \"password\": \"sysadmin\"}' | cut -c 11-46`"
 alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Type: application/xml' 'http://localhost:8080/onecms/security/token'"
 alias haskell=ghci 
 alias java6="JAVA_HOME=`/usr/libexec/java_home -v 1.6`"
