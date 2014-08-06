@@ -26,7 +26,7 @@ source ~/.git-prompt.sh
 
 ### EXPORTS
 export PS1='\n`pwd`\n[\u@\h$(__git_ps1 " (%s)")]\$ '
-export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export JAVA_HOME=`/usr/libexec/java_home`
 export ANT_OPTS=-'Xmx512m -XX:MaxPermSize=128m'
 export EDITOR=emacs
 export MY_POLOPOLY_HOME=/Users/folkol/polopoly
@@ -34,7 +34,7 @@ export MY_POLOPOLY_DIST=$MY_POLOPOLY_HOME/dist
 export MY_POLOPOLY_DIST_ROOT=$MY_POLOPOLY_DIST/dist-root
 export AWK_COL_TO_PRINT=$1
 export REBEL_HOME="/Users/folkol/jrebel/"
-export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=256m"
+export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError"
 export ANT_OPTS=-Xmx1024m
 
 ### FUNCTIONS
@@ -88,10 +88,10 @@ javagrep()
 }
 
 ### ALIASES
-alias login_dataapi="TOKEN=`curl -s -H "Content-Type: application/json" -X POST http://localhost:9090/content-hub/ws/security/token?format=json -d '{"username":"sysadmin", "password": "sysadmin"}' | cut -c 11-46`"
+alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Type: application/xml' 'http://localhost:8080/onecms/security/token'"
+alias haskell=ghci 
 alias java6="JAVA_HOME=`/usr/libexec/java_home -v 1.6`"
 alias java7="JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
-alias java8="JAVA_HOME=`/usr/libexec/java_home -v 1.8`"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
 alias rebuild_pp='time (killall java; rm -rf ~/sites/greenfieldtimes-example/work && pp && mvn clean install -DskipTests -Dskipdoc && cd public-artifacts/jboss-derby-database/ && mvn install && gt && mvn p:run -DskipTests)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
@@ -112,7 +112,7 @@ alias mvn305="export PATH=/usr/local/opt/maven-3.0.5/bin:$PATH"
 alias mvn311="export PATH=/usr/local/bin:$PATH"
 alias mvnsystem="sudo ln -s -f /usr/share/maven/bin/mvn /usr/bin/mvn"
 alias ll="ls -l"
-alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+#alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias jenkinsup='/usr/bin/java -jar /Applications/Jenkins/jenkins.war --httpPort=7979'
 alias deltaup='deltacloudd -i mock'
 alias kff="ps ax | grep firefox | grep -v grep | awk ' {print \$1}' | xargs kill"
