@@ -34,7 +34,7 @@ export MY_POLOPOLY_DIST=$MY_POLOPOLY_HOME/dist
 export MY_POLOPOLY_DIST_ROOT=$MY_POLOPOLY_DIST/dist-root
 export AWK_COL_TO_PRINT=$1
 export REBEL_HOME="/Users/folkol/jrebel/"
-export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError"
+export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError"
 export ANT_OPTS=-Xmx1024m
 
 ### FUNCTIONS
@@ -110,7 +110,7 @@ alias rebel='MAVEN_OPTS="-noverify -javaagent:$REBEL_HOME/jrebel.jar $MAVEN_OPTS
 alias p_run='rebel mvnDebug p:run -Dpolopoly.jetty-scanIntervalSeconds=0 -DskipTests'
 alias pp_run='MAVEN_OPTS="-noverify -Xbootclasspath/p:$REBEL_HOME/jrebel-bootstrap.jar:$REBEL_HOME/jrebel.jar -DPP_HOME=/Users/folkol -Drebel.plugins=/Users/folkol/pp-rebel/pp-rebel/target/pp-rebel-1.1-SNAPSHOT-jar-with-dependencies.jar -Drebel.pp-rebel=true $MAVEN_OPTS" mvnDebug p:run -Dpolopoly.jetty-scanIntervalSeconds=0'
 alias mvn305="export PATH=/usr/local/opt/maven-3.0.5/bin:$PATH"
-alias mvn311="export PATH=/usr/local/bin:$PATH"
+alias mvn311="brew switch maven 3.1.1 && export PATH=/usr/local/bin:$PATH"
 alias mvnsystem="sudo ln -s -f /usr/share/maven/bin/mvn /usr/bin/mvn"
 alias ll="ls -l"
 #alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
