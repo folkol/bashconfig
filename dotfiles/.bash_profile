@@ -36,6 +36,7 @@ export AWK_COL_TO_PRINT=$1
 export REBEL_HOME="/Users/folkol/jrebel/"
 export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError"
 export ANT_OPTS=-Xmx1024m
+export BC_LINE_LENGTH=200000000
 
 ### FUNCTIONS
 function nitro_import
@@ -93,6 +94,7 @@ alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Typ
 alias haskell=ghci 
 alias java6="JAVA_HOME=`/usr/libexec/java_home -v 1.6`"
 alias java7="JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
+alias java8="JAVA_HOME=`/usr/libexec/java_home -v 1.8`"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
 alias rebuild_pp='time (killall java; rm -rf ~/sites/greenfieldtimes-example/work && pp && mvn clean install -DskipTests -Dskipdoc && cd public-artifacts/jboss-derby-database/ && mvn install && gt && mvn p:run -DskipTests)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
