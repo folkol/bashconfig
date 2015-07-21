@@ -21,8 +21,8 @@ export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
 export PATH=/usr/local/bin:$PATH
 
 ### IMPORTS
-source ~/.git-completion.sh
-source ~/.git-prompt.sh
+source /usr/local/etc/bash_completion.d/git-completion.bash
+source /usr/local/etc/bash_completion.d/git-prompt.sh
 
 ### EXPORTS
 export PS1='\n`pwd`\n[\u@\h$(__git_ps1 " (%s)")]\$ '
@@ -124,6 +124,7 @@ alias maketomcatsoftlink='ln -s /Users/folkol/polopoly/eclipse-build/com /Librar
 alias jup='/usr/local/jboss/jboss-4.0.5.GA/bin/run.sh'
 alias jup_nitro='/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/bin/java -Dprogram.name=run.sh -DconnectionPropertiesFile=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/connection.properties -Dp.ejbConfigurationUrl=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/ejb-configuration.properties -Dp.connectionPropertiesUrl=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/connection.properties -DclientCacheBaseDir=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/content-hub-caches -Djava.rmi.server.hostname=localhost -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n -Dsolr.solr.home=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T//test-dir/solrHome -server -Dcom.sun.management.jmxremote.port=8088 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Xms256m -Xmx1536m -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC -XX:PermSize=64m -XX:MaxPermSize=512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Dsun.lang.ClassLoader.allowArraySyntax=true -Dorg.jboss.resolver.warning=true -Djboss.bind.address=0.0.0.0 -Dbind.address=0.0.0.0 -Djava.net.preferIPv4Stack=true -Djava.endorsed.dirs=/opt/jboss5/lib/endorsed -classpath /opt/jboss5/bin/run.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/lib/tools.jar org.jboss.Main -c server_mysql_extweb'
 alias tup='/Library/Tomcat/Home/bin/catalina.sh jpda start'
+alias jdebug='java -agentlib:jdwp=transport=dt_socket,address=1234,server=y,suspend=y'
 #alias tup_nitro="/opt/tomcat7/bin/catalina.sh -Djava.awt.headless=true \
 #    -DreindexIfEmptyIndex=true \
 #    -Djava.util.logging.config.file=/tmp/test-dir/config/logging.properties \
