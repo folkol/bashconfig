@@ -159,6 +159,10 @@ alias copyjars="cp /usr/local/jboss/jboss-4.0.5.GA/client/concurrent.jar \
                    /usr/local/jboss/jboss-4.0.5.GA/client/jmx-client.jar \
                    /usr/local/jboss/jboss-4.0.5.GA/client/jnp-client.jar \
                    ~/polopoly/dist/dist-root/contrib-archives/container-client-lib/"
+alias zookeeper_up='/opt/kafka/bin/zookeeper-server-start.sh /opt/kafka/config/zookeeper.properties'
+alias kafka_up='/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties'
+alias kafka_produce='/opt/kafka/bin/kafka-console-producer.sh --zookeeper localhost:2181 --topic test'
+alias kafka_consume='bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning'
 
 #sourcing rvm
 #source /Users/folkol/.rvm/scripts/rvm
