@@ -1,5 +1,3 @@
-echo "Now executing ~/.bash_profile"
-
 # BASH SETTINGS
 # ... or force ignoredups and ignorespace
 #export HISTCONTROL=ignoreboth
