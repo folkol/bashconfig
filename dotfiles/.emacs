@@ -30,3 +30,7 @@
 (setq js-indent-level 2)
 (add-to-list 'load-path "~/elisp")
 (require 'js2-mode)
+
+;; Misc. options
+(setq column-number-mode t)
+(setq vc-follow-symlinks t)

@@ -35,9 +35,9 @@
 
 [alias]
         co = checkout
-				st = status
-				ci = commit
-				di = diff
+	st = status
+	ci = commit
+	di = diff
         new-branches = for-each-ref --count=30 --sort=-committerdate refs/remotes/ --format='%(refname:short)'
 
 [push]

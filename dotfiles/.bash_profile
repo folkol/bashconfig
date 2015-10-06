@@ -25,7 +25,7 @@ source /usr/local/etc/bash_completion.d/git-completion.bash
 source /usr/local/etc/bash_completion.d/git-prompt.sh
 
 ### EXPORTS
-export PS1='\n`pwd`\n[\u@\h$(__git_ps1 " (%s)")]\$ '
+export PS1='$(__git_ps1 "(%s)")\$ '
 export JAVA_HOME=`/usr/libexec/java_home`
 export ANT_OPTS=-'Xmx512m -XX:MaxPermSize=128m'
 export EDITOR=emacs
@@ -89,6 +89,7 @@ javagrep()
 }
 
 ### ALIASES
+alias tailall='tail -n+1'
 alias login_dataapi="TOKEN=`curl -s -H 'Content-Type: application/json' -X POST 'http://localhost:9090/content-hub/ws/security/token?format=json' -d '{\"username\":\"sysadmin\", \"password\": \"sysadmin\"}' | cut -c 11-46`"
 alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Type: application/xml' 'http://localhost:8080/onecms/security/token'"
 alias haskell=ghci 
@@ -96,11 +97,12 @@ alias java6="JAVA_HOME=`/usr/libexec/java_home -v 1.6`"
 alias java7="JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
 alias java8="JAVA_HOME=`/usr/libexec/java_home -v 1.8`"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
-alias rebuild_pp='time (killall java; rm -rf ~/sites/greenfieldtimes-example/work && pp && mvn clean install -DskipTests -Dskipdoc && cd public-artifacts/jboss-derby-database/ && mvn install && gt && mvn p:run -DskipTests)'
+alias pp_reinstall='time (killall java; rm -rf ~/sites/greenfieldtimes-example/work && pp && mvn clean install -DskipTests -Dskipdoc && gt && mvn p:run -DskipTests)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
 alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
 alias pc='cd ~/code/photochallenge_play'
 alias pp='cd ~/polopoly'
+alias te='cd ~/test-environment'
 alias gt='pp && cd sites/greenfieldtimes-example'
 alias tidyjson="python -m json.tool"
 alias git_share='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
@@ -159,10 +161,10 @@ alias copyjars="cp /usr/local/jboss/jboss-4.0.5.GA/client/concurrent.jar \
                    /usr/local/jboss/jboss-4.0.5.GA/client/jmx-client.jar \
                    /usr/local/jboss/jboss-4.0.5.GA/client/jnp-client.jar \
                    ~/polopoly/dist/dist-root/contrib-archives/container-client-lib/"
-alias zookeeper_up='/opt/kafka/bin/zookeeper-server-start.sh /opt/kafka/config/zookeeper.properties'
-alias kafka_up='/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties'
-alias kafka_produce='/opt/kafka/bin/kafka-console-producer.sh --zookeeper localhost:2181 --topic test'
-alias kafka_consume='bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning'
+alias zookeeper_up='zkServer start'
+alias kafka_up='kafka-server-start.sh /usr/local/etc/kafka/server.properties'
+alias kafka_produce='kafka-console-producer.sh --broker-list localhost:2181 --topic testtest'
+alias kafka_consume='kafka-console-consumer.sh --zookeeper localhost:2181 --topic testtest --from-beginning'
 
 #sourcing rvm
 #source /Users/folkol/.rvm/scripts/rvm
