@@ -100,6 +100,19 @@ pushd()
     dirs
 }
 
+findinjar() {
+    local PATTERN=$1
+    if [ -z "$PATTERN" ]; then
+        printf "usage: jgrep PATTERN [DIRECTORY]\n"
+        return 1
+    fi
+    local DIR=$2
+    if [ -z "$DIR" ]; then
+        DIR="${HOME}/.m2/repository/"
+    fi
+    grep -rFl "$PATTERN" "$DIR" --include=\*jar
+}
+
 ### ALIASES
 alias cd=pushd
 alias tailall='tail -n+1'
@@ -110,7 +123,7 @@ alias java6="JAVA_HOME=`/usr/libexec/java_home -v 1.6`"
 alias java7="JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
 alias java8="JAVA_HOME=`/usr/libexec/java_home -v 1.8`"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
-alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdoc && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -j ~/jrebel -p ~/polopoly/)'
+alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdoc && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -j ~/jrebel -p ~/polopoly/)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
 alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
 alias pc='cd ~/code/photochallenge_play'
