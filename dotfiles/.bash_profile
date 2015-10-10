@@ -119,9 +119,9 @@ alias tailall='tail -n+1'
 alias login_dataapi="TOKEN=`curl -s -H 'Content-Type: application/json' -X POST 'http://localhost:9090/content-hub/ws/security/token?format=json' -d '{\"username\":\"sysadmin\", \"password\": \"sysadmin\"}' | cut -c 11-46`"
 alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Type: application/xml' 'http://localhost:8080/onecms/security/token'"
 alias haskell=ghci 
-alias java6="JAVA_HOME=`/usr/libexec/java_home -v 1.6`"
-alias java7="JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
-alias java8="JAVA_HOME=`/usr/libexec/java_home -v 1.8`"
+alias java6="JAVA_HOME=$(/usr/libexec/java_home -v 1.6 2>/dev/null)"
+alias java7="JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)"
+alias java8="JAVA_HOME=$(/usr/libexec/java_home -v 1.8)"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
 alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdoc && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -j ~/jrebel -p ~/polopoly/)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'

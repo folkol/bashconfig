@@ -14,7 +14,7 @@
  )
 
 ;;polopoly xml import
-(require 'pp-import)
+;; (require 'pp-import)
 
 ;; Backup settings
 (setq
