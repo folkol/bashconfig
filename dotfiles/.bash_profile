@@ -113,6 +113,10 @@ findinjar() {
     grep -rFl "$PATTERN" "$DIR" --include=\*jar
 }
 
+function sum() {
+    awk '{ s+=$1 } END { print $1 }'
+}
+
 ### ALIASES
 alias cd=pushd
 alias tailall='tail -n+1'
