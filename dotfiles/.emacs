@@ -27,9 +27,9 @@
    version-control t)       ; use versioned backups
 
 ;; js2-mode
-(setq js-indent-level 2)
-(add-to-list 'load-path "~/elisp")
-(require 'js2-mode)
+;;(setq js-indent-level 2)
+;;(add-to-list 'load-path "~/elisp")
+;;(require 'js2-mode)
 
 ;; Misc. options
 (setq column-number-mode t)

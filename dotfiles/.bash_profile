@@ -37,6 +37,10 @@ export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=512m -XX
 export ANT_OPTS=-Xmx1024m
 export BC_LINE_LENGTH=200000000
 
+
+### DOCKER
+eval $(docker-machine env)
+
 ### FUNCTIONS
 function nitro_import
 {
@@ -119,7 +123,7 @@ function sum() {
 }
 
 ### ALIASES
-alias cd=pushd
+#alias cd=pushd
 alias tailall='tail -n+1'
 alias login_dataapi="TOKEN=`curl -s -H 'Content-Type: application/json' -X POST 'http://localhost:9090/content-hub/ws/security/token?format=json' -d '{\"username\":\"sysadmin\", \"password\": \"sysadmin\"}' | cut -c 11-46`"
 alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Type: application/xml' 'http://localhost:8080/onecms/security/token'"
@@ -176,3 +180,5 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 ### ENVIRONMENT
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
