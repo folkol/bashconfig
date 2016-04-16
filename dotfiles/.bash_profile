@@ -123,6 +123,7 @@ findinjar() {
 
 distinct() {
  awk '!a[$0]++'
+}
 
 sum() {
     awk '{ s+=$1 } END { print $1 }'
