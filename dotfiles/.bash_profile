@@ -24,6 +24,7 @@ export PATH=/usr/local/bin:$PATH
 ### IMPORTS
 source /usr/local/etc/bash_completion.d/git-completion.bash
 source /usr/local/etc/bash_completion.d/git-prompt.sh
+source ~/.bashrc
 
 ### EXPORTS
 export PS1='$(__git_ps1 "(%s)")\$ '
@@ -38,6 +39,10 @@ export REBEL_HOME="/Users/folkol/jrebel/"
 export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError"
 export ANT_OPTS=-Xmx1024m
 export BC_LINE_LENGTH=200000000
+
+
+### DOCKER
+eval $(docker-machine env)
 
 ### FUNCTIONS
 function nitro_import
@@ -118,10 +123,13 @@ findinjar() {
 
 distinct() {
  awk '!a[$0]++'
+
+sum() {
+    awk '{ s+=$1 } END { print $1 }'
 }
 
 ### ALIASES
-alias cd=pushd
+#alias cd=pushd
 alias tailall='tail -n+1'
 alias login_dataapi="TOKEN=`curl -s -H 'Content-Type: application/json' -X POST 'http://localhost:9090/content-hub/ws/security/token?format=json' -d '{\"username\":\"sysadmin\", \"password\": \"sysadmin\"}' | cut -c 11-46`"
 alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Type: application/xml' 'http://localhost:8080/onecms/security/token'"
@@ -130,7 +138,7 @@ alias java6="JAVA_HOME=$(/usr/libexec/java_home -v 1.6 2>/dev/null)"
 alias java7="JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)"
 alias java8="JAVA_HOME=$(/usr/libexec/java_home -v 1.8)"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
-alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdoc && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -j ~/jrebel -p ~/polopoly/)'
+alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdoc -Dskipdb && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -p ~/polopoly/)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
 alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
 alias pc='cd ~/code/photochallenge_play'
@@ -178,3 +186,5 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 ### ENVIRONMENT
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
