@@ -12,6 +12,9 @@ unset HISTFILESIZE
 HISTSIZE=2000
 export CLICOLOR=Hxxxbxxxxxx
 
+### Docker machine env
+eval $(docker-machine env default)
+
 ### PATH
 export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
@@ -111,6 +114,10 @@ findinjar() {
         DIR="${HOME}/.m2/repository/"
     fi
     grep -rFl "$PATTERN" "$DIR" --include=\*jar
+}
+
+distinct() {
+ awk '!a[$0]++'
 }
 
 ### ALIASES
