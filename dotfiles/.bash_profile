@@ -40,7 +40,6 @@ export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=512m -XX
 export ANT_OPTS=-Xmx1024m
 export BC_LINE_LENGTH=200000000
 
-
 ### DOCKER
 eval $(docker-machine env)
 
@@ -139,20 +138,21 @@ alias java6="JAVA_HOME=$(/usr/libexec/java_home -v 1.6 2>/dev/null)"
 alias java7="JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)"
 alias java8="JAVA_HOME=$(/usr/libexec/java_home -v 1.8)"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
-alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdoc -Dskipdb && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -p ~/polopoly/)'
+alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdoc -Dskipdb && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -p ~/polopoly/ -j ~/jrebel)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
 alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
 alias pc='cd ~/code/photochallenge_play'
 alias pp='cd ~/polopoly'
 alias te='cd ~/test-environment'
 alias gt='cd ~/polopoly/sites/greenfieldtimes-example'
+alias ace='cd ~/code/ace'
 alias tidyjson="python -m json.tool"
 alias git_share='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
 alias git_daemon='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
 alias import_scan="mvn p:import-scan -Dpolopoly.connection-properties=http://localhost:8081/connection-properties/connection.properties"
 alias cdp="cd ~/polopoly"
 alias deploy_external='cp target/dist/deployment-cm/cm-server*.ear /usr/local/jboss/jboss-4.0.5.GA/server/default/deploy/polopoly/ && cp target/dist/deployment-front/*.war /Library/Tomcat/Home/webapps/ && cp target/dist/deployment-polopoly-gui/*.war /Library/Tomcat/Home/webapps/'
-alias rebel='MAVEN_OPTS="-noverify -javaagent:$REBEL_HOME/jrebel.jar $MAVEN_OPTS"'
+alias rebel='MAVEN_OPTS="-noverify -agentpath:$REBEL_HOME/lib/libjrebel64.dylib $MAVEN_OPTS"'
 alias p_run='rebel mvnDebug p:run -Dpolopoly.jetty-scanIntervalSeconds=0 -DskipTests'
 alias pp_run='MAVEN_OPTS="-noverify -Xbootclasspath/p:$REBEL_HOME/jrebel-bootstrap.jar:$REBEL_HOME/jrebel.jar -DPP_HOME=/Users/folkol -Drebel.plugins=/Users/folkol/pp-rebel/pp-rebel/target/pp-rebel-1.1-SNAPSHOT-jar-with-dependencies.jar -Drebel.pp-rebel=true $MAVEN_OPTS" mvnDebug p:run -Dpolopoly.jetty-scanIntervalSeconds=0'
 alias mvn305="export PATH=/usr/local/opt/maven-3.0.5/bin:$PATH"
