@@ -38,7 +38,7 @@
 
 ;; slime helper!
 (setq inferior-lisp-program "sbcl")
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
+;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
 
 ;; Buffers and Windows
 (defun transpose-windows ()

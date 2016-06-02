@@ -138,7 +138,7 @@ alias java6="JAVA_HOME=$(/usr/libexec/java_home -v 1.6 2>/dev/null)"
 alias java7="JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)"
 alias java8="JAVA_HOME=$(/usr/libexec/java_home -v 1.8)"
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
-alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdoc -Dskipdb && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -p ~/polopoly/ -j ~/jrebel)'
+alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdb && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -p ~/polopoly/ -j ~/jrebel)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
 alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
 alias pc='cd ~/code/photochallenge_play'
