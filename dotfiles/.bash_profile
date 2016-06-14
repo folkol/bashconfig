@@ -36,7 +36,7 @@ export MY_POLOPOLY_DIST=$MY_POLOPOLY_HOME/dist
 export MY_POLOPOLY_DIST_ROOT=$MY_POLOPOLY_DIST/dist-root
 export AWK_COL_TO_PRINT=$1
 export REBEL_HOME="/Users/folkol/jrebel/"
-export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:PermSize=128m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError"
+export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:+HeapDumpOnOutOfMemoryError"
 export ANT_OPTS=-Xmx1024m
 export BC_LINE_LENGTH=200000000
 
@@ -130,6 +130,7 @@ sum() {
 
 ### ALIASES
 #alias cd=pushd
+alias ace-login='export TOKEN=$(~/bin/ace-login.sh)'
 alias tailall='tail -n+1'
 alias login_dataapi="TOKEN=`curl -s -H 'Content-Type: application/json' -X POST 'http://localhost:9090/content-hub/ws/security/token?format=json' -d '{\"username\":\"sysadmin\", \"password\": \"sysadmin\"}' | cut -c 11-46`"
 alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Type: application/xml' 'http://localhost:8080/onecms/security/token'"
