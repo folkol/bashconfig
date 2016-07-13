@@ -1,3 +1,5 @@
+source /usr/local/etc/bash_completion.d/git-prompt.sh
+
 #echo "Now executing ~/.bashrc"
 #
 #export PATH="/opt/local/bin:$PATH"
