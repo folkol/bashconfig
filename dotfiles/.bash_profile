@@ -13,7 +13,7 @@ HISTSIZE=2000
 export CLICOLOR=Hxxxbxxxxxx
 
 ### Docker machine env
-eval $(docker-machine env default)
+#eval $(docker-machine env default)
 
 ### PATH
 export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
@@ -41,7 +41,7 @@ export ANT_OPTS=-Xmx1024m
 export BC_LINE_LENGTH=200000000
 
 ### DOCKER
-eval $(docker-machine env)
+#eval $(docker-machine env)
 
 ### FUNCTIONS
 function nitro_import
