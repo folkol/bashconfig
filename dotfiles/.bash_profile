@@ -22,14 +22,11 @@ export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
 export PATH=/usr/local/bin:$PATH
 
 ### IMPORTS
-source /usr/local/etc/bash_completion.d/git-completion.bash
-source /usr/local/etc/bash_completion.d/git-prompt.sh
 source ~/.bashrc
 
 ### EXPORTS
 export PS1='$(__git_ps1 "(%s)")\$ '
 export JAVA_HOME=`/usr/libexec/java_home`
-export ANT_OPTS=-'Xmx512m -XX:MaxPermSize=128m'
 export EDITOR=emacs
 export MY_POLOPOLY_HOME=/Users/folkol/polopoly
 export MY_POLOPOLY_DIST=$MY_POLOPOLY_HOME/dist
@@ -131,6 +128,7 @@ sum() {
 ### ALIASES
 #alias cd=pushd
 alias ace-login='export TOKEN=$(~/bin/ace-login.sh)'
+alias serve='python -m SimpleHTTPServer'
 alias tailall='tail -n+1'
 alias login_dataapi="TOKEN=`curl -s -H 'Content-Type: application/json' -X POST 'http://localhost:9090/content-hub/ws/security/token?format=json' -d '{\"username\":\"sysadmin\", \"password\": \"sysadmin\"}' | cut -c 11-46`"
 alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Type: application/xml' 'http://localhost:8080/onecms/security/token'"
