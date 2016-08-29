@@ -1,1 +1,1 @@
-find dotfiles -type f -exec ln -sfv `pwd`/{} ~ \;
+find dotfiles -type f -exec ln -sv `pwd`/{} ~ \;
