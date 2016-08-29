@@ -37,9 +37,6 @@ export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:+HeapDumpOnOutOfMemoryError"
 export ANT_OPTS=-Xmx1024m
 export BC_LINE_LENGTH=200000000
 
-### DOCKER
-#eval $(docker-machine env)
-
 ### FUNCTIONS
 function nitro_import
 {
