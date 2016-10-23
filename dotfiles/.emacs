@@ -57,3 +57,6 @@
 
 ;; Keybindings
 (global-set-key (kbd "C-x t") 'transpose-windows)
+
+;; Misc
+(server-start)

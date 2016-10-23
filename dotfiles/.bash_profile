@@ -20,6 +20,7 @@ export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/fo
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
 export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
 export PATH=/usr/local/bin:$PATH
+export PATH="/Users/folkol/code/ace/system-tests/test-scripts/bin:$PATH"
 
 ### IMPORTS
 source ~/.bashrc
@@ -36,6 +37,7 @@ export REBEL_HOME="/Users/folkol/jrebel/"
 export MAVEN_OPTS="-Xmx1536m -Xms128m -XX:+HeapDumpOnOutOfMemoryError"
 export ANT_OPTS=-Xmx1024m
 export BC_LINE_LENGTH=200000000
+export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 ### FUNCTIONS
 function nitro_import
@@ -124,7 +126,9 @@ sum() {
 
 ### ALIASES
 #alias cd=pushd
-alias ace-login='export TOKEN=$(~/bin/ace-login.sh)'
+alias kafkatail='/opt/kafka/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181'
+alias emacs='emacsclient'
+alias ace-login='export TOKEN=$(/Users/folkol/code/ace/system-tests/test-scripts/bin/ace-login.sh)'
 alias serve='python -m SimpleHTTPServer'
 alias tailall='tail -n+1'
 alias login_dataapi="TOKEN=`curl -s -H 'Content-Type: application/json' -X POST 'http://localhost:9090/content-hub/ws/security/token?format=json' -d '{\"username\":\"sysadmin\", \"password\": \"sysadmin\"}' | cut -c 11-46`"
