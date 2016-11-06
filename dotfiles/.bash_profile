@@ -126,6 +126,7 @@ sum() {
 
 ### ALIASES
 #alias cd=pushd
+alias DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address'
 alias kafkatail='/opt/kafka/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181'
 alias emacs='emacsclient'
 alias ace-login='export TOKEN=$(/Users/folkol/code/ace/system-tests/test-scripts/bin/ace-login.sh)'
