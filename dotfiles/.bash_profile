@@ -131,11 +131,9 @@ sum() {
 alias gitbranches='git branch -a --sort=-committerdate --color -v | head'
 alias kafkatail="docker exec -it ace.kafka bash -c '/opt/kafka*/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181'"
 alias emacs='emacsclient'
-alias ace-login='export TOKEN=$(/Users/folkol/code/ace/system-tests/test-scripts/bin/ace-login.sh)'
 alias serve='python -m SimpleHTTPServer'
+alias ace-login='export TOKEN=$(ace-login.sh)'
 alias tailall='tail -n+1'
-alias login_dataapi="TOKEN=`curl -s -H 'Content-Type: application/json' -X POST 'http://localhost:9090/content-hub/ws/security/token?format=json' -d '{\"username\":\"sysadmin\", \"password\": \"sysadmin\"}' | cut -c 11-46`"
-alias login_gong="curl -d @/Users/folkol/credentials.xml -X POST -H 'Content-Type: application/xml' 'http://localhost:8080/onecms/security/token'"
 alias haskell=ghci 
 alias java6="JAVA_HOME=$(/usr/libexec/java_home -v 1.6 2>/dev/null)"
 alias java7="JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)"
