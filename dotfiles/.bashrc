@@ -1,4 +1,5 @@
-source /usr/local/etc/bash_completion.d/git-prompt.sh
+. /usr/local/share/gitprompt.sh
+. /usr/local/etc/bash_completion
 
 #echo "Now executing ~/.bashrc"
 #
@@ -11,7 +12,5 @@ source /usr/local/etc/bash_completion.d/git-prompt.sh
 #
 #
 #PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-source /usr/local/etc/bash_completion.d/git-completion.bash
-source /usr/local/etc/bash_completion.d/git-prompt.sh
 
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"

@@ -128,6 +128,7 @@ sum() {
 
 ### ALIASES
 #alias cd=pushd
+alias gitbranches='git branch -a --sort=-committerdate --color -v | head'
 alias kafkatail='/opt/kafka/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181'
 alias emacs='emacsclient'
 alias ace-login='export TOKEN=$(/Users/folkol/code/ace/system-tests/test-scripts/bin/ace-login.sh)'
