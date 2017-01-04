@@ -26,7 +26,7 @@ export PATH="/Users/folkol/code/ace/system-tests/test-scripts/bin:$PATH"
 source ~/.bashrc
 
 ### EXPORTS
-export PS1='$(__git_ps1 "(%s)")\$ '
+export PS1='$(__git_ps1 "(%s)")★ '
 export JAVA_HOME=`/usr/libexec/java_home`
 export EDITOR=emacs
 export MY_POLOPOLY_HOME=/Users/folkol/polopoly
