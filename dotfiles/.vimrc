@@ -102,3 +102,7 @@ filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set swapfile
+
+set backupdir=~/.vimtmp/,.
+set directory=~/.vimtmp/,.
