@@ -132,7 +132,7 @@ alias gitbranches='git branch -a --sort=-committerdate --color -v | head'
 alias kafkatail="docker exec -it ace.kafka bash -c '/opt/kafka*/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181'"
 alias emacs='emacsclient'
 alias serve='python -m SimpleHTTPServer'
-alias ace-login='export TOKEN=$(ace-login.sh)'
+alias ace-login='export TOKEN=$(ace-login.sh $USERNAME $PASSWD)'
 alias tailall='tail -n+1'
 alias haskell=ghci 
 alias java6="JAVA_HOME=$(/usr/libexec/java_home -v 1.6 2>/dev/null)"
