@@ -1,7 +1,7 @@
 GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_END="\n★ "
-. /usr/local/share/gitprompt.sh
-. /usr/local/etc/bash_completion
+[ -f /usr/local/share/gitprompt.sh ] && . /usr/local/share/gitprompt.sh
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 #echo "Now executing ~/.bashrc"
 #

@@ -174,6 +174,7 @@ alias pup='zup && kup && jup && tup'
 alias tlog='tail -F -b 200 /Library/Tomcat/Home/logs/catalina.out'
 alias kafka_produce='kafka-console-producer.sh --broker-list localhost:2181 --topic testtest'
 alias kafka_consume='kafka-console-consumer.sh --zookeeper localhost:2181 --topic testtest --from-beginning'
+alias preview='open -a Preview.app -f'
 
 #sourcing rvm
 #source /Users/folkol/.rvm/scripts/rvm
