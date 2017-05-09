@@ -96,7 +96,8 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-set dir=~/.vimswap//,/var/tmp//,/tmp//,.
+set directory=~/.vimswap//,/var/tmp//,/tmp//,.
+set backupdir=~/.vimbackup//,/var/tmp//,/tmp//,.
 
 filetype plugin indent on
 set tabstop=4
@@ -106,3 +107,5 @@ set swapfile
 
 set backupdir=~/.vimtmp/,.
 set directory=~/.vimtmp/,.
+
+runtime macros/matchit.vim

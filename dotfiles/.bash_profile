@@ -3,7 +3,8 @@
 #export HISTCONTROL=ignoreboth
 
 #Rebind terminal flow control to ^X instead of ^S to enable bash forward search
-stty stop ^X
+stty stop undef
+stty start undef
 
 # append to the history file, don't overwrite it
 #shopt -s histappend
@@ -28,7 +29,6 @@ source ~/.bashrc
 ### EXPORTS
 export PS1='\[\033[1;31m\]♥\[\033[0m\] '
 export JAVA_HOME=`/usr/libexec/java_home`
-export EDITOR=emacs
 export MY_POLOPOLY_HOME=/Users/folkol/polopoly
 export MY_POLOPOLY_DIST=$MY_POLOPOLY_HOME/dist
 export MY_POLOPOLY_DIST_ROOT=$MY_POLOPOLY_DIST/dist-root
@@ -42,6 +42,15 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address='
 
 ### FUNCTIONS
+reduce ()
+{
+    read x;
+    while read y; do
+        eval "x=$1";
+    done;
+    echo $x
+}
+
 function nitro_import
 {
     java -jar ~/polopoly/test/nitro-dist-test-project/target/dist/deployment-config/polopoly-cli.jar import -c http://localhost:9090/connection-properties/connection.properties $@
@@ -128,9 +137,12 @@ sum() {
 
 ### ALIASES
 #alias cd=pushd
+alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"
 alias gitbranches='git branch -a --sort=-committerdate --color -v | head'
-alias kafkatail="docker exec -it ace.kafka bash -c '/opt/kafka*/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181'"
 alias emacs='emacsclient'
+alias ktail='docker exec -it ace.kafka sh -c "/opt/kafka*/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181"'
+alias ace-login='export TOKEN=$(/Users/folkol/code/ace/system-tests/test-scripts/bin/ace-login.sh)'
+alias ace-login-kalle='export TOKEN=$(/Users/folkol/code/ace/system-tests/test-scripts/bin/ace-login.sh kalle anka)'
 alias serve='python -m SimpleHTTPServer'
 alias ace-login='export TOKEN=$(ace-login.sh $USERNAME $PASSWD)'
 alias tailall='tail -n+1'
@@ -143,8 +155,8 @@ alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
 alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/target/dist/deployment-config/polopoly-cli.jar reindex -a -s http://localhost:8080/solr-indexer'
 alias pc='cd ~/code/photochallenge_play'
-alias pp='cd ~/polopoly'
-alias te='cd ~/test-environment'
+alias pp='cd ~/code/polopoly'
+alias te='cd ~/code/test-environment'
 alias gt='cd ~/polopoly/sites/greenfieldtimes-example'
 alias ace='cd ~/code/ace'
 alias tidyjson="python -m json.tool"
@@ -166,7 +178,7 @@ alias deltaup='deltacloudd -i mock'
 alias kff="ps ax | grep firefox | grep -v grep | awk ' {print \$1}' | xargs kill"
 alias deployjs="ant -f ~/polopoly/dist/build.xml pack-polopoly-js -Djs.compress=false && cp -r ~/polopoly/dist/dist-root/install/web/jsp.orchid/script/* /Library/Tomcat/Home/webapps/polopoly/script/ && echo '  -- Kopierat och klart! --'"
 alias jup='/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin/java -Dprogram.name=run.sh -DconnectionPropertiesFile=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/connection.properties -Djava.util.logging.config.file=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/logging.properties -Dp.ejbConfigurationUrl=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/ejb-configuration.properties -Dp.connectionPropertiesUrl=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/connection.properties -DclientCacheBaseDir=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/clientcaches -Djava.rmi.server.hostname=localhost -noverify -javaagent:/Users/folkol/jrebel/jrebel.jar -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n -Dsolr.solr.home=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T//test-dir/solrHome -server -Xms256m -Xmx1536m -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC -XX:PermSize=64m -XX:MaxPermSize=512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djava.util.logging.config.file=/opt/jboss4/bin/solr-logging.properties -Dcom.sun.management.jmxremote.port=8088 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.endorsed.dirs=/opt/jboss4/lib/endorsed -classpath /opt/jboss4/bin/run.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/lib/tools.jar org.jboss.Main -c server_mysql_extweb & >> /opt/jboss/out.log'
-alias tup='/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin/java -Djava.util.logging.config.file=/opt/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.awt.headless=true -DreindexIfEmptyIndex=true -Djava.util.logging.config.file=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/logging.properties -Dp.connectionPropertiesUrl=http://localhost:9090//connection-properties/connection.properties -Dcontent-file-service-directory=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/files/content -Dtemporary-file-service-directory=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/files/temporary -Dsolr.solr.home=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/solrHome -Dnitro.workspace=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/filedata -Dnitro.applicationContextLocation=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/server-integration.applicationContext.xml -Dnitro.integrationInboxLocation=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/inbox -Dnitro.integrationInboxWithApplicationsLocation=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/inbox-with-applications -Dnitro.integrationOutboxLocation=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/outbox -DmultimachineTest.indexServerHost=http://localhost:8080 -DejbContainerJmxUrl=service:jmx:rmi:///jndi/rmi://localhost:8088/jmxrmi -DwebContainerJmxUrl=service:jmx:rmi:///jndi/rmi://localhost:8088/jmxrmi -DPOLOPOLY_TEST_REPORT_DIR=/Users/folkol/polopoly/archive/dumps/ -DwebServerHost=localhost -DwebDataApiServerHost=localhost -DwebDataApiServerPort=8080 -DcachingProxy=False -noverify -javaagent:/Users/folkol/jrebel/jrebel.jar -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -DclientCacheBaseDir=/tmp/test-dir/clientcaches -Xms128m -Xmx2048m -XX:PermSize=64m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote.port=8089 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.endorsed.dirs=/opt/tomcat/endorsed -classpath /opt/tomcat/bin/bootstrap.jar:/opt/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/opt/tomcat -Dcatalina.home=/opt/tomcat -Djava.io.tmpdir=/opt/tomcat/temp org.apache.catalina.startup.Bootstrap start & >> /opt/tomcat/logs/catalina.out'
+alias tup='/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin/java -Djava.util.logging.config.file=/opt/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.awt.headless=true -DreindexIfEmptyIndex=true -Djava.util.logging.config.file=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/logging.properties -Dp.connectionPropertiesUrl=http://localhost:9090//connection-properties/connection.properties -Dcontent-file-service-directory=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/files/content -Dtemporary-file-service-directory=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/files/temporary -Dsolr.solr.home=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/solrHome -Dnitro.workspace=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/filedata -Dnitro.applicationContextLocation=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/server-integration.applicationContext.xml -Dnitro.integrationInboxLocation=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/inbox -Dnitro.integrationInboxWithApplicationsLocation=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/inbox-with-applications -Dnitro.integrationOutboxLocation=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/outbox -DmultimachineTest.indexServerHost=http://localhost:8080 -DejbContainerJmxUrl=service:jmx:rmi:///jndi/rmi://localhost:8088/jmxrmi -DwebContainerJmxUrl=service:jmx:rmi:///jndi/rmi://localhost:8088/jmxrmi -DPOLOPOLY_TEST_REPORT_DIR=/Users/folkol/polopoly/archive/dumps/ -DwebServerHost=localhost -DwebDataApiServerHost=localhost -DwebDataApiServerPort=8080 -DcachingProxy=False -noverify -javaagent:/Users/folkol/jrebel/jrebel.jar -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -DclientCacheBaseDir=/tmp/test-dir/clientcaches -Xms128m -Xmx2048m -XX:PermSize=64m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote.port=8089 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.endorsed.dirs=/opt/tomcat/endorsed -classpath /opt/tomcat/bin/bootstrap.jar:/opt/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/opt/tomcat -Dcatalina.home=/opt/tomcat -Djava.io.tmpdir=/opt/tomcat/temp org.apache.catalina.startup.Bootstrap start & >> /opt/tomcat/logs/catalina.out'S
 alias zup='/opt/zookeeper/bin/zkServer.sh start'
 alias kup='/opt/kafka/bin/kafka-server-start.sh -daemon /opt/kafka/config/server.properties'
 alias pup='zup && kup && jup && tup'
@@ -191,3 +203,4 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
+
