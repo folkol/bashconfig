@@ -135,6 +135,14 @@ sum() {
     awk '{ s+=$1 } END { print $1 }'
 }
 
+function each() {
+    while read line; do
+        for f in "$@"; do
+            $f $line
+        done
+    done
+}
+
 ### ALIASES
 #alias cd=pushd
 alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"

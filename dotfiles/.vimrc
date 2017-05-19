@@ -105,7 +105,4 @@ set shiftwidth=4
 set expandtab
 set swapfile
 
-set backupdir=~/.vimtmp/,.
-set directory=~/.vimtmp/,.
-
 runtime macros/matchit.vim
