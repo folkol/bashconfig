@@ -60,16 +60,7 @@ import() {
     cp $@ /Users/folkol/polopoly/sites/greenfieldtimes-example/work/inbox/
 }
 
-rmhost() {
-    if [ $# -eq 0 ]
-    then
-        echo "Usage: rmhost ip"
-        return
-    fi
-    cat ~/.ssh/known_hosts | grep -v $1 > ~/.ssh/known_hosts.tmp && mv ~/.ssh/known_hosts.tmp ~/.ssh/known_hosts
-}
-
-static_analysis_c() {
+tatic_analysis_c() {
     if [ -z $1 ]
     then
         echo "Usage: check_static_analysis source_file.c"
@@ -145,6 +136,8 @@ function each() {
 
 ### ALIASES
 #alias cd=pushd
+alias docker-stats-names='docker stats `docker ps --format "{{.Names}}"`'
+alias serve='python -m SimpleHTTPServer'
 alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"
 alias gitbranches='git branch -a --sort=-committerdate --color -v | head'
 alias emacs='emacsclient'
