@@ -22,6 +22,7 @@ export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/us
 export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
 export PATH=/usr/local/bin:$PATH
 export PATH="/Users/folkol/code/ace/system-tests/test-scripts/bin:$PATH"
+export PATH="$PATH:/Users/folkol/Library/Python/2.7/bin"
 
 ### IMPORTS
 source ~/.bashrc
