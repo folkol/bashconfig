@@ -60,7 +60,6 @@ function nitro_import
 import() {
     cp $@ /Users/folkol/polopoly/sites/greenfieldtimes-example/work/inbox/
 }
-
 tatic_analysis_c() {
     if [ -z $1 ]
     then
@@ -206,3 +205,4 @@ export LANG=en_US.UTF-8
 
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
 
+source ~/git-completion.bash
