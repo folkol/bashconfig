@@ -136,6 +136,7 @@ function each() {
 
 ### ALIASES
 #alias cd=pushd
+alias docker-kill-all='docker ps -qa | each "docker stop" "docker rm"'
 alias docker-stats-names='docker stats `docker ps --format "{{.Names}}"`'
 alias serve='python -m SimpleHTTPServer'
 alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"
