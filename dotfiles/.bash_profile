@@ -137,6 +137,8 @@ function each() {
 ### ALIASES
 #alias cd=pushd
 alias kafka-offset="docker exec -it ace.kafka /bin/sh -c '/opt/kafka*/bin//kafka-run-class.sh kafka.tools.GetOffsetShell --topic polopoly.changelist --broker-list localhost:9092' | cut -d: -f3"
+alias docker-login='screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty'
+alias git-diff-ignore-whitespace='git diff --word-diff-regex=[^[:space:]]'
 alias docker-kill-all='docker ps -qa | each "docker stop" "docker rm"'
 alias docker-stats-names='docker stats `docker ps --format "{{.Names}}"`'
 alias serve='python -m SimpleHTTPServer'
