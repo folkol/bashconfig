@@ -134,6 +134,18 @@ function each() {
     done
 }
 
+function upload() {
+    if [ -z "$1" ]; then
+        echo 'usage: upload filename [ resource_name ]'
+        return 1
+    fi
+    local filename=$1
+    local resource=${2:-$filename}
+    local URL="https://share.folkol.com/files/$resource"
+    curl -s -S -o /dev/null -XPUT --data-binary @$filename $URL
+    echo $URL
+}
+
 ### ALIASES
 #alias cd=pushd
 alias kafka-offset="docker exec -it ace.kafka /bin/sh -c '/opt/kafka*/bin//kafka-run-class.sh kafka.tools.GetOffsetShell --topic polopoly.changelist --broker-list localhost:9092' | cut -d: -f3"
