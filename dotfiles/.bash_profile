@@ -146,8 +146,13 @@ function upload() {
     echo $URL
 }
 
+[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
+
 ### ALIASES
 #alias cd=pushd
+alias t='tree -L 3'
+alias l=ll
+alias plot="gnuplot -p -e \"set nokey; plot '<cat -' with lines\""
 alias kafka-offset="docker exec -it ace.kafka /bin/sh -c '/opt/kafka*/bin//kafka-run-class.sh kafka.tools.GetOffsetShell --topic polopoly.changelist --broker-list localhost:9092' | cut -d: -f3"
 alias docker-login='screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty'
 alias git-diff-ignore-whitespace='git diff --word-diff-regex=[^[:space:]]'
@@ -158,6 +163,7 @@ alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"
 alias gitbranches='git branch -a --sort=-committerdate --color -v | head'
 alias emacs='emacsclient'
 alias ktail='docker exec -it ace.kafka sh -c "/opt/kafka*/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181"'
+alias pp-login='export TOKEN=$(pp-login.sh)'
 alias ace-login='export TOKEN=$(/Users/folkol/code/ace/system-tests/test-scripts/bin/ace-login.sh)'
 alias ace-login-kalle='export TOKEN=$(/Users/folkol/code/ace/system-tests/test-scripts/bin/ace-login.sh kalle anka)'
 alias serve='python -m SimpleHTTPServer'
@@ -188,7 +194,7 @@ alias pp_run='MAVEN_OPTS="-noverify -Xbootclasspath/p:$REBEL_HOME/jrebel-bootstr
 alias mvn305="export PATH=/usr/local/opt/maven-3.0.5/bin:$PATH"
 alias mvn311="brew switch maven 3.1.1 && export PATH=/usr/local/bin:$PATH"
 alias mvnsystem="sudo ln -s -f /usr/share/maven/bin/mvn /usr/bin/mvn"
-alias ll="ls -l"
+alias ll="ls -lhSA"
 #alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias jenkinsup='/usr/bin/java -jar /Applications/Jenkins/jenkins.war --httpPort=7979'
 alias deltaup='deltacloudd -i mock'
@@ -219,6 +225,5 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
-
 source ~/git-completion.bash
+
