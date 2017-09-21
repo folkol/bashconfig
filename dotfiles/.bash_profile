@@ -29,6 +29,8 @@ source ~/.bashrc
 
 ### EXPORTS
 export PS1='\[\033[1;31m\]♥\[\033[0m\] '
+PROMPT_COMMAND='BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
+PS1='$BRANCH$ '
 export JAVA_HOME=`/usr/libexec/java_home`
 export MY_POLOPOLY_HOME=/Users/folkol/polopoly
 export MY_POLOPOLY_DIST=$MY_POLOPOLY_HOME/dist
@@ -180,7 +182,7 @@ alias reindex='java -jar /Users/folkol/polopoly/sites/greenfieldtimes-example/ta
 alias pc='cd ~/code/photochallenge_play'
 alias pp='cd ~/code/polopoly'
 alias te='cd ~/code/test-environment'
-alias gt='cd ~/polopoly/sites/greenfieldtimes-example'
+alias gt='pp && cd sites/greenfieldtimes-example'
 alias ace='cd ~/code/ace'
 alias tidyjson="python -m json.tool"
 alias git_share='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
