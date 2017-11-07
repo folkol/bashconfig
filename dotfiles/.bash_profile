@@ -148,17 +148,26 @@ function upload() {
     echo $URL
 }
 
+function download() {
+    if [ -z "$1" ]; then
+        echo 'usage: download filename'
+        return 1
+    fi
+    local resource=$1
+    local URL="https://share.folkol.com/files/$resource"
+    curl -s -S -o $resource $URL
+}
+
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
 
 ### ALIASES
 #alias cd=pushd
 alias t='tree -L 3'
 alias l=ll
-alias plot="gnuplot -p -e \"set nokey; plot '<cat -' with lines\""
 alias kafka-offset="docker exec -it ace.kafka /bin/sh -c '/opt/kafka*/bin//kafka-run-class.sh kafka.tools.GetOffsetShell --topic polopoly.changelist --broker-list localhost:9092' | cut -d: -f3"
 alias docker-login='screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty'
 alias git-diff-ignore-whitespace='git diff --word-diff-regex=[^[:space:]]'
-alias docker-kill-all='docker ps -qa | each "docker stop" "docker rm"'
+alias docker-kill-all='(ace; docker-compose -f system-tests/test-scripts/docker-compose.yml down; docker ps -qa | each "docker stop" "docker rm";)'
 alias docker-stats-names='docker stats `docker ps --format "{{.Names}}"`'
 alias serve='python -m SimpleHTTPServer'
 alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"
@@ -174,7 +183,7 @@ alias tailall='tail -n+1'
 alias haskell=ghci 
 alias java6="JAVA_HOME=$(/usr/libexec/java_home -v 1.6 2>/dev/null)"
 alias java7="JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)"
-alias java8="JAVA_HOME=$(/usr/libexec/java_home -v 1.8)"
+alias java8='JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 alias nitropy="(cd /tmp && JOB_NAME=master_Nightly_nitro-webapps-adapter-tomcat-jboss5-mysql /Users/folkol/test-environment/script/nitro/nitro.py --tomcatDebug --jbossDebug -d -k -p ~/polopoly/)"
 alias pp_reinstall='time (killall java; rm -r /tmp/test-dir; pp && git clean -df && ./jrebel-gen.py -c && mvn clean install -DskipTests -Dskipdb && JOB_NAME="_nitro-system-jboss-mysql-tomcat" ~/test-environment/script/nitro/nitro.py -d -k --tomcatDebug --jbossDebug -p ~/polopoly/ -j ~/jrebel)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
@@ -202,7 +211,7 @@ alias jenkinsup='/usr/bin/java -jar /Applications/Jenkins/jenkins.war --httpPort
 alias deltaup='deltacloudd -i mock'
 alias kff="ps ax | grep firefox | grep -v grep | awk ' {print \$1}' | xargs kill"
 alias deployjs="ant -f ~/polopoly/dist/build.xml pack-polopoly-js -Djs.compress=false && cp -r ~/polopoly/dist/dist-root/install/web/jsp.orchid/script/* /Library/Tomcat/Home/webapps/polopoly/script/ && echo '  -- Kopierat och klart! --'"
-alias jup='/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin/java -Dprogram.name=run.sh -DconnectionPropertiesFile=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/connection.properties -Djava.util.logging.config.file=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/logging.properties -Dp.ejbConfigurationUrl=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/ejb-configuration.properties -Dp.connectionPropertiesUrl=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/connection.properties -DclientCacheBaseDir=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/clientcaches -Djava.rmi.server.hostname=localhost -noverify -javaagent:/Users/folkol/jrebel/jrebel.jar -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n -Dsolr.solr.home=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T//test-dir/solrHome -server -Xms256m -Xmx1536m -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC -XX:PermSize=64m -XX:MaxPermSize=512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djava.util.logging.config.file=/opt/jboss4/bin/solr-logging.properties -Dcom.sun.management.jmxremote.port=8088 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.endorsed.dirs=/opt/jboss4/lib/endorsed -classpath /opt/jboss4/bin/run.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/lib/tools.jar org.jboss.Main -c server_mysql_extweb & >> /opt/jboss/out.log'
+alias jup='java -Dprogram.name=run.sh -DconnectionPropertiesFile=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/connection.properties -Djava.util.logging.config.file=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/logging.properties -Dp.ejbConfigurationUrl=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/ejb-configuration.properties -Dp.connectionPropertiesUrl=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/connection.properties -DclientCacheBaseDir=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/clientcaches -Djava.rmi.server.hostname=localhost -noverify -javaagent:/Users/folkol/jrebel/jrebel.jar -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n -Dsolr.solr.home=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T//test-dir/solrHome -server -Xms256m -Xmx1536m -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC -XX:PermSize=64m -XX:MaxPermSize=512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djava.util.logging.config.file=/opt/jboss4/bin/solr-logging.properties -Dcom.sun.management.jmxremote.port=8088 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.endorsed.dirs=/opt/jboss4/lib/endorsed -classpath /opt/jboss4/bin/run.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/lib/tools.jar org.jboss.Main -c server_mysql_extweb & >> /opt/jboss4/out.log'
 alias tup='/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin/java -Djava.util.logging.config.file=/opt/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.awt.headless=true -DreindexIfEmptyIndex=true -Djava.util.logging.config.file=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/logging.properties -Dp.connectionPropertiesUrl=http://localhost:9090//connection-properties/connection.properties -Dcontent-file-service-directory=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/files/content -Dtemporary-file-service-directory=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/files/temporary -Dsolr.solr.home=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/solrHome -Dnitro.workspace=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/filedata -Dnitro.applicationContextLocation=file:///var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/config/server-integration.applicationContext.xml -Dnitro.integrationInboxLocation=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/inbox -Dnitro.integrationInboxWithApplicationsLocation=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/inbox-with-applications -Dnitro.integrationOutboxLocation=/var/folders/sn/pr23sfmj305695dfj3m4p2lw0000gn/T/test-dir/outbox -DmultimachineTest.indexServerHost=http://localhost:8080 -DejbContainerJmxUrl=service:jmx:rmi:///jndi/rmi://localhost:8088/jmxrmi -DwebContainerJmxUrl=service:jmx:rmi:///jndi/rmi://localhost:8088/jmxrmi -DPOLOPOLY_TEST_REPORT_DIR=/Users/folkol/polopoly/archive/dumps/ -DwebServerHost=localhost -DwebDataApiServerHost=localhost -DwebDataApiServerPort=8080 -DcachingProxy=False -noverify -javaagent:/Users/folkol/jrebel/jrebel.jar -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -DclientCacheBaseDir=/tmp/test-dir/clientcaches -Xms128m -Xmx2048m -XX:PermSize=64m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote.port=8089 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.endorsed.dirs=/opt/tomcat/endorsed -classpath /opt/tomcat/bin/bootstrap.jar:/opt/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/opt/tomcat -Dcatalina.home=/opt/tomcat -Djava.io.tmpdir=/opt/tomcat/temp org.apache.catalina.startup.Bootstrap start & >> /opt/tomcat/logs/catalina.out'S
 alias zup='/opt/zookeeper/bin/zkServer.sh start'
 alias kup='/opt/kafka/bin/kafka-server-start.sh -daemon /opt/kafka/config/server.properties'
