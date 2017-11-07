@@ -172,7 +172,6 @@ alias docker-stats-names='docker stats `docker ps --format "{{.Names}}"`'
 alias serve='python -m SimpleHTTPServer'
 alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"
 alias gitbranches='git branch -a --sort=-committerdate --color -v | head'
-alias emacs='emacsclient'
 alias ktail='docker exec -it ace.kafka sh -c "/opt/kafka*/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181"'
 alias pp-login='export TOKEN=$(pp-login.sh)'
 alias ace-login='export TOKEN=$(/Users/folkol/code/ace/system-tests/test-scripts/bin/ace-login.sh)'

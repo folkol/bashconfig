@@ -106,3 +106,5 @@ set expandtab
 set swapfile
 
 runtime macros/matchit.vim
+set number relativenumber
+

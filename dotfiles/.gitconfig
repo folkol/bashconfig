@@ -1,6 +1,6 @@
 [user]
-        name = Matte
-        email = mattias4@kth.se
+	name = Matte
+	email = mattias4@kth.se
 
 [merge]
         renameLimit = 10000
