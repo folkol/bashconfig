@@ -3,8 +3,10 @@
 #export HISTCONTROL=ignoreboth
 
 #Rebind terminal flow control to ^X instead of ^S to enable bash forward search
-stty stop undef
-stty start undef
+if [ -t 0 ] ; then
+    stty stop undef
+    stty start undef
+fi
 
 # append to the history file, don't overwrite it
 #shopt -s histappend
@@ -44,6 +46,7 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address='
 
 ### FUNCTIONS
+
 reduce ()
 {
     read x;
@@ -152,6 +155,7 @@ function download() {
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
 
 ### ALIASES
+alias funiq="awk '!seen[\$0]++'"
 alias t='tree -L 3'
 alias l=ll
 alias kafka-offset="docker exec -it ace.kafka /bin/sh -c '/opt/kafka*/bin//kafka-run-class.sh kafka.tools.GetOffsetShell --topic polopoly.changelist --broker-list localhost:9092' | cut -d: -f3"
@@ -166,20 +170,18 @@ alias ktail='docker exec -it ace.kafka sh -c "/opt/kafka*/bin/kafka-console-cons
 alias serve='python -m SimpleHTTPServer'
 alias tailall='tail -n+1'
 alias haskell=ghci 
+alias java6="JAVA_HOME=$(/usr/libexec/java_home -v 1.6 2>/dev/null)"
+alias java7="JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)"
+alias java8='JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
+alias java9='JAVA_HOME=$(/usr/libexec/java_home -v 9)'
 alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war --httpPort=1337'
 alias git_share='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
 alias git_daemon='git daemon --verbose --export-all --enable=upload-pack --enable=receive-pack --base-path=`pwd`'
 alias cdp="cd ~/polopoly"
-alias rebel='MAVEN_OPTS="-noverify -agentpath:$REBEL_HOME/lib/libjrebel64.dylib $MAVEN_OPTS"'
 alias mvnsystem="sudo ln -s -f /usr/share/maven/bin/mvn /usr/bin/mvn"
 alias ll="ls -lhSA"
 alias jenkinsup='/usr/bin/java -jar /Applications/Jenkins/jenkins.war --httpPort=7979'
 alias deltaup='deltacloudd -i mock'
-alias zup='/opt/zookeeper/bin/zkServer.sh start'
-alias kup='/opt/kafka/bin/kafka-server-start.sh -daemon /opt/kafka/config/server.properties'
-alias pup='zup && kup && jup && tup'
-
-alias tlog='tail -F -b 200 /Library/Tomcat/Home/logs/catalina.out'
 alias kafka_produce='kafka-console-producer.sh --broker-list localhost:2181 --topic testtest'
 alias kafka_consume='kafka-console-consumer.sh --zookeeper localhost:2181 --topic testtest --from-beginning'
 alias preview='open -a Preview.app -f'
