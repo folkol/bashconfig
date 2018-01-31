@@ -156,6 +156,9 @@ function download() {
 
 ### ALIASES
 alias funiq="awk '!seen[\$0]++'"
+alias mkpasswd='openssl rand -base64 16'
+alias m='cd ~/code/mota && [ "$VIRTUAL_ENV" == "/Users/folkol/code/mota/venv" ] || . venv/bin/activate'
+alias s='cd ~/code/soda'
 alias t='tree -L 3'
 alias l=ll
 alias kafka-offset="docker exec -it ace.kafka /bin/sh -c '/opt/kafka*/bin//kafka-run-class.sh kafka.tools.GetOffsetShell --topic polopoly.changelist --broker-list localhost:9092' | cut -d: -f3"
