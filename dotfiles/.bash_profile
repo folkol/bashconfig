@@ -155,9 +155,11 @@ function download() {
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
 
 ### ALIASES
+alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 alias funiq="awk '!seen[\$0]++'"
 alias mkpasswd='openssl rand -base64 16'
-alias m='cd ~/code/mota && [ "$VIRTUAL_ENV" == "/Users/folkol/code/mota/venv" ] || . venv/bin/activate'
+alias v='. venv/bin/activate'
+alias m='cd ~/code/mota && [ "$VIRTUAL_ENV" == "/Users/folkol/code/mota/venv" ] || v'
 alias s='cd ~/code/soda'
 alias t='tree -L 3'
 alias l=ll
