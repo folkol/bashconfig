@@ -19,6 +19,7 @@ export CLICOLOR=Hxxxbxxxxxx
 #eval $(docker-machine env default)
 
 ### PATH
+export PATH=$(brew --prefix openssl)/bin:$PATH
 export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
 export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
@@ -154,19 +155,24 @@ function download() {
 
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
 
+### COMPLETIONS
+
+complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
+
 ### ALIASES
 alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 alias funiq="awk '!seen[\$0]++'"
 alias mkpasswd='openssl rand -base64 16'
-alias v='. venv/bin/activate'
-alias m='cd ~/code/mota && [ "$VIRTUAL_ENV" == "/Users/folkol/code/mota/venv" ] || v'
+alias v='test -d venv || python3 -m venv venv && . venv/bin/activate'
+alias m='cd ~/code/mota'
 alias s='cd ~/code/soda'
+alias i='cd ~/ivbar'
 alias t='tree -L 3'
 alias l=ll
 alias kafka-offset="docker exec -it ace.kafka /bin/sh -c '/opt/kafka*/bin//kafka-run-class.sh kafka.tools.GetOffsetShell --topic polopoly.changelist --broker-list localhost:9092' | cut -d: -f3"
 alias dockershell='screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty'
 alias git-diff-ignore-whitespace='git diff --word-diff-regex=[^[:space:]]'
-alias docker-kill-all='(ace; docker-compose -f system-tests/test-scripts/docker-compose.yml down; docker ps -qa | each "docker stop" "docker rm";)'
+alias docker-kill-all='docker ps -qa | each "docker stop" "docker rm"'
 alias docker-stats-names='docker stats `docker ps --format "{{.Names}}"`'
 alias serve='python -m SimpleHTTPServer'
 alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"
