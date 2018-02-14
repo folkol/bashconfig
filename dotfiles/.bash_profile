@@ -213,3 +213,5 @@ export LANG=en_US.UTF-8
 
 source ~/git-completion.bash
 
+
+export PATH="$HOME/.cargo/bin:$PATH"
