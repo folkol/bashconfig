@@ -2,11 +2,9 @@
 # ... or force ignoredups and ignorespace
 #export HISTCONTROL=ignoreboth
 
-#Rebind terminal flow control to ^X instead of ^S to enable bash forward search
-if [ -t 0 ] ; then
-    stty stop undef
-    stty start undef
-fi
+# Leave my ^S alone!
+stty stop undef
+stty start undef
 
 # append to the history file, don't overwrite it
 #shopt -s histappend
