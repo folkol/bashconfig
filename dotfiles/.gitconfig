@@ -39,6 +39,7 @@
     st = status
     ci = commit
     di = diff
+    each = for-each-ref --format='%(refname:short)'
     hot = for-each-ref --count=30 --sort=-committerdate refs/remotes/ --format='%(refname:short)'
 
 [push]
