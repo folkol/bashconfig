@@ -163,6 +163,7 @@ function download() {
 complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
 
 ### ALIASES
+alias gg='git grep'
 alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 alias funiq="awk '!seen[\$0]++'"
 alias mkpasswd='openssl rand -base64 16'
