@@ -17,7 +17,8 @@ export CLICOLOR=Hxxxbxxxxxx
 #eval $(docker-machine env default)
 
 ### PATH
-export PATH=$(brew --prefix openssl)/bin:$PATH
+#export PATH=$(brew --prefix openssl)/bin:$PATH
+export PATH="/usr/local/opt/openssl:$PATH"
 export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
 export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
