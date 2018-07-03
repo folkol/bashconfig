@@ -25,6 +25,10 @@ export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
 export PATH=/usr/local/bin:$PATH
 export PATH="/Users/folkol/code/ace/system-tests/test-scripts/bin:$PATH"
 export PATH="$PATH:/Users/folkol/Library/Python/2.7/bin"
+export PATH="$PATH:/Users/folkol/code/futils/bin"
+export PATH="/usr/local/opt/flex/bin:$PATH"
+export PATH="/usr/local/opt/gettext/bin:$PATH"
+export PATH="/usr/local/opt/texinfo/bin/:$PATH"
 
 ### IMPORTS
 source ~/.bashrc
