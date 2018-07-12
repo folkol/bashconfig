@@ -96,3 +96,7 @@
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
+
+;; gnu-apl-mode
+(add-to-list 'load-path "~/code/gnu-apl-mode")
+(require 'gnu-apl-mode)

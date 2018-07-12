@@ -29,6 +29,7 @@ export PATH="$PATH:/Users/folkol/code/futils/bin"
 export PATH="/usr/local/opt/flex/bin:$PATH"
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 export PATH="/usr/local/opt/texinfo/bin/:$PATH"
+export PATH="/Users/folkol/code/futils/bin:$PATH"
 
 ### IMPORTS
 source ~/.bashrc
@@ -230,3 +231,15 @@ if [ -f '/opt/google-cloud-sdk/path.bash.inc' ]; then source '/opt/google-cloud-
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/opt/google-cloud-sdk/completion.bash.inc' ]; then source '/opt/google-cloud-sdk/completion.bash.inc'; fi
+
+# Setting PATH for Python 3.7
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+export PATH
+
+# Setting PATH for Python 3.6
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+export PATH
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
