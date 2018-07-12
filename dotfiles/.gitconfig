@@ -40,3 +40,7 @@
 
 [push]
     default = upstream
+
+[diff "ansible-vault"]
+    cachetextconv = false
+    textconv = viewvault.sh
