@@ -167,6 +167,7 @@ function download() {
 ### COMPLETIONS
 
 complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
+complete -W '$(cat ~/.my_hosts)' ssh
 
 ### ALIASES
 alias gg='git grep -I'
