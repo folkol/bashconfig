@@ -1,22 +1,18 @@
-# BASH SETTINGS
-# ... or force ignoredups and ignorespace
-#export HISTCONTROL=ignoreboth
-
 # Leave my ^S alone!
 stty stop undef
 stty start undef
 
-# append to the history file, don't overwrite it
-#shopt -s histappend
-#PROMPT_COMMAND="history -n; history -a"
-unset HISTFILESIZE
-HISTSIZE=2000
+### HISTORY COMMANDS
+
+shopt -s histappend
+PROMPT_COMMAND="history -n; history -a; $PROMT_COMMAND"
+export HISTCONTROL=ignoreboth
+export HISTFILESIZE=
+export HISTSIZE=
 export CLICOLOR=Hxxxbxxxxxx
 
-### Docker machine env
-#eval $(docker-machine env default)
-
 ### PATH
+
 #export PATH=$(brew --prefix openssl)/bin:$PATH
 export PATH="/usr/local/opt/openssl:$PATH"
 export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
