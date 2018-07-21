@@ -15,7 +15,6 @@ GIT_PROMPT_END="\n★ "
 #
 #PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -27,3 +26,6 @@ export NVM_DIR="$HOME/.nvm"
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
 [ -f /Users/folkol/node_modules/tabtab/.completions/sls.bash ] && . /Users/folkol/node_modules/tabtab/.completions/sls.bash
+
+[ -s "/Users/folkol/.rvm/scripts/rvm" ] && source $HOME/.rvm/scripts/rvm
+[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"

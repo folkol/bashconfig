@@ -158,7 +158,6 @@ function download() {
     curl -s -S -o $resource $URL
 }
 
-[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
 
 ### COMPLETIONS
 
@@ -203,12 +202,7 @@ alias deltaup='deltacloudd -i mock'
 alias kafka_produce='kafka-console-producer.sh --broker-list localhost:2181 --topic testtest'
 alias kafka_consume='kafka-console-consumer.sh --zookeeper localhost:2181 --topic testtest --from-beginning'
 alias preview='open -a Preview.app -f'
-
-#sourcing rvm
-#source /Users/folkol/.rvm/scripts/rvm
-##
-# Your previous /Users/folkol/.bash_profile file was backed up as /Users/folkol/.bash_profile.macports-saved_2013-01-16_at_14:08:26
-##
+alias plot="gnuplot -p -e 'term=system(\"echo ${TERMINAL:-dumb}\"); set terminal term; plot \"< cat -\";'"
 
 # MacPorts Installer addition on 2013-01-16_at_14:08:26: adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
@@ -240,3 +234,5 @@ PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
