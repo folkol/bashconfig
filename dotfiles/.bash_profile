@@ -184,7 +184,7 @@ function gmtm() {
         branch="$(git rev-parse --abbrev-ref HEAD)"
     fi
 
-    echo " === MERGING $branch TO MASTER ===" >&2
+    echo " === MERGING $branch INTO MASTER ===" >&2
     git checkout $branch
     git pull
     git merge origin/master
