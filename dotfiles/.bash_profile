@@ -158,6 +158,40 @@ function download() {
     curl -s -S -o $resource $URL
 }
 
+function gmtm() {
+    if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+        echo "    Git, can you hear me?"
+        echo "    I am lost and so alone"
+        echo "    I'm asking for your guidance"
+        echo "    Won't you come down from your throne?"
+        echo "    I need a tight compadre"
+        echo "    Who will teach me how to rock"
+        echo "    My father thinks you're evil"
+        echo "    But man, he can suck a <redacted>"
+        echo "    Git is not the Devil's work"
+        echo "    It's magical and rad"
+        echo "    I'll never rock as long as I am"
+        echo "    Stuck here with my Dad"
+        echo
+        echo "...aka 'Not inside git repo?'" >&2
+        return
+    fi
+
+    local branch="$1"
+
+    if [ -z "$branch" ]; then
+        # Assuming that we want to merge current branch to master
+        branch="$(git rev-parse --abbrev-ref HEAD)"
+    fi
+
+    echo " === MERGING $branch TO MASTER ===" >&2
+    git checkout $branch
+    git pull
+    git merge origin/master
+    git checkout master
+    git pull
+    git merge $branch
+}
 
 ### COMPLETIONS
 
@@ -165,6 +199,8 @@ complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9
 complete -W '$(cat ~/.my_hosts)' ssh
 
 ### ALIASES
+alias gdm='git diff origin/master'
+alias gmm='git merge origin/master'
 alias gg='git grep -I'
 alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 alias funiq="awk '!seen[\$0]++'"
