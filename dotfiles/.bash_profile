@@ -26,6 +26,7 @@ export PATH="/usr/local/opt/flex/bin:$PATH"
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 export PATH="/usr/local/opt/texinfo/bin/:$PATH"
 export PATH="/Users/folkol/code/futils/bin:$PATH"
+export PATH="$(brew --prefix)/opt/python/libexec/bin:$PATH"
 
 ### IMPORTS
 source ~/.bashrc
