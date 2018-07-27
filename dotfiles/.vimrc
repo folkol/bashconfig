@@ -5,6 +5,9 @@ syntax on
 set nocompatible
 
 " allow backspacing over everything in insert mode
+set hidden
+set nowrap
+set tabstop=4
 set backspace=indent,eol,start
 
 if has("vms")
@@ -35,6 +38,10 @@ if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
 endif
+
+set wildmode=longest,list,full
+set wildmenu
+colorscheme elflord
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -67,6 +74,7 @@ if has("autocmd")
 else
 
   set autoindent		" always set autoindenting on
+  set copyindent
 
 endif " has("autocmd")
 
@@ -91,6 +99,11 @@ runtime macros/matchit.vim
 set number relativenumber
 
 set cursorline
+set ignorecase
+    set showmatch
+
+set listchars=tab:>~,nbsp:_,trail:.
+set list
 
 nmap <silent> <C-k> :wincmd k<CR>
 nmap <silent> <C-j> :wincmd j<CR>
