@@ -31,6 +31,7 @@
     excludesfile = /Users/folkol/.gitignore_global
 
 [alias]
+    new = log -u --since='1 week ago'
     co = checkout
     st = status
     ci = commit
