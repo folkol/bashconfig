@@ -49,6 +49,11 @@ export DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address='
 
 ### FUNCTIONS
 
+drop() {
+    local num_rows=${1:-10}
+    tail -n +$(($num_rows + 1))
+}
+
 reduce ()
 {
     read x;
