@@ -50,7 +50,7 @@ export DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address='
 ### FUNCTIONS
 
 drop() {
-    local num_rows=${1:-10}
+    local num_rows=${1:-1}
     tail -n +$(($num_rows + 1))
 }
 
