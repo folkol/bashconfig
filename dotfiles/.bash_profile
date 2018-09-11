@@ -203,6 +203,7 @@ function gmtm() {
 
 complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
 complete -W '$(cat ~/.my_hosts)' ssh
+complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 
 ### ALIASES
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
