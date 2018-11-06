@@ -223,11 +223,10 @@ alias dockershell='screen ~/Library/Containers/com.docker.docker/Data/com.docker
 alias git-diff-ignore-whitespace='git diff --word-diff-regex=[^[:space:]]'
 alias docker-kill-all='docker ps -qa | each "docker stop" "docker rm"'
 alias docker-stats-names='docker stats `docker ps --format "{{.Names}}"`'
-alias serve='python -m SimpleHTTPServer'
+alias serve='python -m http.server'
 alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"
 alias gitbranches='git branch -a --sort=-committerdate --color -v | head'
 alias ktail='docker exec -it ace.kafka sh -c "/opt/kafka*/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181"'
-alias serve='python -m SimpleHTTPServer'
 alias tailall='tail -n+1'
 alias haskell=ghci 
 alias java6="JAVA_HOME=$(/usr/libexec/java_home -v 1.6 2>/dev/null)"

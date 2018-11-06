@@ -1,5 +1,17 @@
+[diff]
+    tool = pycharm
+[difftool "pycharm"]
+    cmd = /usr/local/bin/charm diff "$LOCAL" "$REMOTE" && echo "Press enter to continue..." && read
 [merge]
-    renameLimit = 10000
+    tool = pycharm
+    keepBackup = false
+[mergetool "pycharm"]
+    cmd = /usr/local/bin/charm merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+[diff "ansible-vault"]
+    cachetextconv = false
+    textconv = viewvault.sh
+[mergetool]
+    keepBackup = false
 
 [color]
     diff = auto
@@ -41,7 +53,3 @@
 
 [push]
     default = upstream
-
-[diff "ansible-vault"]
-    cachetextconv = false
-    textconv = viewvault.sh
