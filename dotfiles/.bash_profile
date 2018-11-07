@@ -46,6 +46,7 @@ export BC_LINE_LENGTH=200000000
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 export DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address='
+export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
@@ -209,7 +210,7 @@ complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
 alias gdm='git diff origin/master'
 alias gmm='git merge origin/master'
-alias gg='git grep -I'
+alias gg='git grep -iI'
 alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 alias funiq="awk '!seen[\$0]++'"
 alias mkpasswd='openssl rand -base64 16'
@@ -275,7 +276,5 @@ export PATH
 # The original version is saved in .bash_profile.pysave
 PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
-
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
