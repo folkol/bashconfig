@@ -15,7 +15,6 @@ export CLICOLOR=Hxxxbxxxxxx
 
 #export PATH=$(brew --prefix openssl)/bin:$PATH
 export PATH="/usr/local/opt/openssl:$PATH"
-export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
 export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
 export PATH=/usr/local/bin:$PATH
@@ -27,6 +26,7 @@ export PATH="/usr/local/opt/gettext/bin:$PATH"
 export PATH="/usr/local/opt/texinfo/bin/:$PATH"
 export PATH="/Users/folkol/code/futils/bin:$PATH"
 export PATH="$(brew --prefix)/opt/python/libexec/bin:$PATH"
+export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
 
 ### IMPORTS
 source ~/.bashrc
@@ -244,7 +244,6 @@ alias deltaup='deltacloudd -i mock'
 alias kafka_produce='kafka-console-producer.sh --broker-list localhost:2181 --topic testtest'
 alias kafka_consume='kafka-console-consumer.sh --zookeeper localhost:2181 --topic testtest --from-beginning'
 alias preview='open -a Preview.app -f'
-alias plot="gnuplot -p -e 'term=system(\"echo ${TERMINAL:-dumb}\"); set terminal term; plot \"< cat -\";'"
 
 # MacPorts Installer addition on 2013-01-16_at_14:08:26: adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
