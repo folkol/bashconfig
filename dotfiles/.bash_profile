@@ -14,7 +14,7 @@ export CLICOLOR=Hxxxbxxxxxx
 ### PATH
 
 #export PATH=$(brew --prefix openssl)/bin:$PATH
-export PATH="/usr/local/opt/openssl:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
 export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
@@ -207,13 +207,14 @@ complete -W '$(cat ~/.my_hosts)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 
 ### ALIASES
+alias egg='gg -E'
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
 alias gdm='git diff origin/master'
 alias gmm='git merge origin/master'
 alias gg='git grep -iI'
 alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 alias funiq="awk '!seen[\$0]++'"
-alias mkpasswd='openssl rand -base64 16'
+alias mkpasswd='openssl rand -base64 48'
 alias v='test -d venv || python3 -m venv venv && . venv/bin/activate'
 alias m='cd ~/code/mota'
 alias s='cd ~/code/soda'
@@ -278,3 +279,6 @@ PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
