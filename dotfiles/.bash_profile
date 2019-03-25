@@ -207,6 +207,10 @@ complete -W '$(cat ~/.my_hosts)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 
 ### ALIASES
+alias k=kubectl
+alias kgp='k get pods'
+alias kdp='k describe pods'
+alias ss=shellcheck
 alias egg='gg -E'
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
 alias gdm='git diff origin/master'
