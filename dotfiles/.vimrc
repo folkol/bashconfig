@@ -95,7 +95,8 @@ set swapfile
 runtime macros/matchit.vim
 set number relativenumber
 
-set cursorline
+" set cursorline
+set cursorcolumn
 set ignorecase
     set showmatch
 
