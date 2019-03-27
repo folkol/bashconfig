@@ -261,6 +261,11 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+export SPARK_PATH=/usr/local/opt/spark
+export PYSPARK_DRIVER_PYTHON=jupyter
+export PYSPARK_DRIVER_PYTHON_OPTS=notebook
+export PYSPARK_PYTHON=python3
+
 source ~/git-completion.bash
 
 
