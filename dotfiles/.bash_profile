@@ -207,6 +207,7 @@ complete -W '$(cat ~/.my_hosts)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 
 ### ALIASES
+alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
 alias k=kubectl
 alias kgp='k get pods'
 alias kdp='k describe pods'
