@@ -53,5 +53,3 @@
 
 [push]
     default = upstream
-[branch]
-	autoSetupMerge = false
