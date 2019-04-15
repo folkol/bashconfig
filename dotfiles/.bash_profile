@@ -50,6 +50,15 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+upload ()
+{
+    for file in "$@";
+    do
+        aws s3 cp "$file" "s3://folkol.com/$file" --acl public-read-write > /dev/null;
+        echo "https://folkol.com/$file";
+    done
+}
+
 drop() {
     local num_rows=${1:-1}
     tail -n +$(($num_rows + 1))
