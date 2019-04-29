@@ -50,6 +50,22 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+vgrep() {
+    if [ $# -eq 0 ]; then
+        echo "usage: vgrep [ pattern ]  # Tries to find and print top-level SODA variables that matches pattern" >&2
+        return 1
+    fi
+    local PATTERN=$1
+    find . -type f -path '*_vars/*' | while read FILE; do
+        local matches=$(yq -r "to_entries | map(select(.key | match(\"$PATTERN\";\"i\"))) | from_entries" $FILE)
+        if [ "$matches" != "{}" ]; then
+            echo "==> $FILE <=="
+            yq -y -r "to_entries | map(select(.key | match(\"$PATTERN\";\"i\"))) | from_entries" $FILE
+            echo
+        fi
+    done
+}
+
 upload ()
 {
     for file in "$@";
