@@ -168,18 +168,6 @@ function each() {
     done
 }
 
-function upload() {
-    if [ -z "$1" ]; then
-        echo 'usage: upload filename [ resource_name ]'
-        return 1
-    fi
-    local filename=$1
-    local resource=${2:-$filename}
-    local URL="https://share.folkol.com/files/$resource"
-    curl -s -S -o /dev/null -XPUT --data-binary @$filename $URL
-    echo $URL
-}
-
 function download() {
     if [ -z "$1" ]; then
         echo 'usage: download filename'
