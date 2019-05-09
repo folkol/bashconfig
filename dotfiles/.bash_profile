@@ -15,6 +15,8 @@ export CLICOLOR=Hxxxbxxxxxx
 
 #export PATH=$(brew --prefix openssl)/bin:$PATH
 export PATH="/usr/local/opt/openssl:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
 export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
 export PATH=/usr/local/bin:$PATH
@@ -46,8 +48,34 @@ export BC_LINE_LENGTH=200000000
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 export DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address='
+export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
+
+vgrep() {
+    if [ $# -eq 0 ]; then
+        echo "usage: vgrep [ pattern ]  # Tries to find and print top-level SODA variables that matches pattern" >&2
+        return 1
+    fi
+    local PATTERN=$1
+    find . -type f -path '*_vars/*' | while read FILE; do
+        local matches=$(yq -r "to_entries | map(select(.key | match(\"$PATTERN\";\"i\"))) | from_entries" $FILE)
+        if [ "$matches" != "{}" ]; then
+            echo "==> $FILE <=="
+            yq -y -r "to_entries | map(select(.key | match(\"$PATTERN\";\"i\"))) | from_entries" $FILE
+            echo
+        fi
+    done
+}
+
+upload ()
+{
+    for file in "$@";
+    do
+        aws s3 cp "$file" "s3://folkol.com/$file" --acl public-read-write > /dev/null;
+        echo "https://folkol.com/$file";
+    done
+}
 
 drop() {
     local num_rows=${1:-1}
@@ -142,18 +170,6 @@ function each() {
     done
 }
 
-function upload() {
-    if [ -z "$1" ]; then
-        echo 'usage: upload filename [ resource_name ]'
-        return 1
-    fi
-    local filename=$1
-    local resource=${2:-$filename}
-    local URL="https://share.folkol.com/files/$resource"
-    curl -s -S -o /dev/null -XPUT --data-binary @$filename $URL
-    echo $URL
-}
-
 function download() {
     if [ -z "$1" ]; then
         echo 'usage: download filename'
@@ -203,15 +219,23 @@ function gmtm() {
 
 complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
 complete -W '$(cat ~/.my_hosts)' ssh
+complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
+complete -C 'aws_completer' aws
 
 ### ALIASES
+alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
+alias k=kubectl
+alias kgp='k get pods'
+alias kdp='k describe pods'
+alias ss=shellcheck
+alias egg='gg -E'
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
 alias gdm='git diff origin/master'
 alias gmm='git merge origin/master'
-alias gg='git grep -I'
+alias gg='git grep -iI'
 alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 alias funiq="awk '!seen[\$0]++'"
-alias mkpasswd='openssl rand -base64 16'
+alias mkpasswd='openssl rand -base64 48'
 alias v='test -d venv || python3 -m venv venv && . venv/bin/activate'
 alias m='cd ~/code/mota'
 alias s='cd ~/code/soda'
@@ -253,6 +277,11 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+export SPARK_PATH=/usr/local/opt/spark
+export PYSPARK_DRIVER_PYTHON=jupyter
+export PYSPARK_DRIVER_PYTHON_OPTS=notebook
+export PYSPARK_PYTHON=python3
+
 source ~/git-completion.bash
 
 
@@ -274,6 +303,7 @@ export PATH
 PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

@@ -29,3 +29,9 @@ export NVM_DIR="$HOME/.nvm"
 
 [ -s "/Users/folkol/.rvm/scripts/rvm" ] && source $HOME/.rvm/scripts/rvm
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
+
+PATH="/Users/folkol/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/folkol/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/folkol/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/folkol/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/folkol/perl5"; export PERL_MM_OPT;
