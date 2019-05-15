@@ -50,6 +50,7 @@
     di = diff
     each = for-each-ref --format='%(refname:short)'
     hot = for-each-ref --count=30 --sort=-committerdate refs/remotes/ --format='%(refname:short)'
+    wd = diff --word-diff=color --word-diff-regex '[a-z_]+|.'
 
 [push]
     default = upstream
