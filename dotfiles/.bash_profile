@@ -16,6 +16,7 @@ export CLICOLOR=Hxxxbxxxxxx
 #export PATH=$(brew --prefix openssl)/bin:$PATH
 export PATH="/usr/local/opt/openssl:$PATH"
 export PATH="~/Library/Python/3.7/bin/:$PATH"
+export PATH="~/Library/Python/3.6/bin/:$PATH"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
@@ -25,11 +26,11 @@ export PATH="/Users/folkol/code/ace/system-tests/test-scripts/bin:$PATH"
 export PATH="$PATH:/Users/folkol/Library/Python/2.7/bin"
 export PATH="$PATH:/Users/folkol/code/futils/bin"
 export PATH="/usr/local/opt/flex/bin:$PATH"
-export PATH="/usr/local/opt/gettext/bin:$PATH"
 export PATH="/usr/local/opt/texinfo/bin/:$PATH"
 export PATH="/Users/folkol/code/futils/bin:$PATH"
 export PATH="$(brew --prefix)/opt/python/libexec/bin:$PATH"
 export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
+export PATH="/usr/local/opt/gettext/bin:$PATH"
 
 ### IMPORTS
 source ~/.bashrc
@@ -223,6 +224,8 @@ complete -W '$(cat ~/.my_hosts)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
 
+if [ -d '/usr/local/etc/bash_completion.d' ]; then source /usr/local/etc/bash_completion.d/*; fi
+
 ### ALIASES
 alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
 alias k=kubectl
@@ -282,10 +285,6 @@ export SPARK_PATH=/usr/local/opt/spark
 export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS=notebook
 export PYSPARK_PYTHON=python3
-
-source ~/git-completion.bash
-
-
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -308,3 +307,10 @@ export PATH
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
+### NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+
+### scm_breeze
+[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
