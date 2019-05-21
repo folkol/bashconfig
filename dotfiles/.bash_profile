@@ -224,7 +224,9 @@ complete -W '$(cat ~/.my_hosts)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
 
-if [ -d '/usr/local/etc/bash_completion.d' ]; then source /usr/local/etc/bash_completion.d/*; fi
+for file in /usr/local/etc/bash_completion.d/*; do
+    source $file
+done
 
 ### ALIASES
 alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
