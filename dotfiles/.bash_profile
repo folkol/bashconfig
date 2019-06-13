@@ -1,6 +1,8 @@
 # Leave my ^S alone!
-stty stop undef
-stty start undef
+if tty -s; then
+    stty stop undef
+    stty start undef
+fi
 
 ### HISTORY COMMANDS
 
@@ -15,8 +17,6 @@ export CLICOLOR=Hxxxbxxxxxx
 
 #export PATH=$(brew --prefix openssl)/bin:$PATH
 export PATH="/usr/local/opt/openssl:$PATH"
-export PATH="~/Library/Python/3.7/bin/:$PATH"
-export PATH="~/Library/Python/3.6/bin/:$PATH"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
 export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
@@ -31,6 +31,8 @@ export PATH="/Users/folkol/code/futils/bin:$PATH"
 export PATH="$(brew --prefix)/opt/python/libexec/bin:$PATH"
 export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
 export PATH="/usr/local/opt/gettext/bin:$PATH"
+export PATH="~/Library/Python/3.7/bin/:$PATH"
+export PATH="~/Library/Python/3.6/bin/:$PATH"
 
 ### IMPORTS
 source ~/.bashrc
@@ -229,6 +231,7 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias uhp="dsh -c -g prod -- cat /ivbar/nagios/data/unhandled-problems.log 2>/dev/null"
 alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
 alias k=kubectl
 alias kgp='k get pods'
@@ -244,7 +247,7 @@ alias funiq="awk '!seen[\$0]++'"
 alias mkpasswd='openssl rand -base64 48'
 alias v='test -d venv || python3 -m venv venv && . venv/bin/activate'
 alias m='cd ~/code/mota'
-alias s='cd ~/code/soda'
+alias s='cd ~/code/soda/ansible'
 alias i='cd ~/ivbar'
 alias t='tree -L 3'
 alias l=ll
@@ -302,7 +305,7 @@ export PATH
 
 # Setting PATH for Python 3.6
 # The original version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+#PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
@@ -316,3 +319,8 @@ export NVM_DIR="$HOME/.nvm"
 
 ### scm_breeze
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
+
+# Setting PATH for Python 3.6
+# The original version is saved in .bash_profile.pysave
+#PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+export PATH
