@@ -110,3 +110,6 @@ nmap <silent> <C-l> :wincmd l<CR>
 
 execute pathogen#infect()
 map <C-n> :NERDTreeToggle<CR>
+
+set modelines=0
+set nomodeline
