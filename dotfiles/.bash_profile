@@ -81,6 +81,11 @@ upload ()
     done
 }
 
+invalidate() {
+    local paths=$1
+    aws cloudfront create-invalidation --distribution-id EA2XJ4B419376 --paths $paths
+}
+
 drop() {
     local num_rows=${1:-1}
     tail -n +$(($num_rows + 1))
