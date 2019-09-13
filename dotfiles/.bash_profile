@@ -1,8 +1,8 @@
 # Leave my ^S alone!
-if tty -s; then
-    stty stop undef
-    stty start undef
-fi
+# if tty -s; then
+stty stop undef
+stty start undef
+# fi
 
 ### HISTORY COMMANDS
 
@@ -33,6 +33,7 @@ export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 export PATH="~/Library/Python/3.7/bin/:$PATH"
 export PATH="~/Library/Python/3.6/bin/:$PATH"
+export PATH="$PATH:~/.tacit"
 
 ### IMPORTS
 source ~/.bashrc
@@ -55,6 +56,14 @@ export DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address='
 export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
+
+function git-hot() {
+    local i=1
+    for ref in $(git for-each-ref --count=30 --sort=-committerdate refs/remotes/ --format='%(refname:short)'); do
+        echo "  [$i] $ref"
+        declare -g "e$((i++))=${ref#*/}"
+    done
+}
 
 vgrep() {
     if [ $# -eq 0 ]; then
@@ -236,6 +245,9 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias gcom='git checkout master'
+alias gh='git-hot'
+alias mvn-init="mvn archetype:generate -DgroupId=com.folkol -DartifactId=rx -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false"
 alias uhp="dsh -c -g prod -- cat /ivbar/nagios/data/unhandled-problems.log 2>/dev/null"
 alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
 alias k=kubectl
