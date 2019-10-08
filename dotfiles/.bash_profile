@@ -52,10 +52,45 @@ export ANT_OPTS=-Xmx1024m
 export BC_LINE_LENGTH=200000000
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
-export DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address='
+#export DEBUG='-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address='
 export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
+
+function burl() {
+    local HOST="$1"
+    local PATH="$2"
+    exec 3<>/dev/tcp/$HOST/80
+    cat <<EOF >&3
+GET $PATH HTTP/1.1
+Host: $HOST
+
+EOF
+    cat <&3
+}
+
+function kube-get-pods-all-ns() {
+    mapfile <<<$(kubectl get pods --all-namespaces | grep -v kube-system | tail -n +2)
+
+    i=1
+    for line in "${MAPFILE[@]}"; do
+        read NAMESPACE NAME READY STATUS RESTARTS AGE <<<$(echo $line)
+        declare -g e$((i++))="$NAME -n $NAMESPACE"
+    done
+
+    i=1
+    for line in "${MAPFILE[@]}"; do
+        echo [$((i++))] $line
+    done | column -t
+}
+
+function kube-attach() {
+    kubectl exec -it $1 $2 $3
+}
+
+function kube-exec() {
+    kubectl exec -it $1 $2 $3 ${4:-bash}
+}
 
 function git-hot() {
     local i=1
@@ -172,7 +207,7 @@ distinct() {
 }
 
 sum() {
-    awk '{ s+=$1 } END { print $1 }'
+    awk '{ s+=$1 } END { print s }'
 }
 
 function pp()
@@ -239,6 +274,7 @@ complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9
 complete -W '$(cat ~/.my_hosts)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
+complete -o default -F __start_kubectl k
 
 for file in /usr/local/etc/bash_completion.d/*; do
     source $file
@@ -251,7 +287,9 @@ alias mvn-init="mvn archetype:generate -DgroupId=com.folkol -DartifactId=rx -Dar
 alias uhp="dsh -c -g prod -- cat /ivbar/nagios/data/unhandled-problems.log 2>/dev/null"
 alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
 alias k=kubectl
-alias kgp='k get pods'
+alias kgp='kube-get-pods-all-ns'
+alias ka='exec_scmb_expand_args kube-attach'
+alias ke='exec_scmb_expand_args kube-exec'
 alias kdp='k describe pods'
 alias ss=shellcheck
 alias egg='gg -E'
@@ -332,10 +370,13 @@ test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shel
 ### NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 ### scm_breeze
 [ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
+
+#### scm_breeze overrides
+alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
 
 # Setting PATH for Python 3.6
 # The original version is saved in .bash_profile.pysave
