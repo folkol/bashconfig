@@ -85,7 +85,7 @@ function kube-get-pods-all-ns() {
 }
 
 function kube-attach() {
-    kubectl exec -it $1 $2 $3
+    kubectl attach -it $1 $2 $3
 }
 
 function kube-exec() {
