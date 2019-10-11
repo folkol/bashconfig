@@ -57,6 +57,19 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+function launchctl-info() {
+    if [ $# -eq 0 ]; then
+        echo 'usage: launchctl-info *service-pattern*' >&2
+        return 1
+    fi
+    local service_pattern=$1
+    launchctl list \
+        | awk "/$service_pattern/ { print \$3 }" \
+        | while read -r daemon; do
+            launchctl dumpstate | sed -n "/^$daemon /,/^}/p"
+        done
+}
+
 function burl() {
     local HOST="$1"
     local PATH="$2"
