@@ -7,7 +7,7 @@ stty start undef
 ### HISTORY COMMANDS
 
 shopt -s histappend
-PROMPT_COMMAND="history -n; history -a; $PROMT_COMMAND"
+PROMPT_COMMAND="history -n; history -a; $PROMPT_COMMAND"
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=
 export HISTSIZE=
@@ -31,14 +31,12 @@ export PATH="/Users/folkol/code/futils/bin:$PATH"
 export PATH="$(brew --prefix)/opt/python/libexec/bin:$PATH"
 export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
 export PATH="/usr/local/opt/gettext/bin:$PATH"
-export PATH="~/Library/Python/3.7/bin/:$PATH"
-export PATH="~/Library/Python/3.6/bin/:$PATH"
+export PATH="$HOME/Library/Python/3.7/bin/:$PATH"
+export PATH="$HOME/Library/Python/3.6/bin/:$PATH"
 export PATH="$PATH:~/.tacit"
 
 ### IMPORTS
-source ~/.bashrc
-
-### EXPORTS
+source ~/.bashrc ### EXPORTS
 export PS1='\[\033[1;31m\]♥\[\033[0m\] '
 PROMPT_COMMAND='BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
 PS1='$BRANCH$ '
@@ -56,6 +54,32 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
+
+function _vim() {
+    if [ $# -eq 0 ]; then
+        /usr/bin/env vim `fzf -m`
+    else
+        /usr/bin/env vim "$@"
+    fi
+}
+
+function get_era_ticket_initial() {
+    if ! \git rev-parse --is-inside-work-tree &>/dev/null; then
+        exit
+    fi
+    local branch=$(git rev-parse --abbrev-ref HEAD)
+    local ticket=$(echo $branch | grep -Eo '^era-[0-9]+')
+    echo "gc -m '$ticket:"
+}
+
+function get_era_ticket() {
+    if ! \git rev-parse --is-inside-work-tree &>/dev/null; then
+        exit
+    fi
+    local branch=$(git rev-parse --abbrev-ref HEAD)
+    local ticket=$(echo $branch | grep -Eo '^era-[0-9]+')
+    echo "-m '$ticket:"
+}
 
 function launchctl-info() {
     if [ $# -eq 0 ]; then
@@ -283,6 +307,7 @@ function gmtm() {
 
 ### COMPLETIONS
 
+# complete -o bashdefault -E -C folkol_master_completion
 complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
 complete -W '$(cat ~/.my_hosts)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
@@ -294,6 +319,8 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias vim=_vim
+alias vb='vim ~/.bash_profile'
 alias gcom='git checkout master'
 alias gh='git-hot'
 alias mvn-init="mvn archetype:generate -DgroupId=com.folkol -DartifactId=rx -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false"
@@ -304,6 +331,7 @@ alias kgp='kube-get-pods-all-ns'
 alias ka='exec_scmb_expand_args kube-attach'
 alias ke='exec_scmb_expand_args kube-exec'
 alias kdp='k describe pods'
+alias kap='k apply -f'
 alias ss=shellcheck
 alias egg='gg -E'
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
@@ -390,6 +418,12 @@ export NVM_DIR="$HOME/.nvm"
 
 #### scm_breeze overrides
 alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
+#complete -o bashdefault -I -C get_era_ticket_initial gc
+complete -o bashdefault -C get_era_ticket gc
+
+#### fzf stuff
+export FZF_DEFAULT_COMMAND=fd
+alias f=fzf
 
 # Setting PATH for Python 3.6
 # The original version is saved in .bash_profile.pysave

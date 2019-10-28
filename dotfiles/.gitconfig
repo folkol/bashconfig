@@ -1,5 +1,6 @@
 [diff]
     tool = pycharm
+	noprefix = true
 [difftool "pycharm"]
     cmd = /usr/local/bin/pycharm diff "$LOCAL" "$REMOTE" && echo "Press enter to continue..." && read
 [merge]
