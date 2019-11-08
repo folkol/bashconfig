@@ -78,7 +78,10 @@ function get_era_ticket() {
     fi
     local branch=$(git rev-parse --abbrev-ref HEAD)
     local ticket=$(echo $branch | grep -Eo '^era-[0-9]+')
-    echo "-m '$ticket:"
+    if [ -n "$ticket" ]; then
+        ticket=" '$ticket:"
+    fi
+    echo "-m$ticket"
 }
 
 function launchctl-info() {
@@ -309,7 +312,7 @@ function gmtm() {
 
 # complete -o bashdefault -E -C folkol_master_completion
 complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
-complete -W '$(cat ~/.my_hosts)' ssh
+complete -W '$(cat ~/.my_hosts$ivbar_env)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
 complete -o default -F __start_kubectl k
@@ -319,6 +322,7 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias jp='jupyter notebook'
 alias vim=_vim
 alias vb='vim ~/.bash_profile'
 alias gcom='git checkout master'
