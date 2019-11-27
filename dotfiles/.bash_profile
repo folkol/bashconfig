@@ -55,12 +55,10 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
-function _vim() {
-    if [ $# -eq 0 ]; then
-        /usr/bin/env vim `fzf -m`
-    else
-        /usr/bin/env vim "$@"
-    fi
+hnt() {
+    head "$@"
+    echo "..."
+    tail "$@"
 }
 
 function get_era_ticket_initial() {
