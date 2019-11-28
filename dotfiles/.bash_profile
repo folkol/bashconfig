@@ -28,7 +28,7 @@ export PATH="$PATH:/Users/folkol/code/futils/bin"
 export PATH="/usr/local/opt/flex/bin:$PATH"
 export PATH="/usr/local/opt/texinfo/bin/:$PATH"
 export PATH="/Users/folkol/code/futils/bin:$PATH"
-export PATH="$(brew --prefix)/opt/python/libexec/bin:$PATH"
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 export PATH="$HOME/Library/Python/3.7/bin/:$PATH"
@@ -320,8 +320,8 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias todo='gg todo'
 alias jp='jupyter notebook'
-alias vim=_vim
 alias vb='vim ~/.bash_profile'
 alias gcom='git checkout master'
 alias gh='git-hot'
@@ -345,7 +345,7 @@ alias funiq="awk '!seen[\$0]++'"
 alias mkpasswd='openssl rand -base64 48'
 alias v='test -d venv || python3 -m venv venv && . venv/bin/activate'
 alias m='cd ~/code/mota'
-alias s='cd ~/code/soda/ansible'
+alias s='cd /Users/folkol/code/soda/deployments-take-2/poc'
 alias i='cd ~/ivbar'
 alias t='tree -L 3'
 alias l=ll

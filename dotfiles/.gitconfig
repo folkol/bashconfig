@@ -1,6 +1,6 @@
 [diff]
     tool = pycharm
-	noprefix = true
+    noprefix = true
 [difftool "pycharm"]
     cmd = /usr/local/bin/pycharm diff "$LOCAL" "$REMOTE" && echo "Press enter to continue..." && read
 [merge]
@@ -8,12 +8,13 @@
     keepBackup = false
 [mergetool "pycharm"]
     cmd = /usr/local/bin/pycharm merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+[mergetool "meld"]
+    # Choose one of these 2 lines (not both!) explained below.
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+    #cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 [diff "ansible-vault"]
     cachetextconv = false
     textconv = viewvault.sh
-[mergetool]
-    keepBackup = false
-
 [color]
     diff = auto
     status = auto
