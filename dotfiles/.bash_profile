@@ -12,6 +12,7 @@ export HISTCONTROL=ignoreboth
 export HISTFILESIZE=
 export HISTSIZE=
 export CLICOLOR=Hxxxbxxxxxx
+export HISTTIMEFORMAT="%d/%m/%y %T "
 
 ### PATH
 
@@ -56,14 +57,14 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 ### FUNCTIONS
 
 hnt() {
-    head "$@"
+    stdbuf -i0 -o0 -e0 head "$@"
     echo "..."
     tail "$@"
 }
 
 function get_era_ticket_initial() {
     if ! \git rev-parse --is-inside-work-tree &>/dev/null; then
-        exit
+        return
     fi
     local branch=$(git rev-parse --abbrev-ref HEAD)
     local ticket=$(echo $branch | grep -Eo '^era-[0-9]+')
@@ -72,7 +73,7 @@ function get_era_ticket_initial() {
 
 function get_era_ticket() {
     if ! \git rev-parse --is-inside-work-tree &>/dev/null; then
-        exit
+        return
     fi
     local branch=$(git rev-parse --abbrev-ref HEAD)
     local ticket=$(echo $branch | grep -Eo '^era-[0-9]+')
@@ -128,6 +129,14 @@ function kube-attach() {
 
 function kube-exec() {
     kubectl exec -it $1 $2 $3 ${4:-bash}
+}
+
+function kube-desc() {
+    kubectl describe $1 $2 $3 $4
+}
+
+function kube-kill() {
+    kubectl delete $1 $2 $3 $4
 }
 
 function git-hot() {
@@ -332,7 +341,8 @@ alias k=kubectl
 alias kgp='kube-get-pods-all-ns'
 alias ka='exec_scmb_expand_args kube-attach'
 alias ke='exec_scmb_expand_args kube-exec'
-alias kdp='k describe pods'
+alias kdp='exec_scmb_expand_args kube-desc pod'
+alias kkp='exec_scmb_expand_args kube-kill pod'
 alias kap='k apply -f'
 alias ss=shellcheck
 alias egg='gg -E'
@@ -420,8 +430,8 @@ export NVM_DIR="$HOME/.nvm"
 
 #### scm_breeze overrides
 alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
-#complete -o bashdefault -I -C get_era_ticket_initial gc
-complete -o bashdefault -C get_era_ticket gc
+#complete -o bashdefault -I -F get_era_ticket_initial gc
+complete -o bashdefault -F get_era_ticket gc
 
 #### fzf stuff
 export FZF_DEFAULT_COMMAND=fd
@@ -431,3 +441,4 @@ alias f=fzf
 # The original version is saved in .bash_profile.pysave
 #PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
+
