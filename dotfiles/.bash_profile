@@ -78,9 +78,9 @@ function get_era_ticket() {
     local branch=$(git rev-parse --abbrev-ref HEAD)
     local ticket=$(echo $branch | grep -Eo '^era-[0-9]+')
     if [ -n "$ticket" ]; then
-        ticket=" '$ticket:"
+        ticket="$ticket: "
     fi
-    echo "-m$ticket"
+    printf "%s" "-m '$ticket"
 }
 
 function launchctl-info() {
