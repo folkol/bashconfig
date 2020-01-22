@@ -80,7 +80,8 @@ function get_era_ticket() {
     if [ -n "$ticket" ]; then
         ticket="$ticket: "
     fi
-    printf "%s" "-m '$ticket"
+    COMPREPLY=("-m '$ticket")
+    compopt -o nospace
 }
 
 function launchctl-info() {
