@@ -1,7 +1,7 @@
 # Leave my ^S alone!
 # if tty -s; then
-stty stop undef
-stty start undef
+stty stop undef 2>/dev/null
+stty start undef 2>/dev/null
 # fi
 
 ### HISTORY COMMANDS
@@ -56,8 +56,13 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+function era() {
+    [ $# = 0 ] && open 'https://logexgroup.atlassian.net/secure/RapidBoard.jspa?rapidView=538&projectKey=ERA'
+    [ -n "$1" ] && open https://logexgroup.atlassian.net/browse/ERA-$1
+}
+
 hnt() {
-    stdbuf -i0 -o0 -e0 head "$@"
+    head "$@"
     echo "..."
     tail "$@"
 }
@@ -138,6 +143,19 @@ function kube-desc() {
 
 function kube-kill() {
     kubectl delete $1 $2 $3 $4
+}
+
+function kube-logs() {
+    kubectl logs $1 $2 $3 $4
+}
+
+function git_branch_grep() {
+    local pattern=${1:-''}
+    local i=1
+    for ref in $(git branch --list | grep -m 10 "$pattern"); do
+        echo "  [$i] $ref"
+        declare -g "e$((i++))=${ref#*/}"
+    done
 }
 
 function git-hot() {
@@ -330,6 +348,9 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias whatismyip='dig @resolver1.opendns.com ANY myip.opendns.com +short'
+alias pcat=pygmentize
+alias passphrase='gshuf /usr/share/dict/words | head -n 3 | tr "\n" " "'
 alias todo='gg todo'
 alias jp='jupyter notebook'
 alias vb='vim ~/.bash_profile'
@@ -340,11 +361,12 @@ alias uhp="dsh -c -g prod -- cat /ivbar/nagios/data/unhandled-problems.log 2>/de
 alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
 alias k=kubectl
 alias kgp='kube-get-pods-all-ns'
+alias kl='exec_scmb_expand_args kube-logs'
 alias ka='exec_scmb_expand_args kube-attach'
 alias ke='exec_scmb_expand_args kube-exec'
 alias kdp='exec_scmb_expand_args kube-desc pod'
 alias kkp='exec_scmb_expand_args kube-kill pod'
-alias kap='k apply -f'
+alias kap='exec_scmb_expand_args kubectl apply -f'
 alias ss=shellcheck
 alias egg='gg -E'
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
@@ -356,7 +378,7 @@ alias funiq="awk '!seen[\$0]++'"
 alias mkpasswd='openssl rand -base64 48'
 alias v='test -d venv || python3 -m venv venv && . venv/bin/activate'
 alias m='cd ~/code/mota'
-alias s='cd /Users/folkol/code/soda/deployments-take-2/poc'
+alias s='cd /Users/folkol/code/soda/ansible'
 alias i='cd ~/ivbar'
 alias t='tree -L 3'
 alias l=ll
@@ -419,11 +441,14 @@ export PATH
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+function update_ps_1() {
+    echo "Updating PS1"
+}
+export -f update_ps_1
 
 ### NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 ### scm_breeze
@@ -442,4 +467,9 @@ alias f=fzf
 # The original version is saved in .bash_profile.pysave
 #PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
