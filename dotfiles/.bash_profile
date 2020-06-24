@@ -348,6 +348,7 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias noos='unset ${!OS_@}'
 alias whatismyip='dig @resolver1.opendns.com ANY myip.opendns.com +short'
 alias pcat=pygmentize
 alias passphrase='gshuf /usr/share/dict/words | head -n 3 | tr "\n" " "'
