@@ -348,6 +348,8 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias pg='pgrep -fil'
+alias nmap-help='echo https://securitytrails.com/blog/top-15-nmap-commands-to-scan-remote-hosts'
 alias noos='unset ${!OS_@}'
 alias whatismyip='dig @resolver1.opendns.com ANY myip.opendns.com +short'
 alias pcat=pygmentize
