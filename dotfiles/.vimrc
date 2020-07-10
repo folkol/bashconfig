@@ -121,4 +121,8 @@ map <C-n> :NERDTreeToggle<CR>
 
 set modelines=0
 set nomodeline
-set scrolloff=10
+set scrolloff=7
+
+colorscheme gruvbox
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gr <Plug>(coc-references)
