@@ -56,6 +56,14 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+function npmadvisory() {
+   if [ $# != 1 ]; then
+      echo "usage: npmadvisory #" >&2
+      return
+   fi
+   open https://npmjs.com/advisories/$1
+}
+
 function era() {
     [ $# = 0 ] && open 'https://logexgroup.atlassian.net/secure/RapidBoard.jspa?rapidView=538&projectKey=ERA'
     [ -n "$1" ] && open https://logexgroup.atlassian.net/browse/ERA-$1
@@ -348,6 +356,8 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias man='MANWIDTH=100 LESSOPEN="|- pr -to $(( ($(tput cols) - 100) / 2))" man'
+alias fingerprint='ssh-keygen -l -E md5 -f'
 alias pg='pgrep -fil'
 alias nmap-help='echo https://securitytrails.com/blog/top-15-nmap-commands-to-scan-remote-hosts'
 alias noos='unset ${!OS_@}'
@@ -425,6 +435,7 @@ export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS=notebook
 export PYSPARK_PYTHON=python3
 export PATH="$HOME/.cargo/bin:$PATH"
+export VAULT_ADDR=https://vault.ivbar.com:8200
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/opt/google-cloud-sdk/path.bash.inc' ]; then source '/opt/google-cloud-sdk/path.bash.inc'; fi
@@ -436,6 +447,9 @@ if [ -f '/opt/google-cloud-sdk/completion.bash.inc' ]; then source '/opt/google-
 # The original version is saved in .bash_profile.pysave
 PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
 export PATH
+
+# pipx PATH
+PATH="$PATH:/Users/folkol/.local/bin"
 
 # Setting PATH for Python 3.6
 # The original version is saved in .bash_profile.pysave
