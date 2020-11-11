@@ -35,3 +35,9 @@ PERL5LIB="/Users/folkol/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5L
 PERL_LOCAL_LIB_ROOT="/Users/folkol/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/Users/folkol/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/Users/folkol/perl5"; export PERL_MM_OPT;
+
+# added by travis gem
+[ -f /Users/folkol/.travis/travis.sh ] && source /Users/folkol/.travis/travis.sh
+
+# Created by `userpath` on 2020-08-07 19:24:13
+export PATH="$PATH:/Users/folkol/.local/bin"

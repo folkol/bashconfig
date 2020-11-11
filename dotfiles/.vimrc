@@ -113,3 +113,5 @@ map <C-n> :NERDTreeToggle<CR>
 
 set modelines=0
 set nomodeline
+
+set scrolloff=20

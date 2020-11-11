@@ -294,6 +294,7 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias gitauthors='git log --pretty=format:%an | sort | uniq -c | sort -rn'
 alias gcom='git checkout master'
 alias gh='git-hot'
 alias mvn-init="mvn archetype:generate -DgroupId=com.folkol -DartifactId=rx -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false"
@@ -354,6 +355,7 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+export REACT_EDITOR=webstorm
 export SPARK_PATH=/usr/local/opt/spark
 export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS=notebook
@@ -376,8 +378,6 @@ export PATH
 #PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
 ### NVM
@@ -395,3 +395,11 @@ alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
 # The original version is saved in .bash_profile.pysave
 #PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
+
+# Created by `userpath` on 2020-08-07 19:24:13
+export PATH="$PATH:/Users/folkol/.local/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
