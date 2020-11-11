@@ -41,3 +41,35 @@ PERL_MM_OPT="INSTALL_BASE=/Users/folkol/perl5"; export PERL_MM_OPT;
 
 # Created by `userpath` on 2020-08-07 19:24:13
 export PATH="$PATH:/Users/folkol/.local/bin"
+# pyenv
+#eval "$(pyenv init -)"
+
+# pyenv-virtualenv:
+#eval "$(pyenv virtualenv-init -)"
+function updatePrompt {
+
+    # Styles
+    GREEN='\[\e[0;32m\]'
+    BLUE='\[\e[0;34m\]'
+    RESET='\[\e[0m\]'
+
+    # Base prompt: \W = working dir
+    PROMPT="\W"
+
+    # Current Git repo
+    if type "__git_ps1" > /dev/null 2>&1; then
+        PROMPT="$PROMPT$(__git_ps1 "${GREEN}(%s)${RESET}")"
+    fi
+
+    # Current virtualenv
+    if [[ $VIRTUAL_ENV != "" ]]; then
+        # Strip out the path and just leave the env name
+        PROMPT="$PROMPT${BLUE}{${VIRTUAL_ENV##*/}}${RESET}"
+    fi
+
+    PS1="$PROMPT\$ "
+}
+export -f updatePrompt
+
+# Bash shell executes this function just before displaying the PS1 variable
+export PROMPT_COMMAND='updatePrompt'

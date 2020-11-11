@@ -1,17 +1,18 @@
 # Leave my ^S alone!
 # if tty -s; then
-stty stop undef
-stty start undef
+stty stop undef 2>/dev/null
+stty start undef 2>/dev/null
 # fi
 
 ### HISTORY COMMANDS
 
 shopt -s histappend
-PROMPT_COMMAND="history -n; history -a; $PROMT_COMMAND"
+PROMPT_COMMAND="history -n; history -a; $PROMPT_COMMAND"
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=
 export HISTSIZE=
 export CLICOLOR=Hxxxbxxxxxx
+export HISTTIMEFORMAT="%d/%m/%y %T "
 
 ### PATH
 
@@ -28,17 +29,15 @@ export PATH="$PATH:/Users/folkol/code/futils/bin"
 export PATH="/usr/local/opt/flex/bin:$PATH"
 export PATH="/usr/local/opt/texinfo/bin/:$PATH"
 export PATH="/Users/folkol/code/futils/bin:$PATH"
-export PATH="$(brew --prefix)/opt/python/libexec/bin:$PATH"
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
 export PATH="/usr/local/opt/gettext/bin:$PATH"
-export PATH="~/Library/Python/3.7/bin/:$PATH"
-export PATH="~/Library/Python/3.6/bin/:$PATH"
+export PATH="$HOME/Library/Python/3.7/bin/:$PATH"
+export PATH="$HOME/Library/Python/3.6/bin/:$PATH"
 export PATH="$PATH:~/.tacit"
 
 ### IMPORTS
-source ~/.bashrc
-
-### EXPORTS
+source ~/.bashrc ### EXPORTS
 export PS1='\[\033[1;31m\]♥\[\033[0m\] '
 PROMPT_COMMAND='BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
 PS1='$BRANCH$ '
@@ -56,6 +55,47 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
+
+function npmadvisory() {
+   if [ $# != 1 ]; then
+      echo "usage: npmadvisory #" >&2
+      return
+   fi
+   open https://npmjs.com/advisories/$1
+}
+
+function era() {
+    [ $# = 0 ] && open 'https://logexgroup.atlassian.net/secure/RapidBoard.jspa?rapidView=538&projectKey=ERA'
+    [ -n "$1" ] && open https://logexgroup.atlassian.net/browse/ERA-$1
+}
+
+hnt() {
+    head "$@"
+    echo "..."
+    tail "$@"
+}
+
+function get_era_ticket_initial() {
+    if ! \git rev-parse --is-inside-work-tree &>/dev/null; then
+        return
+    fi
+    local branch=$(git rev-parse --abbrev-ref HEAD)
+    local ticket=$(echo $branch | grep -Eo '^era-[0-9]+')
+    echo "gc -m '$ticket:"
+}
+
+function get_era_ticket() {
+    if ! \git rev-parse --is-inside-work-tree &>/dev/null; then
+        return
+    fi
+    local branch=$(git rev-parse --abbrev-ref HEAD)
+    local ticket=$(echo $branch | grep -Eo '^era-[0-9]+')
+    if [ -n "$ticket" ]; then
+        ticket="$ticket: "
+    fi
+    COMPREPLY=("-m '$ticket")
+    compopt -o nospace
+}
 
 function launchctl-info() {
     if [ $# -eq 0 ]; then
@@ -103,6 +143,27 @@ function kube-attach() {
 
 function kube-exec() {
     kubectl exec -it $1 $2 $3 ${4:-bash}
+}
+
+function kube-desc() {
+    kubectl describe $1 $2 $3 $4
+}
+
+function kube-kill() {
+    kubectl delete $1 $2 $3 $4
+}
+
+function kube-logs() {
+    kubectl logs $1 $2 $3 $4
+}
+
+function git_branch_grep() {
+    local pattern=${1:-''}
+    local i=1
+    for ref in $(git branch --list | grep -m 10 "$pattern"); do
+        echo "  [$i] $ref"
+        declare -g "e$((i++))=${ref#*/}"
+    done
 }
 
 function git-hot() {
@@ -283,8 +344,9 @@ function gmtm() {
 
 ### COMPLETIONS
 
+# complete -o bashdefault -E -C folkol_master_completion
 complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
-complete -W '$(cat ~/.my_hosts)' ssh
+complete -W '$(cat ~/.my_hosts$ivbar_env)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
 complete -o default -F __start_kubectl k
@@ -295,6 +357,17 @@ done
 
 ### ALIASES
 alias gitauthors='git log --pretty=format:%an | sort | uniq -c | sort -rn'
+alias man='MANWIDTH=100 LESSOPEN="|- pr -to $(( ($(tput cols) - 100) / 2))" man'
+alias fingerprint='ssh-keygen -l -E md5 -f'
+alias pg='pgrep -fil'
+alias nmap-help='echo https://securitytrails.com/blog/top-15-nmap-commands-to-scan-remote-hosts'
+alias noos='unset ${!OS_@}'
+alias whatismyip='dig @resolver1.opendns.com ANY myip.opendns.com +short'
+alias pcat=pygmentize
+alias passphrase='gshuf /usr/share/dict/words | head -n 3 | tr "\n" " "'
+alias todo='gg todo'
+alias jp='jupyter notebook'
+alias vb='vim ~/.bash_profile'
 alias gcom='git checkout master'
 alias gh='git-hot'
 alias mvn-init="mvn archetype:generate -DgroupId=com.folkol -DartifactId=rx -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false"
@@ -302,9 +375,12 @@ alias uhp="dsh -c -g prod -- cat /ivbar/nagios/data/unhandled-problems.log 2>/de
 alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
 alias k=kubectl
 alias kgp='kube-get-pods-all-ns'
+alias kl='exec_scmb_expand_args kube-logs'
 alias ka='exec_scmb_expand_args kube-attach'
 alias ke='exec_scmb_expand_args kube-exec'
-alias kdp='k describe pods'
+alias kdp='exec_scmb_expand_args kube-desc pod'
+alias kkp='exec_scmb_expand_args kube-kill pod'
+alias kap='exec_scmb_expand_args kubectl apply -f'
 alias ss=shellcheck
 alias egg='gg -E'
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
@@ -316,7 +392,7 @@ alias funiq="awk '!seen[\$0]++'"
 alias mkpasswd='openssl rand -base64 48'
 alias v='test -d venv || python3 -m venv venv && . venv/bin/activate'
 alias m='cd ~/code/mota'
-alias s='cd ~/code/soda/ansible'
+alias s='cd /Users/folkol/code/soda/ansible'
 alias i='cd ~/ivbar'
 alias t='tree -L 3'
 alias l=ll
@@ -361,6 +437,7 @@ export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS=notebook
 export PYSPARK_PYTHON=python3
 export PATH="$HOME/.cargo/bin:$PATH"
+export VAULT_ADDR=https://vault.ivbar.com:8200
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/opt/google-cloud-sdk/path.bash.inc' ]; then source '/opt/google-cloud-sdk/path.bash.inc'; fi
@@ -373,16 +450,25 @@ if [ -f '/opt/google-cloud-sdk/completion.bash.inc' ]; then source '/opt/google-
 PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
 export PATH
 
+# pipx PATH
+PATH="$PATH:/Users/folkol/.local/bin"
+
 # Setting PATH for Python 3.6
 # The original version is saved in .bash_profile.pysave
 #PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+function update_ps_1() {
+    echo "Updating PS1"
+}
+export -f update_ps_1
 
 ### NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 ### scm_breeze
@@ -390,6 +476,12 @@ export NVM_DIR="$HOME/.nvm"
 
 #### scm_breeze overrides
 alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
+#complete -o bashdefault -I -F get_era_ticket_initial gc
+complete -o bashdefault -F get_era_ticket gc
+
+#### fzf stuff
+export FZF_DEFAULT_COMMAND=fd
+alias f=fzf
 
 # Setting PATH for Python 3.6
 # The original version is saved in .bash_profile.pysave
@@ -403,3 +495,5 @@ export PATH="$PATH:/Users/folkol/.local/bin"
 
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
