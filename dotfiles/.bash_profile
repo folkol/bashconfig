@@ -358,11 +358,16 @@ done
 ### ALIASES
 alias gitauthors='git log --pretty=format:%an | sort | uniq -c | sort -rn'
 alias man='MANWIDTH=100 LESSOPEN="|- pr -to $(( ($(tput cols) - 100) / 2))" man'
+alias mkpassphrase='echo $(gshuf --random-source=/dev/random -n 3 /usr/share/dict/words | sed "N;N;s/\n/ /g")'
+# commented out because it breaks buffer switching in less, e.g. h -> q
+#alias man='MANWIDTH=100 LESSOPEN="|- pr -to $(( ($(tput cols) - 100) / 2))" man'
 alias fingerprint='ssh-keygen -l -E md5 -f'
 alias pg='pgrep -fil'
 alias nmap-help='echo https://securitytrails.com/blog/top-15-nmap-commands-to-scan-remote-hosts'
+alias osenv='env | grep ^OS_ | grep -v OS_PASSWORD'
 alias noos='unset ${!OS_@}'
-alias whatismyip='dig @resolver1.opendns.com ANY myip.opendns.com +short'
+alias whatismyip='dig -4 @resolver1.opendns.com ANY myip.opendns.com +short'
+alias whatismyipgoogle='dig TXT +short o-o.myaddr.l.google.com @ns1.google.com'
 alias pcat=pygmentize
 alias passphrase='gshuf /usr/share/dict/words | head -n 3 | tr "\n" " "'
 alias todo='gg todo'
