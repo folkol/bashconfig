@@ -56,6 +56,17 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+function retry ()
+{
+    until "$@"; do
+        sleep 1;
+    done
+}
+
+function show() {
+    vimcat `which "$1"`
+}
+
 function npmadvisory() {
    if [ $# != 1 ]; then
       echo "usage: npmadvisory #" >&2
@@ -366,7 +377,7 @@ alias pg='pgrep -fil'
 alias nmap-help='echo https://securitytrails.com/blog/top-15-nmap-commands-to-scan-remote-hosts'
 alias osenv='env | grep ^OS_ | grep -v OS_PASSWORD'
 alias noos='unset ${!OS_@}'
-alias whatismyip='dig -4 @resolver1.opendns.com ANY myip.opendns.com +short'
+alias whatismyip='dig -4 @resolver1.opendns.com myip.opendns.com +short'
 alias whatismyipgoogle='dig TXT +short o-o.myaddr.l.google.com @ns1.google.com'
 alias pcat=pygmentize
 alias passphrase='gshuf /usr/share/dict/words | head -n 3 | tr "\n" " "'
