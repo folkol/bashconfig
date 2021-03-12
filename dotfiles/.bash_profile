@@ -7,6 +7,7 @@ stty start undef 2>/dev/null
 ### HISTORY COMMANDS
 
 shopt -s histappend
+shopt -s globstar
 PROMPT_COMMAND="history -n; history -a; $PROMPT_COMMAND"
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=
