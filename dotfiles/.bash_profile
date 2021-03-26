@@ -57,6 +57,14 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+function ykotp() {
+    OTP="$1"
+    if [ $# -lt 1 ]; then
+        read -p "OTP: " -r OTP
+    fi
+    curl -H'Content-Type: application/json' -XPOST https://demo.yubico.com/api/v1/simple/otp/validate -d "{\"key\":\"$OTP\"}"
+}
+
 function retry ()
 {
     until "$@"; do
@@ -79,6 +87,11 @@ function npmadvisory() {
 function era() {
     [ $# = 0 ] && open 'https://logexgroup.atlassian.net/secure/RapidBoard.jspa?rapidView=538&projectKey=ERA'
     [ -n "$1" ] && open https://logexgroup.atlassian.net/browse/ERA-$1
+}
+
+function sc() {
+    [ $# = 0 ] && open 'https://github.com/koalaman/shellcheck'
+    [ -n "$1" ] && open "https://github.com/koalaman/shellcheck/wiki/SC$1"
 }
 
 hnt() {
