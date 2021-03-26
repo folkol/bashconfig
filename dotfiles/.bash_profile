@@ -58,6 +58,7 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 ### FUNCTIONS
 
 function ykotp() {
+    # https://demo.yubico.com/otp/verify
     OTP="$1"
     if [ $# -lt 1 ]; then
         read -p "OTP: " -r OTP
