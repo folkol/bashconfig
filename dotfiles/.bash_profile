@@ -63,7 +63,7 @@ function ykotp() {
     if [ $# -lt 1 ]; then
         read -p "OTP: " -r OTP
     fi
-    curl -H'Content-Type: application/json' -XPOST https://demo.yubico.com/api/v1/simple/otp/validate -d "{\"key\":\"$OTP\"}"
+    curl -H'Content-Type: application/json' -d "{\"key\":\"$OTP\"}" https://demo.yubico.com/api/v1/simple/otp/validate
 }
 
 function retry ()
