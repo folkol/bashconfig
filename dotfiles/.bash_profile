@@ -57,6 +57,15 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+news ()
+{
+    curl -s 'https://newsapi.org/v2/top-headlines?language=en' \
+        -G \
+        -d @/Users/folkol/.newsapi.key \
+        | jq -r '.articles[] | "\(.title)\t\(.url)"' \
+        | column -s$'\t' -t
+}
+
 function ykotp() {
     # https://demo.yubico.com/otp/verify
     OTP="$1"
