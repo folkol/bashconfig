@@ -391,6 +391,7 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias vecka='date +"%U"'
 alias dns-cache-clear='sudo killall -HUP mDNSResponder'
 alias ruler='echo "0....|....1....|....2....|....3....|....4....|....5....|....6....|....7....|....8....|....9....|....a"'
 alias gitauthors='git log --pretty=format:%an | sort | uniq -c | sort -rn'
