@@ -57,6 +57,22 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+function allcerts() {
+    if [ ! $# -eq  ]; then
+        echo "usage: allcerts /path/to/bundle.pem"
+        return 1
+    fi
+    openssl crl2pkcs7 -nocrl -certfile "$1" | openssl pkcs7 -print_certs -text -noout
+}
+
+getcert() {
+    if [ $# -eq 0 ]; then
+        echo "Missing servername" >&2
+        return 1
+    fi
+
+    </dev/null openssl s_client -connect "$1:443" | openssl x509 -noout -text
+}
 news ()
 {
     curl -s 'https://newsapi.org/v2/top-headlines?language=en' \
@@ -393,6 +409,8 @@ done
 ### ALIASES
 alias vecka='date +"%U"'
 alias dns-cache-clear='sudo killall -HUP mDNSResponder'
+alias docker-for-mac-linux-vm='docker run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh'
+alias ocr=tesseract
 alias ruler='echo "0....|....1....|....2....|....3....|....4....|....5....|....6....|....7....|....8....|....9....|....a"'
 alias gitauthors='git log --pretty=format:%an | sort | uniq -c | sort -rn'
 alias man='MANWIDTH=100 LESSOPEN="|- pr -to $(( ($(tput cols) - 100) / 2))" man'
@@ -471,6 +489,7 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 ### ENVIRONMENT
+export LESS='-iMFXRj4a#1'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -479,7 +498,6 @@ export SPARK_PATH=/usr/local/opt/spark
 export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS=notebook
 export PYSPARK_PYTHON=python3
-export PATH="$HOME/.cargo/bin:$PATH"
 export VAULT_ADDR=https://vault.ivbar.com:8200
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -540,3 +558,4 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+source "$HOME/.cargo/env"

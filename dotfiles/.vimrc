@@ -154,4 +154,13 @@ nnoremap <Leader>/ :Ack!<Space>
 " Navigate quickfix list with ease
 nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
-map <C-_> :Ack<Space>
+nnoremap <C-_> :Rg<CR>
+
+" .vim/bundles/fzf.vim/plugin/fzf.vim
+" +\'command!      -bang -nargs=0 Rgcw                      call
+" fzf#vim#grep("rg --column --line-number --no-heading --color=always
+" --smart-case -- ".shellescape(expand("<cword>")), 1, s:p(<bang>0),
+"  <bang>0)', "
+nnoremap <C-?> :Rgcw<CR>
+
+set isk+=-
