@@ -11,7 +11,7 @@ shopt -s globstar
 PROMPT_COMMAND="history -n; history -a; $PROMPT_COMMAND"
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=
-export HISTSIZE=
+export HISTSIZE=9999999
 export CLICOLOR=Hxxxbxxxxxx
 export HISTTIMEFORMAT="%d/%m/%y %T "
 
@@ -40,7 +40,7 @@ export PATH="$PATH:~/.tacit"
 ### IMPORTS
 source ~/.bashrc ### EXPORTS
 export PS1='\[\033[1;31m\]♥\[\033[0m\] '
-PROMPT_COMMAND='BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
+#PROMPT_COMMAND='BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)'
 PS1='$BRANCH$ '
 export MY_POLOPOLY_HOME=/Users/folkol/polopoly
 export MY_POLOPOLY_DIST=$MY_POLOPOLY_HOME/dist
@@ -56,6 +56,32 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
+
+function pyupid ()
+{
+    local BASE_URL=https://raw.githubusercontent.com/pyupio/safety-db/master/data/
+    local DB_NAME=insecure_full.json
+    local DB_FILENAME=~/.safety-db-$DB_NAME
+
+    if [ ! $# -eq 1 ]; then
+        echo "usage: pyupid advisoryid";
+        return 1;
+    fi
+
+    local advisoryid=$1
+
+    if ! find $DB_FILENAME -mtime -30 2> /dev/null | grep -q .; then
+        echo 'old db, updating...';
+        curl -sS $BASE_URL$DB_NAME > ~/.safety-db-$DB_NAME
+    fi
+
+    jq 'del(."$meta") | to_entries[].value[] | select(.id == "pyup.io-'$advisoryid'")' $DB_FILENAME
+}
+
+function geoip_lookip ()
+{
+    curl -s https://ipinfo.io/$1
+}
 
 function allcerts() {
     if [ ! $# -eq  ]; then
@@ -93,6 +119,9 @@ function ykotp() {
 
 function retry ()
 {
+    if [ $# -eq 0 ]; then
+        set -- $(rc -r)
+    fi
     until "$@"; do
         sleep 1;
     done
@@ -407,6 +436,8 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias vault-login='vault login -no-print -method=userpass username=matte'
+alias vault-logout='vault token revoke -self'
 alias vecka='date +"%U"'
 alias dns-cache-clear='sudo killall -HUP mDNSResponder'
 alias docker-for-mac-linux-vm='docker run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh'
@@ -489,7 +520,8 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 ### ENVIRONMENT
-export LESS='-iMFXRj4a#1'
+export LESS='-iMFXRj4a#10'
+export LESS='-iMXRj4a#10'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -499,12 +531,6 @@ export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS=notebook
 export PYSPARK_PYTHON=python3
 export VAULT_ADDR=https://vault.ivbar.com:8200
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/opt/google-cloud-sdk/path.bash.inc' ]; then source '/opt/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/opt/google-cloud-sdk/completion.bash.inc' ]; then source '/opt/google-cloud-sdk/completion.bash.inc'; fi
 
 # Setting PATH for Python 3.7
 # The original version is saved in .bash_profile.pysave
@@ -532,14 +558,6 @@ export -f update_ps_1
 #[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
-### scm_breeze
-[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
-
-#### scm_breeze overrides
-alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
-#complete -o bashdefault -I -F get_era_ticket_initial gc
-complete -o bashdefault -F get_era_ticket gc
-
 #### fzf stuff
 export FZF_DEFAULT_COMMAND=fd
 alias f=fzf
@@ -554,8 +572,53 @@ export PATH="$PATH:/Users/folkol/.local/bin"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
+
+#### From https://gist.github.com/frnhr/dba7261bcb6970cf6121
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+pyenvVirtualenvUpdatePrompt() {
+    RED='\[\e[0;31m\]'
+    GREEN='\[\e[0;32m\]'
+    BLUE='\[\e[0;34m\]'
+    RESET='\[\e[0m\]'
+    [ -z "$PYENV_VIRTUALENV_ORIGINAL_PS1" ] && export PYENV_VIRTUALENV_ORIGINAL_PS1="$PS1"
+    [ -z "$PYENV_VIRTUALENV_GLOBAL_NAME" ] && export PYENV_VIRTUALENV_GLOBAL_NAME="$(pyenv global)"
+    VENV_NAME="$(pyenv version-name)"
+    VENV_NAME="${VENV_NAME##*/}"
+    GLOBAL_NAME="$PYENV_VIRTUALENV_GLOBAL_NAME"
+
+    # non-global versions:
+    COLOR="$BLUE"
+    # global version:
+    [ "$VENV_NAME" == "$GLOBAL_NAME" ] && COLOR="$RED"
+    # virtual envs:
+    [ "${VIRTUAL_ENV##*/}" == "$VENV_NAME" ] && COLOR="$GREEN"
+
+    if [ -z "$COLOR" ]; then
+        PS1="$PYENV_VIRTUALENV_ORIGINAL_PS1"
+    else
+        PS1="($COLOR${VENV_NAME}$RESET)$PYENV_VIRTUALENV_ORIGINAL_PS1"
+    fi
+    export PS1
+}
+export PROMPT_COMMAND="pyenvVirtualenvUpdatePrompt; $PROMPT_COMMAND"
+
+### scm_breeze
+[ -s "/Users/folkol/.scm_breeze/scm_breeze.sh" ] && source "/Users/folkol/.scm_breeze/scm_breeze.sh"
+
+#. <(openstack complete)
+
+#### scm_breeze overrides
+alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
+#complete -o bashdefault -I -F get_era_ticket_initial gc
+complete -o bashdefault -F get_era_ticket gc
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 source "$HOME/.cargo/env"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/private/tmp/google-cloud-sdk/path.bash.inc' ]; then . '/private/tmp/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/private/tmp/google-cloud-sdk/completion.bash.inc' ]; then . '/private/tmp/google-cloud-sdk/completion.bash.inc'; fi
