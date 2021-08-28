@@ -164,3 +164,5 @@ nnoremap <C-_> :Rg<CR>
 nnoremap <C-?> :Rgcw<CR>
 
 set isk+=-
+map <C-_> :Ack<Space>
+let g:ctags_statusline=1
