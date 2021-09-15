@@ -57,6 +57,13 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+# Parse date and print out parts in tabular form
+pd ()
+{
+    local when=${1:-$(date)};
+    gdate -d "$when" '+%A %Y %m %d %H %M %S %z %s'
+}
+
 function pyupid ()
 {
     local BASE_URL=https://raw.githubusercontent.com/pyupio/safety-db/master/data/
@@ -436,6 +443,9 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias cert='openssl x509 -noout -text'
+alias allcerts='openssl crl2pkcs7 -nocrl -certfile /dev/stdin | openssl pkcs7 -print_certs -text -noout'
+alias securedbid=pyupid
 alias vault-login='vault login -no-print -method=userpass username=matte'
 alias vault-logout='vault token revoke -self'
 alias vecka='date +"%U"'
@@ -520,8 +530,8 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 ### ENVIRONMENT
-export LESS='-iMFXRj4a#10'
-export LESS='-iMXRj4a#10'
+export LESS='-iMFXRj4#10'
+export LESS='-iMXRj4#10'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
