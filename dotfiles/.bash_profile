@@ -91,7 +91,7 @@ function geoip_lookip ()
 }
 
 function allcerts() {
-    if [ ! $# -eq  ]; then
+    if [ $# -ne 1 ]; then
         echo "usage: allcerts /path/to/bundle.pem"
         return 1
     fi
@@ -443,6 +443,7 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias hl='HIGHLIGHT_OPTIONS="-O xterm256" highlight'  # brew install highlight
 alias cert='openssl x509 -noout -text'
 alias allcerts='openssl crl2pkcs7 -nocrl -certfile /dev/stdin | openssl pkcs7 -print_certs -text -noout'
 alias securedbid=pyupid
@@ -582,8 +583,14 @@ export PATH="$PATH:/Users/folkol/.local/bin"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
+### From pyenv init output
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
 
 #### From https://gist.github.com/frnhr/dba7261bcb6970cf6121
+
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
