@@ -443,6 +443,8 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias nowrap='less -SE'
+alias dockerlogs='/usr/bin/log stream --style syslog --level=debug --color=always --predicate "process matches \".*(ocker|vpnkit).*\" || (process in {\"taskgated-helper\", \"launchservicesd\", \"kernel\"} && eventMessage contains[c] \"docker\")"'
 alias hl='HIGHLIGHT_OPTIONS="-O xterm256" highlight'  # brew install highlight
 alias cert='openssl x509 -noout -text'
 alias allcerts='openssl crl2pkcs7 -nocrl -certfile /dev/stdin | openssl pkcs7 -print_certs -text -noout'
@@ -531,7 +533,7 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 ### ENVIRONMENT
-export LESS='-iMFXRj4#10'
+#export LESS='-iMFXRj4#10'
 export LESS='-iMXRj4#10'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
