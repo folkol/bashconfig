@@ -57,6 +57,38 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+# Recursively display a vault subtree (bash + jq)
+vault_tree ()
+{
+    # usage
+    if [ $# -eq 0 ] || [[ ! $1 == */ ]]; then
+        echo "usage: vault_tree ROOT/ (e.g. /secret/admin/, /secret/backup/ or /secret/shared/ -- including trailing slash)" >&2
+        return 1
+    fi
+
+    # color highlighting
+    if [ -t 1 ]; then
+        BEGIN="\e[34m\e[1m"
+        END="\e[0m"
+    else
+        BEGIN=""
+        END=""
+    fi
+
+    # main
+    local current=$1
+    local root=$2
+    local indent=$3
+    echo -e "$indent$BEGIN${current#$root}$END"
+    for child in $(vault kv list -format json "$current" | jq -r .[]); do
+        if [[ $child == */ ]]; then
+           vault_tree "$current$child" "$current" "$indent    "
+        else
+            echo -e "$indent    - $child"
+        fi
+    done
+}
+
 # Parse date and print out parts in tabular form
 pd ()
 {
