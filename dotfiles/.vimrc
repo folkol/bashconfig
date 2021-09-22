@@ -161,7 +161,7 @@ nnoremap <C-_> :Rg<CR>
 " fzf#vim#grep("rg --column --line-number --no-heading --color=always
 " --smart-case -- ".shellescape(expand("<cword>")), 1, s:p(<bang>0),
 "  <bang>0)', "
-nnoremap <C-?> :Rgcw<CR>
+" nnoremap <C-?> :Rgcw<CR> "
 
 set isk+=-
 map <C-_> :Ack<Space>

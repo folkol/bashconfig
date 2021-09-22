@@ -566,6 +566,7 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
 ### ENVIRONMENT
 #export LESS='-iMFXRj4#10'
+export LESS='-iMFXRj4a#10'
 export LESS='-iMXRj4#10'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -666,10 +667,10 @@ alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
 complete -o bashdefault -F get_era_ticket gc
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-source "$HOME/.cargo/env"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/private/tmp/google-cloud-sdk/path.bash.inc' ]; then . '/private/tmp/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/private/tmp/google-cloud-sdk/completion.bash.inc' ]; then . '/private/tmp/google-cloud-sdk/completion.bash.inc'; fi
+. "$HOME/.cargo/env"
