@@ -57,6 +57,12 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+hl() {
+    local pattern=$1
+    shift
+    grep --color -e ".*$pattern.*" -e '$' "$@"
+}
+
 # Recursively display a vault subtree (bash + jq)
 vault_tree ()
 {
@@ -475,9 +481,15 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias d='date "+%Y-%m-%d"'
+alias kgetall='kubectl get namespace,replicaset,secret,nodes,job,daemonset,statefulset,ingress,configmap,pv,pvc,service,deployment,pod --all-namespaces'
+alias which='echo use this: type'
+alias banner=figlet
+alias gn='git next'
+alias gp='git prev'
 alias nowrap='less -SE'
 alias dockerlogs='/usr/bin/log stream --style syslog --level=debug --color=always --predicate "process matches \".*(ocker|vpnkit).*\" || (process in {\"taskgated-helper\", \"launchservicesd\", \"kernel\"} && eventMessage contains[c] \"docker\")"'
-alias hl='HIGHLIGHT_OPTIONS="-O xterm256" highlight'  # brew install highlight
+alias hightlight='HIGHLIGHT_OPTIONS="-O xterm256" highlight'  # brew install highlight
 alias cert='openssl x509 -noout -text'
 alias allcerts='openssl crl2pkcs7 -nocrl -certfile /dev/stdin | openssl pkcs7 -print_certs -text -noout'
 alias securedbid=pyupid
@@ -669,8 +681,9 @@ complete -o bashdefault -F get_era_ticket gc
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/private/tmp/google-cloud-sdk/path.bash.inc' ]; then . '/private/tmp/google-cloud-sdk/path.bash.inc'; fi
+if [ -f '/Users/folkol/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/folkol/Downloads/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/private/tmp/google-cloud-sdk/completion.bash.inc' ]; then . '/private/tmp/google-cloud-sdk/completion.bash.inc'; fi
 . "$HOME/.cargo/env"
+if [ -f '/Users/folkol/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/folkol/Downloads/google-cloud-sdk/completion.bash.inc'; fi

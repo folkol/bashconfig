@@ -48,6 +48,8 @@
     each = for-each-ref --format='%(refname:short)'
     wd = diff --word-diff=color --word-diff-regex '[a-z_]+|.'
     root = rev-parse --show-toplevel
+    prev = checkout HEAD^1
+    next = "!sh -c 'git log --reverse --pretty=%H origin/master | awk \"/$(git rev-parse HEAD)/{getline;print}\" | xargs git checkout'"
 
 [push]
     default = upstream
