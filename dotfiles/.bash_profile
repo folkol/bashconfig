@@ -483,7 +483,7 @@ done
 ### ALIASES
 alias d='date "+%Y-%m-%d"'
 alias kgetall='kubectl get namespace,replicaset,secret,nodes,job,daemonset,statefulset,ingress,configmap,pv,pvc,service,deployment,pod --all-namespaces'
-alias which='echo use this: type'
+alias which='echo type'
 alias banner=figlet
 alias gn='git next'
 alias gp='git prev'
@@ -679,11 +679,11 @@ alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
 complete -o bashdefault -F get_era_ticket gc
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/folkol/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/folkol/Downloads/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/private/tmp/google-cloud-sdk/completion.bash.inc' ]; then . '/private/tmp/google-cloud-sdk/completion.bash.inc'; fi
 . "$HOME/.cargo/env"
 if [ -f '/Users/folkol/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/folkol/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/usr/local/opt/google-cloud-sdk/path.bash.inc' ]; then . '/usr/local/opt/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/usr/local/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/local/opt/google-cloud-sdk/completion.bash.inc'; fi
