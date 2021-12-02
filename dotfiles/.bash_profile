@@ -57,6 +57,26 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+git-pretty-format() {
+    echo "%n          newline"
+    echo "%%          %"
+    echo "%x00        hex byte (e.g. %x09 for horizontal tab)"
+    echo "%C...       color specification, red|green|blue|reset or C(...) see git-config Value>color"
+    echo "%[><](<N>)  padding, optional truncation with %<(N,[lm]trunc)"
+    echo "%h, %H      (abbr) commit hash"
+    echo "%t, %T      (abbr) tree hash"
+    echo "%p, %P      (abbr) parent hashes"
+    echo "%[ac][ne]   author/committer name/email"
+    echo "%[ac][Is]   author/committer date (short/ISO)"
+    echo "%[fs]       (sanitized) subject"
+    echo "%[bB]       body (raw)"
+    echo ""
+    echo "For more placeholders, see man git-log."
+}
+
+# https://stackoverflow.com/a/37840948/2201050
+function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
+
 hl() {
     local pattern=$1
     shift
@@ -612,8 +632,8 @@ function update_ps_1() {
 export -f update_ps_1
 
 ### NVM
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 #### fzf stuff
