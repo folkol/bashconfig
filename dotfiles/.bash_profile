@@ -74,6 +74,14 @@ git-pretty-format() {
     echo "For more placeholders, see man git-log."
 }
 
+git-time-travel() {
+    git log "${1:-origin/master}" --reverse --pretty=format:%h \
+        | while read -r NEXT; do 
+            read -rsn1 -p "Press any key to checkout $NEXT: " </dev/tty
+            git checkout "$NEXT"
+        done
+}
+
 # https://stackoverflow.com/a/37840948/2201050
 function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 
@@ -435,6 +443,12 @@ function pp()
 }
 
 function each() {
+    while read line; do
+        "$@" $line
+    done
+}
+
+function repeat() {
     while read line; do
         for f in "$@"; do
             $f $line
