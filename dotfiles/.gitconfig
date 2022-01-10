@@ -40,6 +40,8 @@
     excludesfile = /Users/folkol/.gitignore_global
 
 [alias]
+    all = cat-file --batch-check --batch-all-objects --unordered
+    alias = config --get-regexp ^alias\\.
     new = log -u --since='1 week ago'
     co = checkout
     st = status
