@@ -1,5 +1,6 @@
 set colored-completion-prefix On
 set show-all-if-unmodified On
+set show-all-if-ambiguous On
 set completion-query-items -1
 set page-completions Off
 "\eF": vi-forward-bigword

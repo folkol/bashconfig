@@ -275,12 +275,50 @@ EOF
     cat <&3
 }
 
+function kube-get-contexts() {
+    mapfile <<<$(kubectl config get-contexts)
+
+    i=0
+    for line in "${MAPFILE[@]}"; do
+        read NAME _ <<<$(echo "$line" | cut -c 11-)
+        declare -g e$((i++))="$NAME"
+    done
+
+    i=0
+    for line in "${MAPFILE[@]}"; do
+        if [[ $i -gt 0 ]]; then
+            echo -n "[$((i))] $line"
+        else
+            echo -n "    $line"
+        fi
+        (( i++ ))
+    done
+}
+
 function kube-get-pods-all-ns() {
-    mapfile <<<$(kubectl get pods --all-namespaces | grep -v kube-system | tail -n +2)
+    mapfile <<<$(kubectl get pods --all-namespaces | grep -v kube-system)
 
     i=1
     for line in "${MAPFILE[@]}"; do
         read NAMESPACE NAME READY STATUS RESTARTS AGE <<<$(echo $line)
+        declare -g e$((i++))="$NAME -n $NAMESPACE"
+    done
+
+    i=1
+    for line in "${MAPFILE[@]}"; do
+        echo [$((i++))] $line
+    done | column -t
+}
+
+function kube-get-pods() {
+    if [[ -z "$NAMESPACE" ]]; then
+        local NAMESPACE=${1:-default}
+    fi
+    mapfile -s 1 <<<$(kubectl get pods --namespace "$NAMESPACE")
+
+    i=1
+    for line in "${MAPFILE[@]}"; do
+        read NAME READY STATUS RESTARTS AGE <<<$(echo $line)
         declare -g e$((i++))="$NAME -n $NAMESPACE"
     done
 
@@ -508,7 +546,6 @@ complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9
 complete -W '$(cat ~/.my_hosts$ivbar_env)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
-complete -o default -F __start_kubectl k
 
 for file in /usr/local/etc/bash_completion.d/*; do
     source $file
@@ -557,13 +594,16 @@ alias mvn-init="mvn archetype:generate -DgroupId=com.folkol -DartifactId=rx -Dar
 alias uhp="dsh -c -g prod -- cat /ivbar/nagios/data/unhandled-problems.log 2>/dev/null"
 alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
 alias k=kubectl
-alias kgp='kube-get-pods-all-ns'
+alias kgpa='kube-get-pods-all-ns'
+alias kgp='kube-get-pods'
 alias kl='exec_scmb_expand_args kube-logs'
 alias ka='exec_scmb_expand_args kube-attach'
 alias ke='exec_scmb_expand_args kube-exec'
-alias kdp='exec_scmb_expand_args kube-desc pod'
-alias kkp='exec_scmb_expand_args kube-kill pod'
-alias kap='exec_scmb_expand_args kubectl apply -f'
+alias kd='exec_scmb_expand_args kube-desc pod'
+alias kk='exec_scmb_expand_args kube-kill pod'
+alias ka='exec_scmb_expand_args kubectl apply -f'
+alias kgc='kube-get-contexts'
+alias kuc='exec_scmb_expand_args kubectl config use-context'
 alias ss=shellcheck
 alias egg='gg -E'
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
