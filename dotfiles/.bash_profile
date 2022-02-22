@@ -57,6 +57,13 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+bb-ss () {
+    {
+        echo '#!/bin/bash'
+        yq e 'explode(.) | .pipelines.*.*[] | (.step, .parallel[]) | .script[]' bitbucket-pipelines.yml
+    } | shellcheck -
+}
+
 git-pretty-format() {
     echo "%n          newline"
     echo "%%          %"
@@ -296,7 +303,7 @@ function kube-get-contexts() {
 }
 
 function kube-get-pods-all-ns() {
-    mapfile <<<$(kubectl get pods --all-namespaces | grep -v kube-system)
+    mapfile -s 1 <<<$(kubectl get pods --all-namespaces | grep -v kube-system)
 
     i=1
     for line in "${MAPFILE[@]}"; do
@@ -552,6 +559,10 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias safety-db='pyupid'
+alias vimcatyaml='vimcat -c "set syntax=yaml"'
+alias kcs='fzf <~/.kubectl-cheat-sheet'
+alias jsonpaths='jq -rc "path(..)|[.[]|tostring]|join(\".\")"'
 alias d='date "+%Y-%m-%d"'
 alias kgetall='kubectl get namespace,replicaset,secret,nodes,job,daemonset,statefulset,ingress,configmap,pv,pvc,service,deployment,pod --all-namespaces'
 alias which='echo type'
@@ -581,6 +592,7 @@ alias pg='pgrep -fil'
 alias nmap-help='echo https://securitytrails.com/blog/top-15-nmap-commands-to-scan-remote-hosts'
 alias osenv='env | grep ^OS_ | grep -v OS_PASSWORD'
 alias noos='unset ${!OS_@}'
+# alias whatismyip='curl -s https://api.ipify.org'
 alias whatismyip='dig -4 @resolver1.opendns.com myip.opendns.com +short'
 alias whatismyipgoogle='dig TXT +short o-o.myaddr.l.google.com @ns1.google.com'
 alias pcat=pygmentize
