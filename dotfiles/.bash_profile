@@ -559,6 +559,8 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias perltoc='man perltoc'
+alias perllint=perlcritic
 alias safety-db='pyupid'
 alias vimcatyaml='vimcat -c "set syntax=yaml"'
 alias kcs='fzf <~/.kubectl-cheat-sheet'
@@ -583,7 +585,7 @@ alias docker-for-mac-linux-vm='docker run -it --privileged --pid=host debian nse
 alias ocr=tesseract
 alias ruler='echo "0....|....1....|....2....|....3....|....4....|....5....|....6....|....7....|....8....|....9....|....a"'
 alias gitauthors='git log --pretty=format:%an | sort | uniq -c | sort -rn'
-alias man='MANWIDTH=100 LESSOPEN="|- pr -to $(( ($(tput cols) - 100) / 2))" man'
+alias man='MANWIDTH=100 LESSOPEN="|- pr -to $(( ($(tput cols) - 100) / 2)) %s" man'
 alias mkpassphrase='echo $(gshuf --random-source=/dev/random -n 3 /usr/share/dict/words | sed "N;N;s/\n/ /g")'
 # commented out because it breaks buffer switching in less, e.g. h -> q
 #alias man='MANWIDTH=100 LESSOPEN="|- pr -to $(( ($(tput cols) - 100) / 2))" man'

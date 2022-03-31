@@ -3,5 +3,6 @@ set show-all-if-unmodified On
 set show-all-if-ambiguous On
 set completion-query-items -1
 set page-completions Off
+#space: magic-space
 "\eF": vi-forward-bigword
 "\eB": vi-backward-bigword
