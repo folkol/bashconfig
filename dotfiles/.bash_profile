@@ -559,6 +559,7 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias snippets=tldr  # online page with command line snippets tldr.sh
 alias perltoc='man perltoc'
 alias perllint=perlcritic
 alias safety-db='pyupid'
