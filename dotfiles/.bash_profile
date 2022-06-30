@@ -92,6 +92,21 @@ git-time-travel() {
 # https://stackoverflow.com/a/37840948/2201050
 function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 
+h ()
+{
+    if [ $# -eq 0 ]; then
+        ls -d -1 ~/Library/Containers/com.folkol.MenuBarHint/Data/Library/Application\ Support/MenuBarHint/*;
+    else
+        touch ~/Library/Containers/com.folkol.MenuBarHint/Data/Library/Application\ Support/MenuBarHint/"$*";
+    fi
+}
+
+rust-desugar() {
+    rustc +nightly -Zunpretty=hir "$@" \
+        | rustfmt \
+        | vimcat -c 'set syntax=rust'
+}
+
 hl() {
     local pattern=$1
     shift
@@ -776,3 +791,5 @@ if [ -f '/usr/local/opt/google-cloud-sdk/path.bash.inc' ]; then . '/usr/local/op
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/usr/local/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/local/opt/google-cloud-sdk/completion.bash.inc'; fi
+
+\which hugo &>/dev/null && . <(hugo completion bash)
