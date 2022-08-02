@@ -598,6 +598,7 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias chars='grep -o .'
 alias upper='tr [:lower:] [:upper:]'
 alias lower='tr [:upper:] [:lower:]'
 alias markdown-render='npx termd'
