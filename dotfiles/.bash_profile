@@ -57,6 +57,11 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+summary() {
+    local query="$(urlencode "$@")"
+    curl -s "https://api.duckduckgo.com/?format=json&q=$query" | jq -r .Abstract | fold -s -w 72
+}
+
 bb-ss () {
     {
         echo '#!/bin/bash'
@@ -90,12 +95,31 @@ git-time-travel() {
 }
 
 # https://stackoverflow.com/a/37840948/2201050
-function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
+# function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
+
+# https://gist.github.com/cdown/1163649
+
+urlencode() {
+    local input="$@"
+    local length="${#input}"
+    for (( i = 0; i < length; i++ )); do
+        local c="${input:$i:1}"
+        case $c in
+            [a-zA-Z0-9.~_-]) LC_COLLATE=C printf '%s' "$c" ;;
+            *) LC_COLLATE=C printf '%%%02X' "'$c" ;;
+        esac
+    done
+}
+
+urldecode() {
+    local url_encoded="${1//+/ }"
+    printf '%b' "${url_encoded//%/\\x}"
+}
 
 h ()
 {
     if [ $# -eq 0 ]; then
-        ls -d -1 ~/Library/Containers/com.folkol.MenuBarHint/Data/Library/Application\ Support/MenuBarHint/*;
+        ls -d -1 ~/Library/Containers/com.folkol.MenuBarHint/Data/Library/Application\ Support/MenuBarHint/* 2>/dev/null || echo '[no hints, add with "h somehint"]'
     else
         touch ~/Library/Containers/com.folkol.MenuBarHint/Data/Library/Application\ Support/MenuBarHint/"$*";
     fi
@@ -574,6 +598,9 @@ for file in /usr/local/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias upper='tr [:lower:] [:upper:]'
+alias lower='tr [:upper:] [:lower:]'
+alias markdown-render='npx termd'
 alias snippets=tldr  # online page with command line snippets tldr.sh
 alias perltoc='man perltoc'
 alias perllint=perlcritic
@@ -622,7 +649,7 @@ alias gcom='git checkout master'
 alias gh='git-hot'
 alias mvn-init="mvn archetype:generate -DgroupId=com.folkol -DartifactId=rx -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false"
 alias uhp="dsh -c -g prod -- cat /ivbar/nagios/data/unhandled-problems.log 2>/dev/null"
-alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
+#alias urldecode="perl -pe 's/\+/ /g; s/%(..)/chr(hex(\$1))/eg'"
 alias k=kubectl
 alias kgpa='kube-get-pods-all-ns'
 alias kgp='kube-get-pods'
