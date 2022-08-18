@@ -58,6 +58,16 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+function todo() {
+    if [[ $# == 0 ]]; then
+        cat ~/Documents/notes/todos
+        echo "====================="
+        rg TODO ~/Documents/notes
+    else
+        echo "$@" >>~/Documents/notes/todos
+    fi
+}
+
 function tscc() {
     if [[ $# == 0 ]]; then
         local infiledir=$(mktemp -d)
@@ -621,6 +631,8 @@ for file in /opt/homebrew/etc/bash_completion.d/*; do
 done
 
 ### ALIASES
+alias td=todo
+alias vimtodo="vim ~/Documents/notes/todos"
 alias chars='grep -o .'
 alias upper='tr [:lower:] [:upper:]'
 alias lower='tr [:upper:] [:lower:]'
@@ -666,7 +678,7 @@ alias whatismyip='dig -4 @resolver1.opendns.com myip.opendns.com +short'
 alias whatismyipgoogle='dig TXT +short o-o.myaddr.l.google.com @ns1.google.com'
 alias pcat=pygmentize
 alias passphrase='gshuf /usr/share/dict/words | head -n 3 | tr "\n" " "'
-alias todo='gg todo'
+#alias todo='gg todo'
 alias jp='jupyter notebook'
 alias vb='vim ~/.bash_profile'
 alias gcom='git checkout master'
@@ -732,6 +744,7 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 ### ENVIRONMENT
+#todo=~/Documents/notes/todos
 #export LESS='-iMFXRj4#10'
 export LESS='-iMFXRj4a#10'
 export LESS='-iMXRj4#10'
