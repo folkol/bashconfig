@@ -73,5 +73,5 @@ export -f updatePrompt
 
 # Bash shell executes this function just before displaying the PS1 variable
 export PROMPT_COMMAND='updatePrompt'
-source "$HOME/.cargo/env"
-. "$HOME/.cargo/env"
+#source "$HOME/.cargo/env"
+##. "$HOME/.cargo/env"

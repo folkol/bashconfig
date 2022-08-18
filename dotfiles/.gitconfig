@@ -57,3 +57,6 @@
     default = upstream
 [pull]
 	rebase = false
+[user]
+	name = Matte
+	email = mattias.johansson@funnel.io

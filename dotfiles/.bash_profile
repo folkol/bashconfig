@@ -36,6 +36,7 @@ export PATH="/usr/local/opt/gettext/bin:$PATH"
 export PATH="$HOME/Library/Python/3.7/bin/:$PATH"
 export PATH="$HOME/Library/Python/3.6/bin/:$PATH"
 export PATH="$PATH:~/.tacit"
+export PATH="$PATH:/opt/homebrew/bin/"
 
 ### IMPORTS
 source ~/.bashrc ### EXPORTS
@@ -56,6 +57,28 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
+
+function tscc() {
+    if [[ $# == 0 ]]; then
+        local infiledir=$(mktemp -d)
+        local infile="${infiledir}/main.ts"
+        cat >$infile
+    else
+        local infile=$1
+    fi
+    npx tsc --pretty --out /dev/stdout "${infile}" | vimcat -c 'set syntax=JavaScript'
+}
+
+function cdk-redeploy() {
+    [[ $# > 0 ]] || {
+        echo "usage: cdk-deploy '\$stack'"
+        return 1
+    }
+    local stack=$1
+    (
+        cd "$(git rev-parse --show-toplevel)/deploy" && aws-vault exec qwaya -- yarn cdk deploy -e "$stack"
+    )
+}
 
 summary() {
     local query="$(urlencode "$@")"
@@ -593,7 +616,7 @@ complete -W '$(cat ~/.my_hosts$ivbar_env)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
 
-for file in /usr/local/etc/bash_completion.d/*; do
+for file in /opt/homebrew/etc/bash_completion.d/*; do
     source $file
 done
 
@@ -748,6 +771,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 #### fzf stuff
 export FZF_DEFAULT_COMMAND=fd
 alias f=fzf
@@ -811,7 +838,7 @@ alias emacs='exec_scmb_expand_args /usr/bin/env emacs'
 complete -o bashdefault -F get_era_ticket gc
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-. "$HOME/.cargo/env"
+#. "$HOME/.cargo/env"
 if [ -f '/Users/folkol/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/folkol/Downloads/google-cloud-sdk/completion.bash.inc'; fi
 
 # The next line updates PATH for the Google Cloud SDK.
