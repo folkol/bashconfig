@@ -60,23 +60,35 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 function todo() {
     if [[ $# == 0 ]]; then
-        cat ~/Documents/notes/todos
-        echo "====================="
+        vim ~/Documents/notes/todos
+    else
+        echo "$@" >>~/Documents/notes/todos
+    fi
+}
+
+function todos() {
+    if [[ $# == 0 ]]; then
+        echo "=== found in notes ==="
         rg TODO ~/Documents/notes
+        echo
+        echo "=== explicit ==="
+        sed 's/^/- /' ~/Documents/notes/todos
     else
         echo "$@" >>~/Documents/notes/todos
     fi
 }
 
 function tscc() {
+    local tmpdir=$(mktemp -d)
     if [[ $# == 0 ]]; then
-        local infiledir=$(mktemp -d)
-        local infile="${infiledir}/main.ts"
+        local infile="$tmpdir/main.ts"
         cat >$infile
     else
         local infile=$1
     fi
-    npx tsc --pretty --out /dev/stdout "${infile}" | vimcat -c 'set syntax=JavaScript'
+    local outfile="$tmpdir/main.js"
+    npx tsc --pretty --out "$outfile" "$infile"
+    vimcat -c 'set syntax=JavaScript' "$outfile"
 }
 
 function cdk-redeploy() {
