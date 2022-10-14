@@ -37,6 +37,7 @@ export PATH="$HOME/Library/Python/3.7/bin/:$PATH"
 export PATH="$HOME/Library/Python/3.6/bin/:$PATH"
 export PATH="$PATH:~/.tacit"
 export PATH="$PATH:/opt/homebrew/bin/"
+export PATH="/Users/folkol/go/go1.19.1/bin:$PATH"
 
 ### IMPORTS
 source ~/.bashrc ### EXPORTS
@@ -76,6 +77,14 @@ function todos() {
     else
         echo "$@" >>~/Documents/notes/todos
     fi
+}
+
+function todos() {
+    echo '=== explicit todos ==='
+    sed 's/^/- /' ~/Documents/notes/todos
+    echo
+    echo '=== found in notes ==='
+    rg TODO ~/Documents/notes
 }
 
 function tscc() {
@@ -639,10 +648,21 @@ complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
 
 for file in /usr/local/etc/bash_completion.d/* /opt/homebrew/etc/bash_completion.d/*; do
+complete_it() { COMPREPLY=( $(itermocil --list | grep '^ ') ); }
+complete -F complete_it it
+
+complete_aws_vault() { COMPREPLY=($(aws configure list-profiles)); }
+complete -F complete_aws_vault aws-vault
+complete -F complete_aws_vault av
+
+for file in /opt/homebrew/etc/bash_completion.d/*; do
     source $file
 done 2>/dev/null
 
 ### ALIASES
+alias av=aws-vault
+alias it=itermocil
+alias histogram='sort | uniq -c | sort -rn'
 alias td=todo
 alias vimtodo="vim ~/Documents/notes/todos"
 alias chars='grep -o .'
@@ -714,7 +734,7 @@ alias egg='gg -E'
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
 alias gdm='git diff origin/master'
 alias gmm='git merge origin/master'
-alias gg='git grep -iI'
+alias gg='git grep -iEI'
 alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 alias funiq="awk '!seen[\$0]++'"
 alias mkpasswd='openssl rand -base64 48'
