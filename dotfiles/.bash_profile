@@ -648,6 +648,9 @@ complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
 
 for file in /usr/local/etc/bash_completion.d/* /opt/homebrew/etc/bash_completion.d/*; do
+    source $file
+done 2>/dev/null
+
 complete_it() { COMPREPLY=( $(itermocil --list | grep '^ ') ); }
 complete -F complete_it it
 
