@@ -198,7 +198,6 @@ nnoremap <Leader>/ :Ack!<Space>
 " Navigate quickfix list with ease
 nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
-nnoremap <C-_> :Rgcw<CR>
 
 " .vim/bundles/fzf.vim/plugin/fzf.vim
 " +\'command!      -bang -nargs=0 Rgcw                      call
@@ -206,6 +205,10 @@ nnoremap <C-_> :Rgcw<CR>
 " --smart-case -- ".shellescape(expand("<cword>")), 1, s:p(<bang>0),
 "  <bang>0)', "
 " nnoremap <C-?> :Rgcw<CR> "
+set rtp+=/opt/homebrew/bin/fzf
+
+" nnoremap <C-?> :Rg<CR>
+nnoremap <Leader>/ :Rg<CR>
 
 set isk+=-
 " map <C-_> :Ack<Space> "
@@ -222,3 +225,5 @@ let g:ctags_statusline=1
 "let g:syntastic_check_on_wq = 0
 
 set autoindent
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|.class\|target'

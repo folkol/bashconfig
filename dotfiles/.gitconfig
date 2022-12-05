@@ -63,3 +63,11 @@
 	email = mattias.johansson@funnel.io
 [commit]
 	template = /Users/folkol/.gitmessage
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[git-mob]
+	co-author = Viktor Tell <viktor.tell@funnel.io>
+	co-author = Mark Tombs <mark@funnel.io>

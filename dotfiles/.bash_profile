@@ -59,6 +59,35 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+function vx() {
+    aws-vault exec ${ACCOUNT:-qwaya} -- "$@"
+}
+
+function operator-presedence-javascript() {
+    # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+    # https://www.calculateme.com/text/html-table-to-text
+
+    echo 'left-associative, except for exponentiation, assignment and ternary'
+    echo '( )'
+    echo '. [] ?. ()'
+    echo 'x++ x--'
+    echo '! ~ + - ++x --x typeof void delete await'
+    echo '**'
+    echo '* / %'
+    echo '+ -'
+    echo '<< >> >>>'
+    echo '< <= > >= in instancaeof'
+    echo '== != === !=='
+    echo '&'
+    echo '^'
+    echo '|'
+    echo '&&'
+    echo '|| ??'
+    echo '= op= ?: => yield yield* ...'
+    echo ','
+}
+
+
 function todo() {
     if [[ $# == 0 ]]; then
         vim ~/Documents/notes/todos
@@ -647,6 +676,7 @@ complete -W '$(cat ~/.my_hosts$ivbar_env)' ssh
 complete -W "\`gpg -h | egrep -o -- '--\S+'\`" gpg
 complete -C 'aws_completer' aws
 
+# https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 for file in /usr/local/etc/bash_completion.d/* /opt/homebrew/etc/bash_completion.d/*; do
     source $file
 done 2>/dev/null
