@@ -1,13 +1,15 @@
 # Leave my ^S alone!
 # if tty -s; then
-stty stop undef 2>/dev/null
-stty start undef 2>/dev/null
+if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
+    stty stop undef 2>/dev/null
+    stty start undef 2>/dev/null
+fi
 # fi
 
 ### HISTORY COMMANDS
 
 shopt -s histappend
-shopt -s globstar
+#shopt -s globstar
 PROMPT_COMMAND="history -n; history -a; $PROMPT_COMMAND"
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=
@@ -60,7 +62,7 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 ### FUNCTIONS
 
 function vx() {
-    aws-vault exec ${ACCOUNT:-qwaya} -- "$@"
+    aws-vault exec ${ACCOUNT:-qwaya} -- ${@:-echo something works}
 }
 
 function operator-presedence-javascript() {
@@ -711,7 +713,6 @@ alias kcs='fzf <~/.kubectl-cheat-sheet'
 alias jsonpaths='jq -rc "path(..)|[.[]|tostring]|join(\".\")"'
 alias d='date "+%Y-%m-%d"'
 alias kgetall='kubectl get namespace,replicaset,secret,nodes,job,daemonset,statefulset,ingress,configmap,pv,pvc,service,deployment,pod --all-namespaces'
-alias which='echo type'
 alias banner=figlet
 alias gn='git next'
 alias gp='git prev'
@@ -746,7 +747,7 @@ alias passphrase='gshuf /usr/share/dict/words | head -n 3 | tr "\n" " "'
 #alias todo='gg todo'
 alias jp='jupyter notebook'
 alias vb='vim ~/.bash_profile'
-alias gcom='git checkout master'
+alias gcom='git checkout master || git checkout main'
 alias gh='git-hot'
 alias mvn-init="mvn archetype:generate -DgroupId=com.folkol -DartifactId=rx -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false"
 alias uhp="dsh -c -g prod -- cat /ivbar/nagios/data/unhandled-problems.log 2>/dev/null"
@@ -765,8 +766,8 @@ alias kuc='exec_scmb_expand_args kubectl config use-context'
 alias ss=shellcheck
 alias egg='gg -E'
 alias keycode='{ stty raw min 1 time 20 -echo; dd count=1 2> /dev/null | od -vAn -tx1; stty sane; }'
-alias gdm='git diff origin/master'
-alias gmm='git merge origin/master'
+alias gdm='git diff origin/master || git diff origin/main'
+alias gmm='git merge origin/master || git merge origin/main'
 alias gg='git grep -iEI'
 alias dockviz="docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 alias funiq="awk '!seen[\$0]++'"
@@ -775,14 +776,14 @@ alias v='test -d venv || python3 -m venv venv && . venv/bin/activate'
 alias m='cd ~/code/mota'
 alias s='cd /Users/folkol/code/soda/ansible'
 alias i='cd ~/ivbar'
-alias t='tree -L 3'
+alias t='tree --gitfile ~/.gitignore_global --gitignore -L 3'
 alias l=ll
 alias kafka-offset="docker exec -it ace.kafka /bin/sh -c '/opt/kafka*/bin//kafka-run-class.sh kafka.tools.GetOffsetShell --topic polopoly.changelist --broker-list localhost:9092' | cut -d: -f3"
 alias dockershell='screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty'
 alias git-diff-ignore-whitespace='git diff --word-diff-regex=[^[:space:]]'
 alias docker-kill-all='docker ps -qa | each "docker stop" "docker rm"'
 alias docker-stats-names='docker stats `docker ps --format "{{.Names}}"`'
-alias serve='python -m http.server'
+alias serve='python3 -m http.server'
 alias strip="sed -E 's/^[\t ]*(.*)[\t ]*$/\1/'"
 alias gitbranches='git branch -a --sort=-committerdate --color -v | head'
 alias ktail='docker exec -it ace.kafka sh -c "/opt/kafka*/bin/kafka-console-consumer.sh --topic polopoly.changelist --zookeeper localhost:2181"'
@@ -926,3 +927,5 @@ if [ -f '/usr/local/opt/google-cloud-sdk/path.bash.inc' ]; then . '/usr/local/op
 if [ -f '/usr/local/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/local/opt/google-cloud-sdk/completion.bash.inc'; fi
 
 \which hugo &>/dev/null && . <(hugo completion bash)
+
+PATH="$PATH:~/.cargo/bin"

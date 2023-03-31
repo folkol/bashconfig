@@ -58,9 +58,9 @@
     default = upstream
 [pull]
 	rebase = false
-[user]
-	name = Matte
-	email = mattias.johansson@funnel.io
+ [user]
+    name = Matte
+    email = mattias.johansson@funnel.io
 [commit]
 	template = /Users/folkol/.gitmessage
 [filter "lfs"]
@@ -69,5 +69,4 @@
 	process = git-lfs filter-process
 	required = true
 [git-mob]
-	co-author = Viktor Tell <viktor.tell@funnel.io>
-	co-author = Mark Tombs <mark@funnel.io>
+	co-author = Pär Arvidsson <par@funnel.io>

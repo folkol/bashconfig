@@ -4,3 +4,5 @@ out
 *.iml
 .python-version
 venv27
+node_modules
+dist

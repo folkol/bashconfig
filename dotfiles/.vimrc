@@ -227,3 +227,4 @@ let g:ctags_statusline=1
 set autoindent
 
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|.class\|target'
+map <F1> <Nop>
