@@ -75,3 +75,5 @@ export -f updatePrompt
 export PROMPT_COMMAND='updatePrompt'
 #source "$HOME/.cargo/env"
 ##. "$HOME/.cargo/env"
+
+# . "/opt/homebrew/opt/asdf/libexec/asdf.sh"

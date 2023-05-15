@@ -61,6 +61,15 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+aws-logs ()
+{
+    local group=$1;
+    if [ -z "$group" ]; then
+        group=$(aws logs describe-log-groups | jq -r '.logGroups[].logGroupName' | fzf);
+    fi;
+    aws logs tail --since 1h --follow "$group"
+}
+
 function vx() {
     aws-vault exec ${ACCOUNT:-qwaya} -- ${@:-echo something works}
 }
@@ -695,6 +704,7 @@ for file in /opt/homebrew/etc/bash_completion.d/*; do
 done 2>/dev/null
 
 ### ALIASES
+alias json_paths="jq -r 'leaf_paths | join(\"/\")'"
 alias av=aws-vault
 alias it=itermocil
 alias histogram='sort | uniq -c | sort -rn'
