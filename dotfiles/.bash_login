@@ -1,2 +1,1 @@
-echo "Now executing ~/.bash_login"source "$HOME/.cargo/env"
-# . "$HOME/.cargo/env"
+echo In .bash_login

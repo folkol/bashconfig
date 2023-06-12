@@ -20,26 +20,26 @@ export HISTTIMEFORMAT="%d/%m/%y %T "
 ### PATH
 
 #export PATH=$(brew --prefix openssl)/bin:$PATH
-export PATH="/usr/local/opt/openssl:$PATH"
-export PATH="/usr/local/opt/openssl/bin:$PATH"
-export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
-export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
-export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
-export PATH=/usr/local/bin:$PATH
-export PATH="/Users/folkol/code/ace/system-tests/test-scripts/bin:$PATH"
-export PATH="$PATH:/Users/folkol/Library/Python/2.7/bin"
+#export PATH="/usr/local/opt/openssl:$PATH"
+#export PATH="/usr/local/opt/openssl/bin:$PATH"
+#export PATH=$PATH:/Users/folkol/bin/scripts:/Users/folkol/bin/polopoly:/Users/folkol/bin
+#export PATH=/usr/bin/wget:/usr/local/apache-maven/apache-maven-2.2.1/bin/mvn:/usr/local/sbin:$PATH
+#export PATH=$PATH:/Applications/JD-GUI.app/Contents/MacOS
+#export PATH=/usr/local/bin:$PATH
+#export PATH="/Users/folkol/code/ace/system-tests/test-scripts/bin:$PATH"
+#export PATH="$PATH:/Users/folkol/Library/Python/2.7/bin"
 export PATH="$PATH:/Users/folkol/code/futils/bin"
-export PATH="/usr/local/opt/flex/bin:$PATH"
-export PATH="/usr/local/opt/texinfo/bin/:$PATH"
-export PATH="/Users/folkol/code/futils/bin:$PATH"
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+#export PATH="/usr/local/opt/flex/bin:$PATH"
+#export PATH="/usr/local/opt/texinfo/bin/:$PATH"
+#export PATH="/Users/folkol/code/futils/bin:$PATH"
+#export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
-export PATH="/usr/local/opt/gettext/bin:$PATH"
-export PATH="$HOME/Library/Python/3.7/bin/:$PATH"
-export PATH="$HOME/Library/Python/3.6/bin/:$PATH"
-export PATH="$PATH:~/.tacit"
+#export PATH="/usr/local/opt/gettext/bin:$PATH"
+#export PATH="$HOME/Library/Python/3.7/bin/:$PATH"
+#export PATH="$HOME/Library/Python/3.6/bin/:$PATH"
+#export PATH="$PATH:~/.tacit"
 export PATH="$PATH:/opt/homebrew/bin/"
-export PATH="/Users/folkol/go/go1.19.1/bin:$PATH"
+#export PATH="/Users/folkol/go/go1.19.1/bin:$PATH"
 
 ### IMPORTS
 source ~/.bashrc ### EXPORTS
@@ -60,6 +60,15 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
+
+get_fb ()
+{
+    [ -z "$TOKEN" ] && {
+        echo 'Missing $TOKEN' 1>&2;
+        return 1
+    };
+    curl "https://funnel.firebaseio.com/${1}.json?auth=$TOKEN"
+}
 
 aws-logs ()
 {
@@ -704,6 +713,7 @@ for file in /opt/homebrew/etc/bash_completion.d/*; do
 done 2>/dev/null
 
 ### ALIASES
+alias asciibanner=figlet
 alias json_paths="jq -r 'leaf_paths | join(\"/\")'"
 alias av=aws-vault
 alias it=itermocil
@@ -816,7 +826,7 @@ alias kafka_consume='kafka-console-consumer.sh --zookeeper localhost:2181 --topi
 alias preview='open -a Preview.app -f'
 
 # MacPorts Installer addition on 2013-01-16_at_14:08:26: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 ### ENVIRONMENT
@@ -836,7 +846,7 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 # Setting PATH for Python 3.7
 # The original version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+# PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
 export PATH
 
 # pipx PATH
@@ -939,3 +949,5 @@ if [ -f '/usr/local/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/lo
 \which hugo &>/dev/null && . <(hugo completion bash)
 
 PATH="$PATH:~/.cargo/bin"
+
+unset PROMPT_COMMAND
