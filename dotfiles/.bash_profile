@@ -61,12 +61,13 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
-team-for-source-type ()
+source-type-teams ()
 {
     (
+        echo 'adjust¤Bananalytics'
         cd /Users/folkol/code/funnel-io/connector-plugins/plugins
-        paste -d '¤' <(basename -s .json */source_type_configs/*.json) <(jq -r .info.team */source_type_configs/*.json) | column -t -s '¤'
-    )
+        paste -d '¤' <(basename -s .json */source_type_configs/*.json) <(jq -r .info.team */source_type_configs/*.json)
+    ) | column -t -s '¤'
 }
 
 get_fb ()
