@@ -61,6 +61,42 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+marketing-acronyms() {
+    cat <<HERE
+    from https://cydigitalmarketing.com/what-does-ppc-cpa-cpc-cpm-ctr-ppi-and-cpi-actually-mean/
+CPM (Cost Per Mile/Thousand)
+A confusing one this as many assume it means cost per million, when in actual fact it means cost per thousand or mile (another term), the amount is based on impressions and the base unit is one thousand.
+
+PPC (Pay Per Click)
+Pay Per Click (PPC) and Cost Per Click (CPC) are one and the same in all honesty, the point is you are paying for a click on an advert, and the publisher gets paid for the click, simple.
+
+CPC (Cost Per Click)
+As a publisher the CPC (cost per click) is the amount of revenue that you earn each time a visitor clicks an ad displayed on your blog, website, or article. The advertiser determines how much the CPC for any ad will be.
+
+CTR (Click Through Rate)
+Your CTR (click through rate) will be a sign of the success of your online advertising program or campaign as it will show you how many clicks you are obtaining for impression served.
+
+eCPM (Effective Cost Per Thousand Impressions)
+if you are an advertiser you can use eCPM to work out how much it will cost to have an ad placed on a particular website, this can be helpful if you have a limited budget but really like one publisher and want to be seen on their website with your advert.
+
+CPI (Cost Per Impression)
+A CPI or cost per impression is a price paid for an impression paid to a website owner (publisher) or a network offering placement in search results or on websites.
+
+PPI (Pay Per Impression)
+Similar to CPC and PPC, Pay Per Impression (PPI) and Cost Per Impression (CPI) are used to mean the same thing by different people.
+
+CPA/CPL/CPS (Cost Per Action/Acquisition/Lead/Sale)
+People use many choices for metrics in this area such as a sign up to a newsletter (CPA), an actual sale (CPS) or similar and the terms used will primarily depend on what the action is primarily.
+
+VTR (View Through Rate)
+VTR or (view through rate) is a way of measuring the actual number of post-impression views or responses or ‘view-throughs’ from and sort of display media impressions viewed during and following an online advertising campaign.
+HERE
+}
+
+json-structure() {
+    jq '[path(..)|map(if type=="number" then "[]" else tostring end)|join(".")|split(".[]")|join("[]")]|unique|map("."+.)|.[]'
+}
+
 source-type-teams ()
 {
     (
