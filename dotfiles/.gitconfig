@@ -69,4 +69,4 @@
 	process = git-lfs filter-process
 	required = true
 [git-mob]
-	co-author = Pär Arvidsson <par@funnel.io>
+	co-author = Viktor Tell <viktor.tell@funnel.io>

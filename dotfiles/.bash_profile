@@ -553,7 +553,7 @@ function git_branch_grep() {
 
 function git-hot() {
     local i=1
-    for ref in $(git for-each-ref --count=30 --sort=-committerdate refs/remotes/ --format='%(refname:short)'); do
+    for ref in $(git for-each-ref --count=20 --sort=-committerdate refs/remotes/ --format='%(refname:short)'); do
         echo "  [$i] $ref"
         declare -g "e$((i++))=${ref#*/}"
     done
@@ -589,10 +589,10 @@ invalidate() {
     aws cloudfront create-invalidation --distribution-id EA2XJ4B419376 --paths $paths
 }
 
-drop() {
-    local num_rows=${1:-1}
-    tail -n +$(($num_rows + 1))
-}
+# drop() {
+#     local num_rows=${1:-1}
+#     tail -n +$(($num_rows + 1))
+# }
 
 reduce ()
 {
@@ -996,3 +996,7 @@ if [ -f '/usr/local/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/lo
 PATH="$PATH:~/.cargo/bin"
 
 unset PROMPT_COMMAND
+
+c() {
+    cd "/Users/folkol/code/$({ echo .; ls ~/code; } | fzf)"
+}

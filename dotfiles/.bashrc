@@ -77,3 +77,6 @@ export PROMPT_COMMAND='updatePrompt'
 ##. "$HOME/.cargo/env"
 
 # . "/opt/homebrew/opt/asdf/libexec/asdf.sh"
+#
+. ~/.asdf/asdf.sh
+eval "$(/opt/homebrew/bin/direnv hook bash)"
