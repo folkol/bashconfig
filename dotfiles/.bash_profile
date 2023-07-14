@@ -61,9 +61,31 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+mansect () {
+    # from man man
+    cat <<HERE
+The sections of the manual are:
+ 1.   General Commands Manual
+ 2.   System Calls Manual
+ 3.   Library Functions Manual
+ 4.   Kernel Interfaces Manual
+ 5.   File Formats Manual
+ 6.   Games Manual
+ 7.   Miscellaneous Information Manual
+ 8.   System Manager's Manual
+ 9.   Kernel Developer's Manual
+HERE
+}
+
 mangrep ()
 {
-    gman --where --manpath "$(manpath)" --global-apropos "$@"
+    if [ $# -eq 0 ]; then
+        echo 'usage: [GMAN_OPTS="..."] mangrep pattern' >&2
+        return 1
+    fi
+    # requires `man2ascii` = `mandoc -Tascii` on PATH
+    # invoke with GMAN_OPTS=... if you want to pass additional opts to man, such as -S 1
+    gman --where $GMAN_OPTS --manpath "$(manpath)" --global-apropos "$@" | xargs rg -C3 --pre 'man2ascii' "$@"
 }
 
 marketing-acronyms() {
