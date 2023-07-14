@@ -61,8 +61,9 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
-mangrep () {
-    gman -w -a -M `manpath` -K "$@"
+mangrep ()
+{
+    gman --where --manpath "$(manpath)" --global-apropos "$@"
 }
 
 marketing-acronyms() {
