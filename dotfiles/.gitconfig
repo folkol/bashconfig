@@ -68,5 +68,3 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[git-mob]
-	co-author = Viktor Tell <viktor.tell@funnel.io>

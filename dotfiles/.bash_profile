@@ -61,6 +61,10 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+mangrep () {
+    gman -w -a -M `manpath` -K "$@"
+}
+
 marketing-acronyms() {
     cat <<HERE
     from https://cydigitalmarketing.com/what-does-ppc-cpa-cpc-cpm-ctr-ppi-and-cpi-actually-mean/
@@ -113,6 +117,10 @@ get_fb ()
         return 1
     };
     curl "https://funnel.firebaseio.com/${1}.json?auth=$TOKEN"
+}
+
+list-accounts () {
+    aws-vault exec qwaya -- aws organizations list-accounts --query 'Accounts[*][Id, Name]' --output=text
 }
 
 aws-logs ()
