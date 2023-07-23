@@ -61,6 +61,13 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+hist ()
+{
+    sort -n | uniq -c | while read -r COUNT ITEM; do
+        printf "$ITEM: %${COUNT}s\n" | tr ' ' '*';
+    done
+}
+
 mansect () {
     # from man man
     cat <<HERE
