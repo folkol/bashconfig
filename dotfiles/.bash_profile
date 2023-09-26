@@ -61,6 +61,44 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+aws-regions() {
+cat <<HERE
+us-east-2	US East (Ohio)
+us-east-1	US East (N. Virginia)
+us-west-1	US West (N. California)
+us-west-2	US West (Oregon)
+af-south-1	Africa (Cape Town)
+ap-east-1	Asia Pacific (Hong Kong)
+ap-south-2	Asia Pacific (Hyderabad)
+ap-southeast-3	Asia Pacific (Jakarta)
+ap-southeast-4	Asia Pacific (Melbourne)
+ap-south-1	Asia Pacific (Mumbai)
+ap-northeast-3	Asia Pacific (Osaka)
+ap-northeast-2	Asia Pacific (Seoul)
+ap-southeast-1	Asia Pacific (Singapore)
+ap-southeast-2	Asia Pacific (Sydney)
+ap-northeast-1	Asia Pacific (Tokyo)
+ca-central-1	Canada (Central)
+eu-central-1	Europe (Frankfurt)
+eu-west-1	Europe (Ireland)
+eu-west-2	Europe (London)
+eu-south-1	Europe (Milan)
+eu-west-3	Europe (Paris)
+eu-south-2	Europe (Spain)
+eu-north-1	Europe (Stockholm)
+eu-central-2	Europe (Zurich)
+il-central-1	Israel (Tel Aviv)
+me-south-1	Middle East (Bahrain)
+me-central-1	Middle East (UAE)
+sa-east-1	South America (São Paulo)
+HERE
+}
+
+funnel_apps() {
+	echo "8007: MELD API"
+	echo "8028: PRICING APP"
+}
+
 hist ()
 {
     sort -n | uniq -c | while read -r COUNT ITEM; do
@@ -796,6 +834,9 @@ for file in /opt/homebrew/etc/bash_completion.d/*; do
 done 2>/dev/null
 
 ### ALIASES
+alias git-mob-all='git mob vt tb pa'
+alias funnel-urls='(cd /Users/folkol/code/funnel-io && rg -I -o "https?://[a-zA-Z0-9.-]+\.funnel.io" | sort -u)'
+alias cutt='cut -c-$COLUMNS'
 alias asciibanner=figlet
 alias json_paths="jq -r 'leaf_paths | join(\"/\")'"
 alias av=aws-vault
@@ -1032,8 +1073,6 @@ if [ -f '/usr/local/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/lo
 \which hugo &>/dev/null && . <(hugo completion bash)
 
 PATH="$PATH:~/.cargo/bin"
-
-unset PROMPT_COMMAND
 
 c() {
     cd "/Users/folkol/code/$({ echo .; ls ~/code; } | fzf)"

@@ -80,3 +80,15 @@ export PROMPT_COMMAND='updatePrompt'
 #
 . ~/.asdf/asdf.sh
 eval "$(/opt/homebrew/bin/direnv hook bash)"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
+
+# pnpm
+export PNPM_HOME="/Users/folkol/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
