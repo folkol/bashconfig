@@ -61,6 +61,27 @@ export VAULT_ADDR=https://vault.ivbar.com:8200
 
 ### FUNCTIONS
 
+accs ()
+{
+    local DB=/Users/folkol/code/funnel-io/panther-analysis/lookup_tables/aws_accounts/aws_accounts_data.csv
+    if [ "$#" -eq 0 ]; then
+        fzf < "$DB"
+    else
+        for acc in "$@"
+        do
+            grep "$acc" "$DB"
+        done
+    fi
+}
+
+notes() {
+	if [ $# -eq 0 ]; then
+		tail -n 20 ~/Documents/notes/main.md
+	else
+		rg -C5 "$@" ~/Documents/notes/
+	fi
+}
+
 aws-regions() {
 cat <<HERE
 us-east-2	US East (Ohio)
@@ -335,10 +356,10 @@ urlencode() {
     done
 }
 
-urldecode() {
-    local url_encoded="${1//+/ }"
-    printf '%b' "${url_encoded//%/\\x}"
-}
+# urldecode() {
+#     local url_encoded="${1//+/ }"
+#     printf '%b' "${url_encoded//%/\\x}"
+# }
 
 h ()
 {
@@ -834,6 +855,7 @@ for file in /opt/homebrew/etc/bash_completion.d/*; do
 done 2>/dev/null
 
 ### ALIASES
+alias stripansi="sed -e 's/\x1b\[[0-9;]*m//g'"
 alias git-mob-all='git mob vt tb pa'
 alias funnel-urls='(cd /Users/folkol/code/funnel-io && rg -I -o "https?://[a-zA-Z0-9.-]+\.funnel.io" | sort -u)'
 alias cutt='cut -c-$COLUMNS'
@@ -1072,7 +1094,7 @@ if [ -f '/usr/local/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/lo
 
 \which hugo &>/dev/null && . <(hugo completion bash)
 
-PATH="$PATH:~/.cargo/bin"
+PATH="$PATH:/Users/folkol/.cargo/bin"
 
 c() {
     cd "/Users/folkol/code/$({ echo .; ls ~/code; } | fzf)"

@@ -6,3 +6,4 @@ out
 venv27
 node_modules
 dist
+.DS_Store

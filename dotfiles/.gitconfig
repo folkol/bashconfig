@@ -71,6 +71,6 @@
 [pretty]
 	oneline-with-author = format:%h|%cI|%cn|%s
 [git-mob]
-	co-author = Viktor Tell <viktor.tell@funnel.io>
 	co-author = Thorir Bjarnason <thorir@funnel.io>
+	co-author = Viktor Tell <viktor.tell@funnel.io>
 	co-author = Pär Arvidsson <par@funnel.io>
