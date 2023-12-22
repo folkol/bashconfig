@@ -92,3 +92,4 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

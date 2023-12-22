@@ -40,6 +40,7 @@ export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
 #export PATH="$PATH:~/.tacit"
 export PATH="$PATH:/opt/homebrew/bin/"
 #export PATH="/Users/folkol/go/go1.19.1/bin:$PATH"
+export NPM_TOKEN=
 
 ### IMPORTS
 source ~/.bashrc ### EXPORTS
@@ -222,7 +223,14 @@ aws-logs ()
 }
 
 function vx() {
-    aws-vault exec ${ACCOUNT:-qwaya} -- ${@:-echo something works}
+    local NPM_TOKEN=$(
+        aws-vault exec qwaya -- \
+            aws secretsmanager get-secret-value \
+                --region eu-west-1 \
+                --secret-id arn:aws:secretsmanager:eu-west-1:489064650666:secret:npm-readonly-token-AHaomK \
+                --output text \
+                --query SecretString)
+    NPM_TOKEN=$NPM_TOKEN aws-vault exec ${ACCOUNT:-qwaya} -- ${@:-echo something works}
 }
 
 function operator-presedence-javascript() {
@@ -332,7 +340,7 @@ git-pretty-format() {
 }
 
 git-time-travel() {
-    git log "${1:-origin/master}" --reverse --pretty=format:%h \
+    git log "${1:-origin/main}" --reverse --pretty=format:%h $2 \
         | while read -r NEXT; do 
             read -rsn1 -p "Press any key to checkout $NEXT: " </dev/tty
             git checkout "$NEXT"
@@ -855,6 +863,7 @@ for file in /opt/homebrew/etc/bash_completion.d/*; do
 done 2>/dev/null
 
 ### ALIASES
+alias fzfp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 alias stripansi="sed -e 's/\x1b\[[0-9;]*m//g'"
 alias git-mob-all='git mob vt tb pa'
 alias funnel-urls='(cd /Users/folkol/code/funnel-io && rg -I -o "https?://[a-zA-Z0-9.-]+\.funnel.io" | sort -u)'
