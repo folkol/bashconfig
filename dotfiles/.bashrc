@@ -93,3 +93,5 @@ case ":$PATH:" in
 esac
 # pnpm end
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.asdfh/asdf.sh ] && . ~/.asdf/asdf.sh
+[ -f /opt/homebrew/bin/direnv ] && eval "$(/opt/homebrew/bin/direnv hook bash)"

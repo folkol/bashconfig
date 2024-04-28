@@ -41,6 +41,7 @@ export PATH="/Users/folkol/bin:/Users/folkol/bin/scripts:$PATH"
 export PATH="$PATH:/opt/homebrew/bin/"
 #export PATH="/Users/folkol/go/go1.19.1/bin:$PATH"
 export NPM_TOKEN=
+export PATH="$PATH:/Users/folkol/code/apl-inspired-filters/target/release/"
 
 ### IMPORTS
 source ~/.bashrc ### EXPORTS
@@ -471,14 +472,6 @@ getcert() {
 
     </dev/null openssl s_client -connect "$1:443" | openssl x509 -noout -text
 }
-news ()
-{
-    curl -s 'https://newsapi.org/v2/top-headlines?language=en' \
-        -G \
-        -d @/Users/folkol/.newsapi.key \
-        | jq -r '.articles[] | "\(.title)\t\(.url)"' \
-        | column -s$'\t' -t
-}
 
 function ykotp() {
     # https://demo.yubico.com/otp/verify
@@ -868,6 +861,7 @@ alias stripansi="sed -e 's/\x1b\[[0-9;]*m//g'"
 alias git-mob-all='git mob vt tb pa'
 alias funnel-urls='(cd /Users/folkol/code/funnel-io && rg -I -o "https?://[a-zA-Z0-9.-]+\.funnel.io" | sort -u)'
 alias cutt='cut -c-$COLUMNS'
+alias uuid=uuidgen
 alias asciibanner=figlet
 alias json_paths="jq -r 'leaf_paths | join(\"/\")'"
 alias av=aws-vault
@@ -903,7 +897,6 @@ alias vecka='date +"%U"'
 alias dns-cache-clear='sudo killall -HUP mDNSResponder'
 alias docker-for-mac-linux-vm='docker run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh'
 alias ocr=tesseract
-alias ruler='echo "0....|....1....|....2....|....3....|....4....|....5....|....6....|....7....|....8....|....9....|....a"'
 alias gitauthors='git log --pretty=format:%an | sort | uniq -c | sort -rn'
 alias man='MANWIDTH=100 LESSOPEN="|- pr -to $(( ($(tput cols) - 100) / 2)) %s" man'
 alias mkpassphrase='echo $(gshuf --random-source=/dev/random -n 3 /usr/share/dict/words | sed "N;N;s/\n/ /g")'
@@ -1104,6 +1097,9 @@ if [ -f '/usr/local/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/lo
 \which hugo &>/dev/null && . <(hugo completion bash)
 
 PATH="$PATH:/Users/folkol/.cargo/bin"
+PATH="$PATH:$HOME/.cargo/bin"
+
+unset PROMPT_COMMAND
 
 c() {
     cd "/Users/folkol/code/$({ echo .; ls ~/code; } | fzf)"
