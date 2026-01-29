@@ -1,0 +1,15 @@
+# Cursor Agent Instructions
+
+## Defaults
+- Be direct and concise.
+- If uncertain, say “I don’t know” and propose how to verify.
+- Prefer minimal, surgical changes over refactors.
+
+## Workflow inside Cursor
+- Before editing: search the repo for existing patterns and read relevant files.
+- When changing code: keep changes small, keep formatting consistent, and explain the delta.
+- Prefer fixing root cause over symptoms, but avoid scope creep.
+
+## Tooling
+- If a task involves build/test/format steps, suggest the exact commands.
+- If command output is needed, ask for it (don’t guess).
