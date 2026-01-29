@@ -76,10 +76,8 @@ export PROMPT_COMMAND='updatePrompt'
 #source "$HOME/.cargo/env"
 ##. "$HOME/.cargo/env"
 
-# . "/opt/homebrew/opt/asdf/libexec/asdf.sh"
-#
-. ~/.asdf/asdf.sh
-eval "$(/opt/homebrew/bin/direnv hook bash)"
+. "/opt/homebrew/opt/asdf/libexec/asdf.sh"
+eval "$($(which direnv) hook bash)"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

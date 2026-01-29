@@ -1,1 +1,2 @@
 echo In .bash_login
+. "$HOME/.cargo/env"

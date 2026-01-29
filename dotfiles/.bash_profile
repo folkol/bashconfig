@@ -1,3 +1,6 @@
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 # Leave my ^S alone!
 # if tty -s; then
 if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
@@ -42,6 +45,7 @@ export PATH="$PATH:/opt/homebrew/bin/"
 #export PATH="/Users/folkol/go/go1.19.1/bin:$PATH"
 export NPM_TOKEN=
 export PATH="$PATH:/Users/folkol/code/apl-inspired-filters/target/release/"
+export PATH="$PATH:/Users/folkol/Library/Python/3.9/bin/"
 
 ### IMPORTS
 source ~/.bashrc ### EXPORTS
@@ -982,8 +986,6 @@ alias preview='open -a Preview.app -f'
 #export LESS='-iMFXRj4#10'
 export LESS='-iMFXRj4a#10'
 export LESS='-iMXRj4#10'
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
 
 export REACT_EDITOR=webstorm
 export SPARK_PATH=/usr/local/opt/spark
@@ -1104,3 +1106,7 @@ unset PROMPT_COMMAND
 c() {
     cd "/Users/folkol/code/$({ echo .; ls ~/code; } | fzf)"
 }
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

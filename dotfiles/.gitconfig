@@ -60,7 +60,7 @@
 	rebase = false
  [user]
     name = Matte
-    email = mattias.johansson@funnel.io
+    email = folkol@mailbox.org
 [commit]
 	template = /Users/folkol/.gitmessage
 [filter "lfs"]
