@@ -1,1 +1,8 @@
-Some dotfiles. The install-script will create symlinks in $HOME.
+# folkol's dotfiles
+
+Links some stuff to $HOME.
+
+```
+$ brew install stow
+$ make
+```
